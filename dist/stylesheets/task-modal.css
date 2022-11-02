@@ -1,0 +1,78 @@
+#task-modal {
+    padding: 15px 30px 30px;
+    border: 0px;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* this visually centered the modal horizontally and vertically */
+    transform: translate(-50%, -50%);
+}
+
+#task-modal::backdrop {
+    backdrop-filter: blur(2px);
+}
+
+#task-form {
+    display: grid;
+    color: var(--black-color);
+    font-size: 1.8rem;
+}
+
+#task-form>*:not(:first-child):not(:last-child) {
+    margin-bottom: 25px;
+}
+
+#close-task-modal-button {
+    font-size: 25px;
+    justify-self: flex-end;
+    border: 0px;
+    background-color: transparent;
+}
+
+.form-control-container:has(textarea) {
+    display: grid;
+    row-gap: 10px;
+}
+
+.form-control-container>textarea,
+.form-control-container>label+select,
+.form-control-container>label+input {
+    border: 1px solid lightgray;
+}
+
+.form-control-container>textarea:focus,
+.form-control-container>label+select:focus,
+.form-control-container>label+input:focus {
+    outline: 3px solid lightblue;
+}
+
+.form-control-container>textarea {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    width: 350px;
+    resize: none;
+}
+
+.form-control-container:has(select),
+.form-control-container:has(input[type='date']) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#task-name {
+    word-wrap: break-word;
+}
+
+#task-project {
+    text-overflow: ellipsis;
+}
+
+.form-control-container>label+select,
+.form-control-container>label+input {
+    height: 30px;
+    padding: 2px 8px;
+    background-color: transparent;
+}
