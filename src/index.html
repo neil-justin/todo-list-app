@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../dist/stylesheets/main.css">
     <link rel="stylesheet" href="../dist/stylesheets/sidebar.css">
     <link rel="stylesheet" href="../dist/stylesheets/task-modal.css">
+    <link rel="stylesheet" href="../dist/stylesheets/mainbar.css">
 </head>
 
 <body>
@@ -38,8 +39,27 @@
                 <button id="add-project-button">Add project</button>
             </div>
         </div>
-        <div id="mainbar"></div>
-
+        <div id="mainbar">
+            <h1 id="opened-tab-heading">Lorem Ipsum</h1>
+            <div id="sort-by-and-order-container">
+                <div>
+                    <label for="sort-by">Sort by</label>
+                    <select name="sort-by" id="sort-by">
+                        <option value="Default">Default</option>
+                        <option value="Priority">Priority</option>
+                        <option value="Due date">Due date</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="order">Order</label>
+                    <select name="order" id="order">
+                        <option value="Ascending">Ascending</option>
+                        <option value="Descending">Descending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="add-task-button" id="mainbar-add-task-button">Add task</div>
+        </div>
         <!-- Add task buttons and edit button dialog box -->
         <dialog id="task-modal">
             <form method="dialog" id="task-form">
