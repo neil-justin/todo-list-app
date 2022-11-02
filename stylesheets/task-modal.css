@@ -76,3 +76,12 @@
     padding: 2px 8px;
     background-color: transparent;
 }
+
+#confirm-task-modal-button {
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    justify-self: flex-end;
+    border: 0px;
+}
