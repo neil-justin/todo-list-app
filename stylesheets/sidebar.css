@@ -46,6 +46,7 @@
 
 .sidebar-nav-link-container>li:hover {
     background-color: var(--grayish-white-color);
+    cursor: pointer;
 }
 
 #divider {
