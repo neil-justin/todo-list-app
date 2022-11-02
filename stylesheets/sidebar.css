@@ -37,21 +37,15 @@
     padding-left: 10px;
 }
 
-.sidebar-nav-link-container li {
+.sidebar-nav-link-container>li {
     list-style-type: none;
-}
-
-.sidebar-nav-link-container li:hover {
-    background-color: var(--grayish-white-color);
-}
-
-.nav-link {
-    text-decoration: none;
     color: var(--black-color);
     font-size: 1.6rem;
     line-height: 4rem;
-    display: block;
-    width: 100%;
+}
+
+.sidebar-nav-link-container>li:hover {
+    background-color: var(--grayish-white-color);
 }
 
 #divider {
