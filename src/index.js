@@ -1,7 +1,7 @@
 const taskNameTextareaElem = document.querySelector('#task-name');
 
-const addTaskButtonElems = document.querySelectorAll('.add-task-button');
-addTaskButtonElems.forEach(addTaskButtonElem => {
+const addTaskElems = document.querySelectorAll('.add-task-elem');
+addTaskElems.forEach(addTaskButtonElem => {
     addTaskButtonElem.addEventListener('click', () => {
         const taskModalElem = document.querySelector('#task-modal');
         taskModalElem.showModal();
