@@ -30,24 +30,24 @@
     background-color: transparent;
 }
 
-.form-control-container:has(textarea) {
+.task-form-control-container:has(textarea) {
     display: grid;
     row-gap: 10px;
 }
 
-.form-control-container>textarea,
-.form-control-container>label+select,
-.form-control-container>label+input {
+.task-form-control-container>textarea,
+.task-form-control-container>label+select,
+.task-form-control-container>label+input {
     border: 1px solid lightgray;
 }
 
-.form-control-container>textarea:focus,
-.form-control-container>label+select:focus,
-.form-control-container>label+input:focus {
+.task-form-control-container>textarea:focus,
+.task-form-control-container>label+select:focus,
+.task-form-control-container>label+input:focus {
     outline: 3px solid lightblue;
 }
 
-.form-control-container>textarea {
+.task-form-control-container>textarea {
     display: block;
     padding: 10px;
     border-radius: 5px;
@@ -55,8 +55,8 @@
     resize: none;
 }
 
-.form-control-container:has(select),
-.form-control-container:has(input[type='date']) {
+.task-form-control-container:has(select),
+.task-form-control-container:has(input[type='date']) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,8 +70,8 @@
     text-overflow: ellipsis;
 }
 
-.form-control-container>label+select,
-.form-control-container>label+input {
+.task-form-control-container>label+select,
+.task-form-control-container>label+input {
     height: 30px;
     padding: 2px 8px;
     background-color: transparent;
