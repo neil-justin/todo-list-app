@@ -1,8 +1,8 @@
 import { consoleLog } from './modules/tasks';
-import '../dist/stylesheets/main.css';
-import '../dist/stylesheets/mainbar.css';
-import '../dist/stylesheets/sidebar.css';
-import '../dist/stylesheets/task-modal.css';
+import './stylesheets/main.css';
+import './stylesheets/mainbar.css';
+import './stylesheets/sidebar.css';
+import './stylesheets/task-modal.css';
 
 const taskModalElem = document.querySelector('#task-modal');
 const taskNameTextareaElem = document.querySelector('#task-name');
