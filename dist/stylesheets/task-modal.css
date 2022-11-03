@@ -23,7 +23,7 @@
     margin-bottom: 25px;
 }
 
-#close-task-modal-button {
+#task-modal-close-button {
     font-size: 25px;
     justify-self: flex-end;
     border: 0px;
@@ -77,7 +77,7 @@
     background-color: transparent;
 }
 
-#confirm-task-modal-button {
+#task-modal-confirm-button {
     width: fit-content;
     padding: 8px 16px;
     background-color: var(--accent-color);
