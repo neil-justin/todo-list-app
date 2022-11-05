@@ -8,8 +8,8 @@ const taskModalElem = document.querySelector('#task-modal');
 const taskNameTextareaElem = document.querySelector('#task-name');
 
 const addTaskElems = document.querySelectorAll('.add-task-elem');
-addTaskElems.forEach(addTaskButtonElem => {
-    addTaskButtonElem.addEventListener('click', () => {
+addTaskElems.forEach(addTaskElem => {
+    addTaskElem.addEventListener('click', () => {
         taskModalElem.showModal();
 
         if (!taskNameTextareaElem.hasAttribute('required')) {

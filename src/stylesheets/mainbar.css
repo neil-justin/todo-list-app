@@ -24,13 +24,13 @@
     padding: 0px 2px;
 }
 
-#mainbar-add-task-button {
+#mainbar-add-task-div {
     background-color: var(--white-color);
     font-size: 1.6rem;
     padding: 18px;
     color: var(--accent-color);
 }
 
-#mainbar-add-task-button:hover {
+#mainbar-add-task-div:hover {
     cursor: pointer;
 }
