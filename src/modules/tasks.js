@@ -1,13 +1,21 @@
-export { consoleLog };
+export { tasks, Task };
 
-const consoleLog = console.log('test');
+const tasks = [];
 
-function Tasks(task) {
-    const newTask = {
-        taskName: document.querySelector('#task-name').value,
-        taskNotes: document.querySelector('#task-notes').value,
-        taskProject: document.querySelector('#task-project').value,
-        taskPriority: document.querySelector('#task-priority').value,
-        taskDueData: document.querySelector('#task-due-date').value
+function Task(taskFormControl) {
+    function addTask() {
+        const task = Object.assign({}, taskFormControl);
+
+        for (const property in task) {
+            if (property === 'dueDate') {
+                task[property] = task[property].valueAsDate;
+            } else {
+                task[property] = task[property].value;
+            }
+        }
+
+        tasks.push(task);
     }
+
+    return { addTask }
 }

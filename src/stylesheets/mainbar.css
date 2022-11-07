@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: min-content;
     grid-auto-rows: min-content;
-    row-gap: 20px;
+    row-gap: 15px;
 }
 
 #mainbar-main-heading {
@@ -33,4 +33,54 @@
 
 #mainbar-add-task-div:hover {
     cursor: pointer;
+}
+
+#task-list {
+    display: grid;
+    row-gap: 15px;
+}
+
+.task {
+    list-style-type: none;
+    background-color: var(--white-color);
+    padding: 9px 27px;
+}
+
+.priority4-task {
+    border-left: 3px solid #666;
+}
+
+.priority3-task {
+    border-left: 3px solid #246fe0;
+}
+
+.priority2-task {
+    border-left: 3px solid #eb8909;
+}
+
+.priority1-task {
+    border-left: 3px solid var(--accent-color);
+}
+
+.task-info-container {
+    display: grid;
+}
+
+.task-name {
+    font-size: 1.55rem;
+}
+
+.task-notes {
+    font-size: 1.2rem;
+    color: #666666;
+    max-width: 1158px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.task-due-date {
+    font-size: 1.3rem;
+    color: hsl(0deg 0% 30%);
 }

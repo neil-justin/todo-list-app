@@ -1,19 +1,21 @@
-import { consoleLog } from './modules/tasks';
 import './stylesheets/main.css';
 import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 
-const taskModalElem = document.querySelector('#task-modal');
-const taskNameTextareaElem = document.querySelector('#task-name');
+import { tasks, Task } from './modules/tasks';
+import { displayNewTask } from './modules/dom-controller';
+
+const taskNameElem = document.querySelector('#task-name');
 
 const addTaskElems = document.querySelectorAll('.add-task-elem');
 addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
+        const taskModalElem = document.querySelector('#task-modal');
         taskModalElem.showModal();
 
-        if (!taskNameTextareaElem.hasAttribute('required')) {
-            taskNameTextareaElem.setAttribute('required', '');
+        if (!taskNameElem.hasAttribute('required')) {
+            taskNameElem.setAttribute('required', '');
         }
     });
 });
@@ -21,14 +23,23 @@ addTaskElems.forEach(addTaskElem => {
 const taskModalCloseButtonElem = document.querySelector('#task-modal-close-button');
 taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
-    taskNameTextareaElem.removeAttribute('required');
+    taskNameElem.removeAttribute('required');
 });
+
+const taskFormControl = {
+    name: document.querySelector('#task-name'),
+    notes: document.querySelector('#task-notes'),
+    project: document.querySelector('#task-project'),
+    priority: document.querySelector('#task-priority'),
+    dueDate: document.querySelector('#task-due-date')
+}
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    if (taskModalElem.hasAttribute('editing-task')) {
-        taskModalConfirmButtonElem.getAttribute('data-editted-task-index');
-    }
+    if (taskNameElem.value !== '') {
+        const newTask = Task(taskFormControl);
+        newTask.addTask();
 
-    consoleLog;
+        displayNewTask(taskFormControl);
+    }
 });
