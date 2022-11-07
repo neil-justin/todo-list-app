@@ -9,9 +9,9 @@ function displayTask(task, isNotesEmpty, taskDueDate, taskPriorityNumber) {
 
     const taskInfoContainerElem = document.createElement('section');
     taskInfoContainerElem.classList.add('task-info-container');
-    taskElem.appendChild(taskInfoContainerElem); 0
+    taskElem.appendChild(taskInfoContainerElem);
 
-    const taskNameElem = document.createElement('h2');
+    const taskNameElem = document.createElement('h3');
     taskNameElem.textContent = `${task.name.value}`;
     taskNameElem.classList.add('task-name');
     taskInfoContainerElem.appendChild(taskNameElem);
