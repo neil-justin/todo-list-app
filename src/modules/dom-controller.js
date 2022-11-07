@@ -10,7 +10,7 @@ function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
 
     const taskInfoContainerElem = document.createElement('section');
     taskInfoContainerElem.classList.add('task-info-container');
-    taskElem.appendChild(taskInfoContainerElem);
+    taskElem.appendChild(taskInfoContainerElem);0
 
     const taskNameElem = document.createElement('h2');
     taskNameElem.textContent = `${task.name.value}`;
@@ -37,7 +37,7 @@ function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
                     taskDueDate = 'Today';
                     break;
                 case differenceInDays === 1:
-                    taskDueDate = 'Tommorow';
+                    taskDueDate = 'Tomorrow';
                     break;
                 case differenceInDays <= 7:
                     taskDueDate = getDayOfTheWeek(task.dueDate.valueAsDate);
