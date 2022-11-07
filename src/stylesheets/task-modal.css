@@ -43,7 +43,7 @@ div:has(textarea.task-form-control) {
 }
 
 .task-form-control:focus {
-    outline: 3px solid var(--accent-color);
+    outline: 2px solid var(--accent-color);
     border: 0px;
 }
 
