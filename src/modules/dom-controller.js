@@ -1,6 +1,6 @@
 export { displayTask, resetTaskModal };
 
-function displayTask(task, isNotesEmpty, taskDueDate, taskPriorityNumber) {
+function displayTask(task, isNotesEmpty, taskPriorityNumber, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
@@ -23,7 +23,7 @@ function displayTask(task, isNotesEmpty, taskDueDate, taskPriorityNumber) {
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
-    if (task.dueDate.valueAsDate !== null) {
+    if (taskDueDate !== null) {
         const taskDueDateElem = document.createElement('p');
         taskDueDateElem.textContent = `${taskDueDate}`;
         taskDueDateElem.classList.add('task-due-date');

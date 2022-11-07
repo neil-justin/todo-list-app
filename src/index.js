@@ -4,18 +4,18 @@ import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import { Task } from './modules/tasks';
 import { displayTask, resetTaskModal } from './modules/dom-controller';
-import { taskNameNotEmpty, notesNotEmpty, getTaskDueDate, getDayOfTheWeek, getLongDate, getTaskPriority } from './modules/helper';
-import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
+
+const taskNameElem = document.querySelector('#task-name');
 
 const taskFormControl = {
-    name: document.querySelector('#task-name'),
+    name: taskNameElem,
     notes: document.querySelector('#task-notes'),
     project: document.querySelector('#task-project'),
     priority: document.querySelector('#task-priority'),
     dueDate: document.querySelector('#task-due-date')
 }
 
-const taskNameElem = document.querySelector('#task-name');
 const addTaskElems = document.querySelectorAll('.add-task-elem');
 addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
@@ -38,28 +38,22 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    if (taskNameNotEmpty(taskFormControl.name)) {
-        const task = Task(taskFormControl);
+    const task = Task(taskFormControl);
+
+    if (task.nameNotEmpty()) {
         task.addTask();
 
-        displayTask(
-            taskFormControl,
-            notesNotEmpty(taskFormControl.notes),
-            getTaskDueDate(
-                differenceInCalendarDays(
+        if (taskFormControl.dueDate.valueAsDate !== null) {
+            displayTask(
+                taskFormControl, task.notesNotEmpty(), task.getPriorityNumber(),
+                task.getTaskDueDate(differenceInCalendarDays(
                     taskFormControl.dueDate.valueAsDate, new Date()
-                ),
-                getDayOfTheWeek(taskFormControl.dueDate.valueAsDate),
-                getLongDate(
-                    taskFormControl.dueDate.valueAsDate,
-                    differenceInCalendarYears(
-                        taskFormControl.dueDate.valueAsDate,
-                        new Date()
-                    ),
-                ),
-                taskFormControl.dueDate.valueAsDate,
-            ),
-            getTaskPriority(taskFormControl.priority),
-        )
+                )),
+            );
+        } else {
+            displayTask(
+                taskFormControl, task.notesNotEmpty(), task.getPriorityNumber(),
+            );
+        }
     }
 });
