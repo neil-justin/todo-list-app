@@ -1,10 +1,10 @@
 export { displayTask, resetTaskModal };
 
-function displayTask(task, isNotesEmpty, taskDueDate) {
+function displayTask(task, isNotesEmpty, taskDueDate, taskPriorityNumber) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
-    taskElem.classList.add('task');
+    taskElem.classList.add('task', `${taskPriorityNumber}`);
     taskListElem.appendChild(taskElem);
 
     const taskInfoContainerElem = document.createElement('section');
@@ -23,25 +23,11 @@ function displayTask(task, isNotesEmpty, taskDueDate) {
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
-    if (task.dueDate.valueAsDate !== '') {
+    if (task.dueDate.valueAsDate !== null) {
         const taskDueDateElem = document.createElement('p');
         taskDueDateElem.textContent = `${taskDueDate}`;
         taskDueDateElem.classList.add('task-due-date');
         taskInfoContainerElem.appendChild(taskDueDateElem);
-    }
-
-    switch (task.priority.value) {
-        case 'Priority 4':
-            taskElem.classList.add('priority4-task');
-            break;
-        case 'Priority 3':
-            taskElem.classList.add('priority3-task');
-            break;
-        case 'Priority 2':
-            taskElem.classList.add('priority2-task');
-            break;
-        case 'Priority 1':
-            taskElem.classList.add('priority1-task');
     }
 }
 

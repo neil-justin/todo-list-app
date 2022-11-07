@@ -4,7 +4,7 @@ import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import { Task } from './modules/tasks';
 import { displayTask, resetTaskModal } from './modules/dom-controller';
-import { taskNameNotEmpty, notesNotEmpty, getTaskDueDate, getDayOfTheWeek, getLongDate } from './modules/helper';
+import { taskNameNotEmpty, notesNotEmpty, getTaskDueDate, getDayOfTheWeek, getLongDate, getTaskPriority } from './modules/helper';
 import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
 
 const taskFormControl = {
@@ -57,7 +57,9 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
                         new Date()
                     ),
                 ),
+                taskFormControl.dueDate.valueAsDate,
             ),
+            getTaskPriority(taskFormControl.priority),
         )
     }
 });
