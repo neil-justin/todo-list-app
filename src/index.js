@@ -3,9 +3,17 @@ import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import { Task } from './modules/tasks';
-import { displayTask } from './modules/dom-controller';
+import { displayTask, resetTaskModal } from './modules/dom-controller';
 import { taskNameNotEmpty, notesNotEmpty } from './modules/helper';
 import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
+
+const taskFormControl = {
+    name: document.querySelector('#task-name'),
+    notes: document.querySelector('#task-notes'),
+    project: document.querySelector('#task-project'),
+    priority: document.querySelector('#task-priority'),
+    dueDate: document.querySelector('#task-due-date')
+}
 
 const taskNameElem = document.querySelector('#task-name');
 const addTaskElems = document.querySelectorAll('.add-task-elem');
@@ -17,6 +25,8 @@ addTaskElems.forEach(addTaskElem => {
         if (!taskNameElem.hasAttribute('required')) {
             taskNameElem.setAttribute('required', '');
         }
+
+        resetTaskModal(taskFormControl);
     });
 });
 
@@ -25,14 +35,6 @@ taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
     taskNameElem.removeAttribute('required');
 });
-
-const taskFormControl = {
-    name: document.querySelector('#task-name'),
-    notes: document.querySelector('#task-notes'),
-    project: document.querySelector('#task-project'),
-    priority: document.querySelector('#task-priority'),
-    dueDate: document.querySelector('#task-due-date')
-}
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {

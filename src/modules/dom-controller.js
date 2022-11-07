@@ -1,4 +1,4 @@
-export { displayTask };
+export { displayTask, resetTaskModal };
 import { getDayOfTheWeek, formatDate } from './helper';
 
 function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
@@ -10,7 +10,7 @@ function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
 
     const taskInfoContainerElem = document.createElement('section');
     taskInfoContainerElem.classList.add('task-info-container');
-    taskElem.appendChild(taskInfoContainerElem);0
+    taskElem.appendChild(taskInfoContainerElem); 0
 
     const taskNameElem = document.createElement('h2');
     taskNameElem.textContent = `${task.name.value}`;
@@ -72,5 +72,17 @@ function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
             break;
         case 'Priority 1':
             taskElem.classList.add('priority1-task');
+    }
+}
+
+function resetTaskModal(taskFormControl) {
+    for (const key in taskFormControl) {
+        if (key === 'priority') {
+            taskFormControl[key].value = 'Priority 4';
+        } else if (key === 'project') {
+            taskFormControl[key].value = 'None';
+        } else {
+            taskFormControl[key].value = '';
+        }
     }
 }
