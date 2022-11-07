@@ -1,7 +1,6 @@
 export { displayTask, resetTaskModal };
-import { getDayOfTheWeek, formatDate } from './helper';
 
-function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
+function displayTask(task, isNotesEmpty, taskDueDate) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
@@ -26,38 +25,9 @@ function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
 
     if (task.dueDate.valueAsDate !== '') {
         const taskDueDateElem = document.createElement('p');
+        taskDueDateElem.textContent = `${taskDueDate}`;
         taskDueDateElem.classList.add('task-due-date');
         taskInfoContainerElem.appendChild(taskDueDateElem);
-
-        let taskDueDate;
-
-        if (differenceInDays >= 0) {
-            switch (true) {
-                case differenceInDays === 0:
-                    taskDueDate = 'Today';
-                    break;
-                case differenceInDays === 1:
-                    taskDueDate = 'Tomorrow';
-                    break;
-                case differenceInDays <= 7:
-                    taskDueDate = getDayOfTheWeek(task.dueDate.valueAsDate);
-                    break;
-                default:
-                    taskDueDate = formatDate(task.dueDate.valueAsDate,
-                        differenceInYears);
-            }
-
-            taskDueDateElem.textContent = `Due ${taskDueDate}`;
-        } else {
-            if (differenceInDays === -1) {
-                taskDueDate = 'Yesterday';
-            } else {
-                taskDueDate = formatDate(task.dueDate.valueAsDate,
-                    differenceInYears);
-            }
-
-            taskDueDateElem.textContent = `Overdue ${taskDueDate}`;
-        }
     }
 
     switch (task.priority.value) {
