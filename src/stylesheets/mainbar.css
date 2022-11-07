@@ -76,7 +76,6 @@
 .task-notes {
     font-size: 1.2rem;
     color: #666666;
-    max-width: 1158px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
