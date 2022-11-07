@@ -5,7 +5,7 @@
     width: 25%;
     display: grid;
     grid-template-rows: repeat(3, min-content);
-    row-gap: 22px;
+    row-gap: 15px;
 }
 
 #sidebar>div:first-of-type {
@@ -13,8 +13,7 @@
     row-gap: 10px;
 }
 
-#sidebar-add-task-button,
-#add-project-button {
+#sidebar-add-task-button {
     width: fit-content;
     font-size: 1.6rem;
 }
@@ -28,38 +27,33 @@
     border: 0px;
 }
 
+#sidebar-add-task-button:hover {
+    background-color: var(--accent-color);
+    opacity: 1;
+}
+
+.sidebar-text {
+    line-height: 4rem;
+    padding-left: 10px;
+}
+
+.sidebar-text:hover {
+    background-color: var(--grayish-white-color);
+    cursor: pointer;
+}
+
 .sidebar-nav-link-container {
     display: grid;
     row-gap: 3px;
-}
-
-.sidebar-nav-link-container li,
-#add-project-button {
-    padding-left: 10px;
 }
 
 .sidebar-nav-link-container>li {
     list-style-type: none;
     color: var(--black-color);
     font-size: 1.6rem;
-    line-height: 4rem;
 }
 
-.sidebar-nav-link-container>li:hover {
-    background-color: var(--grayish-white-color);
-    cursor: pointer;
-}
-
-#divider {
-    justify-self: center;
-    height: 2px;
-    width: 95%;
-    background-color: hsl(0, 0%, 80%);
-}
-
-#add-project-button {
-    background-color: var(--white-color);
-    border: 0px;
-    line-height: 4rem;
-    color: var(--accent-color);
+#project-list-heading {
+    font-size: 1.6rem;
+    color: var(--black-color);
 }
