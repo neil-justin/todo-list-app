@@ -53,6 +53,7 @@ textarea.task-form-control {
     border-radius: 5px;
     width: 350px;
     resize: none;
+    line-height: 2rem;
 }
 
 div:has(select.task-form-control),

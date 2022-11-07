@@ -4,7 +4,7 @@ import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import { Task } from './modules/tasks';
 import { displayTask } from './modules/dom-controller';
-import { taskNameNotEmpty } from './modules/helper';
+import { taskNameNotEmpty, notesNotEmpty } from './modules/helper';
 import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
@@ -42,7 +42,7 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
         displayTask(
             taskFormControl,
-            notesNotEmpty(taskFormControl.notes.value),
+            notesNotEmpty(taskFormControl.notes),
             differenceInCalendarDays(
                 taskFormControl.dueDate.valueAsDate, new Date()
             ),
