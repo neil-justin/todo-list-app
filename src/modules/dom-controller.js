@@ -1,7 +1,7 @@
-export { displayNewTask };
-import { notesNotEmpty, getDifferenceInYear, getDayOfTheWeek, formatDate } from './helper';
+export { displayTask };
+import { getDayOfTheWeek, formatDate } from './helper';
 
-function displayNewTask(task, differenceInDays, differenceInYears) {
+function displayTask(task, isNotesEmpty, differenceInDays, differenceInYears) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
@@ -17,7 +17,7 @@ function displayNewTask(task, differenceInDays, differenceInYears) {
     taskNameElem.classList.add('task-name');
     taskInfoContainerElem.appendChild(taskNameElem);
 
-    if (notesNotEmpty(task.notes)) {
+    if (isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
         taskNotesElem.textContent = `${task.notes.value}`;
         taskNotesElem.classList.add('task-notes');
@@ -52,7 +52,8 @@ function displayNewTask(task, differenceInDays, differenceInYears) {
             if (differenceInDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
-                taskDueDate = formatDate(task.dueDate.valueAsDate, differenceInYears);
+                taskDueDate = formatDate(task.dueDate.valueAsDate,
+                    differenceInYears);
             }
 
             taskDueDateElem.textContent = `Overdue ${taskDueDate}`;

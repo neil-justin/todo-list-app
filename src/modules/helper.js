@@ -1,7 +1,11 @@
-export { notesNotEmpty, getDayOfTheWeek, formatDate };
+export { notesNotEmpty, taskNameNotEmpty, getDayOfTheWeek, formatDate };
 
 function notesNotEmpty(notes) {
     return notes.value.trim().length !== 0
+}
+
+function taskNameNotEmpty(task) {
+    return task.value.trim().length !== 0;
 }
 
 function getDayOfTheWeek(date) {

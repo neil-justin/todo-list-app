@@ -2,13 +2,12 @@ import './stylesheets/main.css';
 import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
-
-import { tasks, Task } from './modules/tasks';
-import { displayNewTask } from './modules/dom-controller';
+import { Task } from './modules/tasks';
+import { displayTask } from './modules/dom-controller';
+import { taskNameNotEmpty } from './modules/helper';
 import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
-
 const addTaskElems = document.querySelectorAll('.add-task-elem');
 addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
@@ -37,12 +36,13 @@ const taskFormControl = {
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    if (taskNameElem.value !== '') {
-        const newTask = Task(taskFormControl);
-        newTask.addTask();
+    if (taskNameNotEmpty(taskFormControl.name)) {
+        const task = Task(taskFormControl);
+        task.addTask();
 
-        displayNewTask(
+        displayTask(
             taskFormControl,
+            notesNotEmpty(taskFormControl.notes.value),
             differenceInCalendarDays(
                 taskFormControl.dueDate.valueAsDate, new Date()
             ),
