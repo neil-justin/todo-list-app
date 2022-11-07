@@ -1,14 +1,7 @@
-export { notesNotEmpty, getDifferenceInYear, getDayOfTheWeek, formatDate };
+export { notesNotEmpty, getDayOfTheWeek, formatDate };
 
 function notesNotEmpty(notes) {
     return notes.value.trim().length !== 0
-}
-
-function getDifferenceInYear(dueDate, today) {
-    const dueYear = dueDate.getFullYear();
-    const currentYear = today.getFullYear();
-
-    return parseInt(dueYear - currentYear);
 }
 
 function getDayOfTheWeek(date) {

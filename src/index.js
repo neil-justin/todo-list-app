@@ -5,6 +5,7 @@ import './stylesheets/task-modal.css';
 
 import { tasks, Task } from './modules/tasks';
 import { displayNewTask } from './modules/dom-controller';
+import { differenceInCalendarDays, differenceInCalendarYears } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
 
@@ -40,6 +41,14 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
         const newTask = Task(taskFormControl);
         newTask.addTask();
 
-        displayNewTask(taskFormControl);
+        displayNewTask(
+            taskFormControl,
+            differenceInCalendarDays(
+                taskFormControl.dueDate.valueAsDate, new Date()
+            ),
+            differenceInCalendarYears(
+                taskFormControl.dueDate.valueAsDate, new Date()
+            ),
+        );
     }
 });

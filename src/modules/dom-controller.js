@@ -1,8 +1,7 @@
 export { displayNewTask };
 import { notesNotEmpty, getDifferenceInYear, getDayOfTheWeek, formatDate } from './helper';
-import { differenceInDays } from 'date-fns';
 
-function displayNewTask(task) {
+function displayNewTask(task, differenceInDays, differenceInYears) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
@@ -30,38 +29,30 @@ function displayNewTask(task) {
         taskDueDateElem.classList.add('task-due-date');
         taskInfoContainerElem.appendChild(taskDueDateElem);
 
-        const diffInDays = differenceInDays(
-            task.dueDate.valueAsDate, new Date());
-
-        /* Since date-fns' differenceInYears module doesn't work as expected */
-        const diffInYears = getDifferenceInYear(
-            task.dueDate.valueAsDate, new Date()
-        );
-
         let taskDueDate;
 
-        if (diffInDays >= 0) {
+        if (differenceInDays >= 0) {
             switch (true) {
-                case diffInDays === 0:
+                case differenceInDays === 0:
                     taskDueDate = 'Today';
                     break;
-                case diffInDays === 1:
+                case differenceInDays === 1:
                     taskDueDate = 'Tommorow';
                     break;
-                case diffInDays <= 7:
+                case differenceInDays <= 7:
                     taskDueDate = getDayOfTheWeek(task.dueDate.valueAsDate);
                     break;
                 default:
                     taskDueDate = formatDate(task.dueDate.valueAsDate,
-                        diffInYears);
+                        differenceInYears);
             }
 
             taskDueDateElem.textContent = `Due ${taskDueDate}`;
         } else {
-            if (diffInDays === -1) {
+            if (differenceInDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
-                taskDueDate = formatDate(task.dueDate.valueAsDate, diffInYears);
+                taskDueDate = formatDate(task.dueDate.valueAsDate, differenceInYears);
             }
 
             taskDueDateElem.textContent = `Overdue ${taskDueDate}`;
