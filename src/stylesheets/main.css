@@ -47,8 +47,3 @@ main {
 button {
     cursor: pointer;
 }
-
-#mainbar {
-    background-color: var(--grayish-white-color);
-    flex: 1;
-}

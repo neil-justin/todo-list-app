@@ -30,24 +30,24 @@
     background-color: transparent;
 }
 
-.task-form-control-container:has(textarea) {
+div:has(textarea.task-form-control) {
     display: grid;
     row-gap: 10px;
 }
 
-.task-form-control-container>textarea,
-.task-form-control-container>label+select,
-.task-form-control-container>label+input {
+.task-form-control {
     border: 1px solid lightgray;
+    /* Since the default font of textarea element and input is different from
+    one another, I have to force them to adapt the same font */
+    font-family: sans-serif;
 }
 
-.task-form-control-container>textarea:focus,
-.task-form-control-container>label+select:focus,
-.task-form-control-container>label+input:focus {
-    outline: 3px solid lightblue;
+.task-form-control:focus {
+    outline: 3px solid var(--accent-color);
+    border: 0px;
 }
 
-.task-form-control-container>textarea {
+textarea.task-form-control {
     display: block;
     padding: 10px;
     border-radius: 5px;
@@ -55,23 +55,15 @@
     resize: none;
 }
 
-.task-form-control-container:has(select),
-.task-form-control-container:has(input[type='date']) {
+div:has(select.task-form-control),
+div:has(input.task-form-control) {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#task-name {
-    word-wrap: break-word;
-}
-
-#task-project {
-    text-overflow: ellipsis;
-}
-
-.task-form-control-container>label+select,
-.task-form-control-container>label+input {
+select.task-form-control,
+input.task-form-control {
     height: 30px;
     padding: 2px 8px;
     background-color: transparent;
