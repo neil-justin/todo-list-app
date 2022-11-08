@@ -40,19 +40,19 @@ const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-b
 taskModalConfirmButtonElem.addEventListener('click', () => {
     const task = Task(taskFormControl);
 
-    if (task.nameNotEmpty()) {
+    if (task.textareaNotEmpty('name')) {
         task.addTask();
 
         if (taskFormControl.dueDate.valueAsDate !== null) {
             displayTask(
-                taskFormControl, task.notesNotEmpty(), task.getPriorityNumber(),
+                taskFormControl, task.textareaNotEmpty('notes'), task.getPriorityNumber(),
                 task.getTaskDueDate(differenceInCalendarDays(
                     taskFormControl.dueDate.valueAsDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                taskFormControl, task.notesNotEmpty(), task.getPriorityNumber(),
+                taskFormControl, task.textareaNotEmpty('notes'), task.getPriorityNumber(),
             );
         }
     }

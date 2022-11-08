@@ -9,7 +9,7 @@ function Task(taskFormControl) {
 
         for (const property in task) {
             if (property === 'dueDate') {
-                task[property] = task[property].valueAsDate;
+                task.dueDate = task.dueDate.valueAsDate;
             } else {
                 task[property] = task[property].value;
             }
