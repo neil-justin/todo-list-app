@@ -18,12 +18,9 @@ function Task(taskFormControl) {
         tasks.push(task);
     }
 
-    function notesNotEmpty() {
-        return taskFormControl.notes.value.trim().length !== 0;
-    }
-
-    function nameNotEmpty() {
-        return taskFormControl.name.value.trim().length !== 0;
+    function textareaNotEmpty(key) {
+        /* The key parameter could either be the task name or notes */
+        return taskFormControl[key].value.trim().length !== 0;
     }
 
     function getPriorityNumber() {
@@ -101,8 +98,7 @@ function Task(taskFormControl) {
 
     return {
         addTask,
-        notesNotEmpty,
-        nameNotEmpty,
+        textareaNotEmpty,
         getPriorityNumber,
         getDayOfTheWeek,
         getLongDateFormat,
