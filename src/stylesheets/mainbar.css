@@ -96,4 +96,13 @@
 
 .delete-task-elem {
     color: var(--accent-color);
+    padding: 2px;
+}
+
+.delete-task-elem:hover {
+    text-decoration: 1px underline var(--accent-color);
+}
+
+.delete-task-elem-hovered-effect {
+    outline: 1px solid var(--accent-color);
 }

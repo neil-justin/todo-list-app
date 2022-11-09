@@ -79,4 +79,12 @@ function addDeleteTaskElem(taskElem) {
     deleteTaskElem.textContent = 'Delete';
     deleteTaskElem.classList.add('delete-task-elem', 'task-elem-small-text');
     taskElem.appendChild(deleteTaskElem);
+
+    deleteTaskElem.addEventListener('mouseover', () => {
+        taskElem.classList.add('delete-task-elem-hovered-effect');
+    });
+
+    deleteTaskElem.addEventListener('mouseleave', () => {
+        taskElem.classList.remove('delete-task-elem-hovered-effect');
+    });
 }
