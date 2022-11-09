@@ -3,7 +3,11 @@ import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import { Task } from './modules/tasks';
-import { displayTask, resetTaskModal } from './modules/dom-controller';
+import {
+    displayTask,
+    resetTaskModal,
+    displayTaskCheckbox
+} from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
@@ -45,15 +49,20 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
         if (taskFormControl.dueDate.valueAsDate !== null) {
             displayTask(
-                taskFormControl, task.textareaNotEmpty('notes'), task.getPriorityNumber(),
+                taskFormControl, task.textareaNotEmpty('notes'),
                 task.getTaskDueDate(differenceInCalendarDays(
                     taskFormControl.dueDate.valueAsDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                taskFormControl, task.textareaNotEmpty('notes'), task.getPriorityNumber(),
+                taskFormControl, task.textareaNotEmpty('notes'),
             );
         }
     }
+
+    const taskElem = document.querySelector('#task-list').lastElementChild;
+    const taskInfoElem = taskElem.querySelector('.task-info-container');
+
+    displayTaskCheckbox(taskElem, taskInfoElem);
 });

@@ -23,19 +23,6 @@ function Task(taskFormControl) {
         return taskFormControl[key].value.trim().length !== 0;
     }
 
-    function getPriorityNumber() {
-        switch (taskFormControl.priority.value) {
-            case 'Priority 4':
-                return 'priority4-task'
-            case 'Priority 3':
-                return 'priority3-task'
-            case 'Priority 2':
-                return 'priority2-task'
-            case 'Priority 1':
-                return 'priority1-task'
-        }
-    }
-
     function getDayOfTheWeek() {
         const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday'];
@@ -99,7 +86,6 @@ function Task(taskFormControl) {
     return {
         addTask,
         textareaNotEmpty,
-        getPriorityNumber,
         getDayOfTheWeek,
         getLongDateFormat,
         getTaskDueDate,

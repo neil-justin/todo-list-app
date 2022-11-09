@@ -6,25 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        button:hover {
+            content: 'hi';
+        }
+
+        button {
+            background-color: yellow;
+        }
+    </style>
 </head>
 
 <body>
+    <button>Hello</button>
+
     <script>
-        debugger;
-        function Message() {
-            function logMessage(msg) {
-                return msg;
-            }
-
-            function sayHey() {
-                console.log('hey');
-            }
-
-            return { logMessage, sayHey };
-        }
-
-        const msg1 = Message();
-        msg1.logMessage(this.sayHey());
     </script>
 </body>
 

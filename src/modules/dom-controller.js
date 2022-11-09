@@ -1,10 +1,17 @@
-export { displayTask, resetTaskModal };
+export {
+    displayTask,
+    resetTaskModal,
+    displayTaskCheckbox,
+};
+/* I can't find in their documentation how to use the "import" keyword.
+to import the library, so I just imported it the old-fashioned way. */
+const he = require('he');
 
-function displayTask(task, isNotesEmpty, taskPriorityNumber, taskDueDate = null) {
+function displayTask(task, isNotesEmpty, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
-    taskElem.classList.add('task', `${taskPriorityNumber}`);
+    taskElem.classList.add('task');
     taskListElem.appendChild(taskElem);
 
     const taskInfoContainerElem = document.createElement('section');
@@ -19,16 +26,34 @@ function displayTask(task, isNotesEmpty, taskPriorityNumber, taskDueDate = null)
     if (isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
         taskNotesElem.textContent = `${task.notes.value}`;
-        taskNotesElem.classList.add('task-notes');
+        taskNotesElem.classList.add('task-notes', 'task-info');
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
+    /* this element wraps the taskDueDate and taskPriority elements */
+    const taskAdditionalInfoElem = document.createElement('p');
+    taskAdditionalInfoElem.classList.add('task-additional-info', 'task-info');
+    taskInfoContainerElem.appendChild(taskAdditionalInfoElem);
+
     if (taskDueDate !== null) {
-        const taskDueDateElem = document.createElement('p');
+        const taskDueDateElem = document.createElement('span');
         taskDueDateElem.textContent = `${taskDueDate}`;
-        taskDueDateElem.classList.add('task-due-date');
-        taskInfoContainerElem.appendChild(taskDueDateElem);
+        taskAdditionalInfoElem.appendChild(taskDueDateElem);
+
+        const dividerElem = document.createElement('span');
+        taskCheckboxElem.classList.add('task-checkbox');
+        /* The he.decode method decode the passed argument, in this case the html
+        entity 'bullet point', then display it as a symbol */
+        /* Element.innerhtml may also work in this case, however the drawbacks
+        is it may cause vulnerabilities if ever a malicious scripts were
+        injected to it */
+        dividerElem.textContent = ` ${he.decode('&bull;')} `;
+        taskAdditionalInfoElem.appendChild(dividerElem);
     }
+
+    const taskPriorityElem = document.createElement('span');
+    taskPriorityElem.textContent = `${task.priority.value}`;
+    taskAdditionalInfoElem.appendChild(taskPriorityElem);
 }
 
 function resetTaskModal(taskFormControl) {
@@ -41,4 +66,10 @@ function resetTaskModal(taskFormControl) {
             taskFormControl[key].value = '';
         }
     }
+}
+
+function displayTaskCheckbox(taskElem, taskInfoElem) {
+    const taskCheckboxElem = document.createElement('button');
+    taskCheckboxElem.textContent = `${he.decode('&check;')}`;
+    taskElem.insertBefore(taskCheckboxElem, taskInfoElem);
 }
