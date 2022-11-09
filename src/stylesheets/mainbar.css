@@ -47,6 +47,9 @@
     list-style-type: none;
     background-color: var(--white-color);
     padding: 9px 27px;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
 }
 
 .task-info-container {
@@ -76,8 +79,16 @@
 .task-checkbox {
     background-color: transparent;
     border-radius: 50%;
-    width: 20px;
+    width: 22px;
+    height: 22px;
     appearance: none;
-    color: var(--accent-color);
     border: 2px solid var(--accent-color);
+}
+
+.task-checkbox:hover::before {
+    /* unicode for the check mark */
+    content: '\2713';
+    /* this property horizontally centered the 'check' mark inside the button */
+    margin-left: 3.5px;
+    color: var(--accent-color);
 }

@@ -41,7 +41,6 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
         taskAdditionalInfoElem.appendChild(taskDueDateElem);
 
         const dividerElem = document.createElement('span');
-        taskCheckboxElem.classList.add('task-checkbox');
         /* The he.decode method decode the passed argument, in this case the html
         entity 'bullet point', then display it as a symbol */
         /* Element.innerhtml may also work in this case, however the drawbacks
@@ -70,6 +69,6 @@ function resetTaskModal(taskFormControl) {
 
 function displayTaskCheckbox(taskElem, taskInfoElem) {
     const taskCheckboxElem = document.createElement('button');
-    taskCheckboxElem.textContent = `${he.decode('&check;')}`;
+    taskCheckboxElem.classList.add('task-checkbox');
     taskElem.insertBefore(taskCheckboxElem, taskInfoElem);
 }
