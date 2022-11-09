@@ -41,7 +41,6 @@
 
 .sidebar-text:not(#project-list-heading):hover {
     background-color: var(--grayish-white-color);
-    cursor: pointer;
 }
 
 .sidebar-nav-link-container {
