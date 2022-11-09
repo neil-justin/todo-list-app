@@ -48,7 +48,7 @@
     background-color: var(--white-color);
     padding: 9px 27px;
     display: flex;
-    column-gap: 10px;
+    column-gap: 15px;
     align-items: center;
 }
 
@@ -91,4 +91,5 @@
     /* this vertically align the check mark */
     vertical-align: -10%;
     color: var(--accent-color);
+    font-weight: bold;
 }
