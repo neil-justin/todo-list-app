@@ -19,15 +19,13 @@
     font-size: 1.6rem;
     color: var(--white-color);
     background-color: var(--accent-color);
-    opacity: 0.8;
     padding: 15px 20px;
     border-radius: 10px;
     border: 0px;
 }
 
 #sidebar-add-task-button:hover {
-    background-color: var(--accent-color);
-    opacity: 1;
+    opacity: 0.8;
 }
 
 .sidebar-text {

@@ -2,6 +2,7 @@ export {
     displayTask,
     resetTaskModal,
     addTaskCheckbox,
+    addDeleteTaskElem
 };
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
@@ -26,13 +27,13 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
     if (isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
         taskNotesElem.textContent = `${task.notes.value}`;
-        taskNotesElem.classList.add('task-notes', 'task-info');
+        taskNotesElem.classList.add('task-notes', 'task-elem-small-text');
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
     /* this element wraps the taskDueDate and taskPriority elements */
     const taskAdditionalInfoElem = document.createElement('p');
-    taskAdditionalInfoElem.classList.add('task-additional-info', 'task-info');
+    taskAdditionalInfoElem.classList.add('task-additional-info', 'task-elem-small-text');
     taskInfoContainerElem.appendChild(taskAdditionalInfoElem);
 
     if (taskDueDate !== null) {
@@ -71,4 +72,11 @@ function addTaskCheckbox(taskElem, taskInfoElem) {
     const taskCheckboxElem = document.createElement('button');
     taskCheckboxElem.classList.add('task-checkbox');
     taskElem.insertBefore(taskCheckboxElem, taskInfoElem);
+}
+
+function addDeleteTaskElem(taskElem) {
+    const deleteTaskElem = document.createElement('span');
+    deleteTaskElem.textContent = 'Delete';
+    deleteTaskElem.classList.add('delete-task-elem', 'task-elem-small-text');
+    taskElem.appendChild(deleteTaskElem);
 }
