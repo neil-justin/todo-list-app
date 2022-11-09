@@ -79,7 +79,7 @@
 .task-checkbox {
     background-color: transparent;
     border-radius: 50%;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
     appearance: none;
     border: 2px solid var(--accent-color);
