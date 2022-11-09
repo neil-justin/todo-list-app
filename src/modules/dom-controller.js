@@ -1,7 +1,7 @@
 export {
     displayTask,
     resetTaskModal,
-    displayTaskCheckbox,
+    addTaskCheckbox,
 };
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
@@ -67,7 +67,7 @@ function resetTaskModal(taskFormControl) {
     }
 }
 
-function displayTaskCheckbox(taskElem, taskInfoElem) {
+function addTaskCheckbox(taskElem, taskInfoElem) {
     const taskCheckboxElem = document.createElement('button');
     taskCheckboxElem.classList.add('task-checkbox');
     taskElem.insertBefore(taskCheckboxElem, taskInfoElem);

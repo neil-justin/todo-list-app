@@ -6,7 +6,7 @@ import { Task } from './modules/tasks';
 import {
     displayTask,
     resetTaskModal,
-    displayTaskCheckbox
+    addTaskCheckbox
 } from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -64,5 +64,5 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     const taskElem = document.querySelector('#task-list').lastElementChild;
     const taskInfoElem = taskElem.querySelector('.task-info-container');
 
-    displayTaskCheckbox(taskElem, taskInfoElem);
+    addTaskCheckbox(taskElem, taskInfoElem);
 });
