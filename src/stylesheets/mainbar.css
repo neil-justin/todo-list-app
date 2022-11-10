@@ -15,8 +15,10 @@
 #sort-by-and-order-container {
     display: flex;
     font-size: 1.6rem;
-    column-gap: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
     justify-self: end;
+    justify-content: end;
 }
 
 #sort-by-and-order-container select {
