@@ -14,7 +14,7 @@ import {
 import { differenceInCalendarDays } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
-
+const taskModalElem = document.querySelector('#task-modal');
 const taskFormControl = {
     name: taskNameElem,
     notes: document.querySelector('#task-notes'),
@@ -26,7 +26,6 @@ const taskFormControl = {
 const addTaskElems = document.querySelectorAll('.add-task-elem');
 addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
-        const taskModalElem = document.querySelector('#task-modal');
         taskModalElem.showModal();
 
         if (!taskNameElem.hasAttribute('required')) {
@@ -48,26 +47,27 @@ taskListElem.addEventListener('click', (e) => {
     let taskIndex;
 
     while (typeof taskIndex === 'undefined') {
+        taskElem = defineElem(e, 'taskElem');
+        taskInfoElem = defineElem(e, 'taskInfoElem');
+        taskIndex = task.getTaskIndex(e);
+
+        const taskCheckboxElem = taskInfoElem.previousElementSibling;
+        const deleteTaskElem = taskInfoElem.nextElementSibling;
+
         if (e.target === taskListElem) {
             break;
-        } else {
-            taskElem = defineElem(e, 'taskElem');
-            taskInfoElem = defineElem(e, 'taskInfoElem');
-            taskIndex = task.getTaskIndex(e);
-
-            if (e.target === taskElem || e.target === taskInfoElem) {
-                console.log(e.target);
-            } else {
-                if (e.target.classList.contains('delete-task-elem')) {
-                    if (!window.
-                        confirm('Are you sure you want to delete this item?')) {
-                        break;
-                    }
+        } else if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
+            if (e.target === deleteTaskElem) {
+                if (!window.
+                    confirm('Are you sure you want to delete this item?')) {
+                    break;
                 }
-
-                task.removeTask(taskIndex);
-                removeTaskDisplay(taskElem);
             }
+
+            task.removeTask(taskIndex);
+            removeTaskDisplay(taskElem);
+        } else {
+            taskModalElem.showModal();
         }
     }
 });

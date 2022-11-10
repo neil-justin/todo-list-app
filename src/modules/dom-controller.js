@@ -6,6 +6,7 @@ export {
     removeTaskDisplay,
     defineElem,
 };
+
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
