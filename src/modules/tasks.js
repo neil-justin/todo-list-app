@@ -93,7 +93,7 @@ function Task(taskFormControl) {
         if (event.target.hasAttribute('data-task-index')) {
             taskIndex = event.target.getAttribute('data-task-index');
         } else {
-            taskIndex = event.target.closest('[data-task-index]').
+            taskIndex = event.target.closest('.task').
                 getAttribute('data-task-index');
         }
 

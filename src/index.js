@@ -58,6 +58,13 @@ taskListElem.addEventListener('click', (e) => {
             if (e.target === taskElem || e.target === taskInfoElem) {
                 console.log(e.target);
             } else {
+                if (e.target.classList.contains('delete-task-elem')) {
+                    if (!window.
+                        confirm('Are you sure you want to delete this item?')) {
+                        break;
+                    }
+                }
+
                 task.removeTask(taskIndex);
                 removeTaskDisplay(taskElem);
             }

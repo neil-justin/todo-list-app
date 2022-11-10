@@ -109,7 +109,7 @@ function defineElem(event, elem) {
             } else if (event.target.classList.contains('task-info-container')) {
                 return event.target;
             } else {
-                return event.target.closest('.task');
+                return event.target.closest('.task-info-container');
             }
     }
 }
