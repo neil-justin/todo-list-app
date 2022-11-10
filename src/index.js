@@ -9,7 +9,7 @@ import {
     addTaskCheckbox,
     addDeleteTaskElem,
     removeTaskDisplay,
-    defineElem,
+    defineTaskElem,
 } from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -47,8 +47,8 @@ taskListElem.addEventListener('click', (e) => {
     let taskIndex;
 
     while (typeof taskIndex === 'undefined') {
-        taskElem = defineElem(e, 'taskElem');
-        taskInfoElem = defineElem(e, 'taskInfoElem');
+        taskElem = defineTaskElem(e);
+        taskInfoElem = taskElem.querySelector('.task-info-container');
         taskIndex = task.getTaskIndex(e);
 
         const taskCheckboxElem = taskInfoElem.previousElementSibling;

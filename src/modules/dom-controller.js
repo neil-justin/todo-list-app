@@ -4,7 +4,7 @@ export {
     addTaskCheckbox,
     addDeleteTaskElem,
     removeTaskDisplay,
-    defineElem,
+    defineTaskElem,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -96,21 +96,10 @@ function removeTaskDisplay(taskElem) {
     taskElem.remove();
 }
 
-function defineElem(event, elem) {
-    switch (elem) {
-        case 'taskElem':
-            if (event.target.classList.contains('task')) {
-                return event.target;
-            } else {
-                return event.target.closest('.task');
-            }
-        case 'taskInfoElem':
-            if (event.target.classList.contains('task')) {
-                return event.target.querySelector('.task-info-container');
-            } else if (event.target.classList.contains('task-info-container')) {
-                return event.target;
-            } else {
-                return event.target.closest('.task-info-container');
-            }
+function defineTaskElem(event) {
+    if (event.target.classList.contains('task')) {
+        return event.target;
+    } else {
+        return event.target.closest('.task');
     }
 }
