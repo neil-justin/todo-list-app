@@ -87,6 +87,23 @@ function Task(taskFormControl) {
         taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
     }
 
+    function getTaskIndex(event) {
+        let taskIndex;
+
+        if (event.target.hasAttribute('data-task-index')) {
+            taskIndex = event.target.getAttribute('data-task-index');
+        } else {
+            taskIndex = event.target.closest('[data-task-index]').
+                getAttribute('data-task-index');
+        }
+
+        return taskIndex;
+    }
+
+    function removeTask(taskIndex) {
+        tasks.splice(taskIndex, 1);
+    }
+
     return {
         addTask,
         textareaNotEmpty,
@@ -94,5 +111,7 @@ function Task(taskFormControl) {
         getLongDateFormat,
         getTaskDueDate,
         insertTaskIndex,
+        getTaskIndex,
+        removeTask,
     }
 }

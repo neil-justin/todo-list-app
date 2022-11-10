@@ -2,7 +2,9 @@ export {
     displayTask,
     resetTaskModal,
     addTaskCheckbox,
-    addDeleteTaskElem
+    addDeleteTaskElem,
+    removeTaskDisplay,
+    defineElem,
 };
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
@@ -87,4 +89,27 @@ function addDeleteTaskElem(taskElem) {
     deleteTaskElem.addEventListener('mouseleave', () => {
         taskElem.classList.remove('delete-task-elem-hovered-effect');
     });
+}
+
+function removeTaskDisplay(taskElem) {
+    taskElem.remove();
+}
+
+function defineElem(event, elem) {
+    switch (elem) {
+        case 'taskElem':
+            if (event.target.classList.contains('task')) {
+                return event.target;
+            } else {
+                return event.target.closest('.task');
+            }
+        case 'taskInfoElem':
+            if (event.target.classList.contains('task')) {
+                return event.target.querySelector('.task-info-container');
+            } else if (event.target.classList.contains('task-info-container')) {
+                return event.target;
+            } else {
+                return event.target.closest('.task');
+            }
+    }
 }

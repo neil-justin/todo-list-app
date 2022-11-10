@@ -7,7 +7,9 @@ import {
     displayTask,
     resetTaskModal,
     addTaskCheckbox,
-    addDeleteTaskElem
+    addDeleteTaskElem,
+    removeTaskDisplay,
+    defineElem,
 } from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -35,13 +37,31 @@ addTaskElems.forEach(addTaskElem => {
     });
 });
 
+/* The task variable will contain the task DOM element that the user interacts
+with */
+let task;
+let taskElem;
+let taskInfoElem;
 
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
-    const taskCheckboxElem = document.querySelector('.task-checkbox');
+    let taskIndex;
 
-    if (e.target === taskCheckboxElem) {
-        
+    while (typeof taskIndex === 'undefined') {
+        if (e.target === taskListElem) {
+            break;
+        } else {
+            taskElem = defineElem(e, 'taskElem');
+            taskInfoElem = defineElem(e, 'taskInfoElem');
+            taskIndex = task.getTaskIndex(e);
+
+            if (e.target === taskElem || e.target === taskInfoElem) {
+                console.log(e.target);
+            } else {
+                task.removeTask(taskIndex);
+                removeTaskDisplay(taskElem);
+            }
+        }
     }
 });
 
@@ -53,7 +73,7 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    const task = Task(taskFormControl);
+    task = Task(taskFormControl);
 
     if (task.textareaNotEmpty('name')) {
         task.addTask();
@@ -72,8 +92,8 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
         }
     }
 
-    const taskElem = taskListElem.lastElementChild;
-    const taskInfoElem = taskElem.querySelector('.task-info-container');
+    taskElem = taskListElem.lastElementChild;
+    taskInfoElem = taskElem.querySelector('.task-info-container');
 
     addTaskCheckbox(taskElem, taskInfoElem);
     addDeleteTaskElem(taskElem);
