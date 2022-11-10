@@ -35,6 +35,16 @@ addTaskElems.forEach(addTaskElem => {
     });
 });
 
+
+const taskListElem = document.querySelector('#task-list');
+taskListElem.addEventListener('click', (e) => {
+    const taskCheckboxElem = document.querySelector('.task-checkbox');
+
+    if (e.target === taskCheckboxElem) {
+        
+    }
+});
+
 const taskModalCloseButtonElem = document.querySelector('#task-modal-close-button');
 taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
@@ -62,9 +72,10 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
         }
     }
 
-    const taskElem = document.querySelector('#task-list').lastElementChild;
+    const taskElem = taskListElem.lastElementChild;
     const taskInfoElem = taskElem.querySelector('.task-info-container');
 
     addTaskCheckbox(taskElem, taskInfoElem);
     addDeleteTaskElem(taskElem);
+    task.insertTaskIndex(taskElem);
 });

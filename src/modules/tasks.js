@@ -83,11 +83,16 @@ function Task(taskFormControl) {
         }
     }
 
+    function insertTaskIndex(taskElem) {
+        taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+    }
+
     return {
         addTask,
         textareaNotEmpty,
         getDayOfTheWeek,
         getLongDateFormat,
         getTaskDueDate,
+        insertTaskIndex,
     }
 }
