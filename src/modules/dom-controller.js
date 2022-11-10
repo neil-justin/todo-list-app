@@ -6,11 +6,13 @@ export {
     removeTaskDisplay,
     defineTaskElem,
     insertEditingTaskAttr,
+    insertTaskIndexAttr,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
+import { tasks } from './tasks.js';
 
 function displayTask(task, isNotesEmpty, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
@@ -107,4 +109,8 @@ function defineTaskElem(event) {
 
 function insertEditingTaskAttr(taskElem) {
     taskElem.setAttribute('data-editing-task', '');
+}
+
+function insertTaskIndexAttr(taskElem) {
+    taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
 }

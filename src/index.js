@@ -11,6 +11,7 @@ import {
     removeTaskDisplay,
     defineTaskElem,
     insertEditingTaskAttr,
+    insertTaskIndexAttr,
 } from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -110,5 +111,5 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
     addTaskCheckbox(taskElem, taskInfoElem);
     addDeleteTaskElem(taskElem);
-    task.insertTaskIndex(taskElem);
+    insertTaskIndexAttr(taskElem);
 });

@@ -83,10 +83,6 @@ function Task(taskFormControl) {
         }
     }
 
-    function insertTaskIndex(taskElem) {
-        taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
-    }
-
     function getTaskIndex(event) {
         let taskIndex;
 
@@ -110,7 +106,6 @@ function Task(taskFormControl) {
         getDayOfTheWeek,
         getLongDateFormat,
         getTaskDueDate,
-        insertTaskIndex,
         getTaskIndex,
         removeTask,
     }
