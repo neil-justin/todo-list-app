@@ -10,6 +10,7 @@ import {
     addDeleteTaskElem,
     removeTaskDisplay,
     defineTaskElem,
+    insertEditingTaskAttr,
 } from './modules/dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -68,6 +69,7 @@ taskListElem.addEventListener('click', (e) => {
             removeTaskDisplay(taskElem);
         } else {
             taskModalElem.showModal();
+            insertEditingTaskAttr(taskElem);
         }
     }
 });
@@ -76,6 +78,10 @@ const taskModalCloseButtonElem = document.querySelector('#task-modal-close-butto
 taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
     taskNameElem.removeAttribute('required');
+
+    if (taskElem.hasAttribute('data-editing-task')) {
+        taskElem.removeAttribute('data-editing-task');
+    }
 });
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');

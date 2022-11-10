@@ -5,6 +5,7 @@ export {
     addDeleteTaskElem,
     removeTaskDisplay,
     defineTaskElem,
+    insertEditingTaskAttr,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -102,4 +103,8 @@ function defineTaskElem(event) {
     } else {
         return event.target.closest('.task');
     }
+}
+
+function insertEditingTaskAttr(taskElem) {
+    taskElem.setAttribute('data-editing-task', '');
 }
