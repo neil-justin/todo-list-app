@@ -31,6 +31,19 @@
                 <div>
                     <h2 id="project-list-heading" class="sidebar-text">Projects</h2>
                     <button id="add-project-button">&#43;</button>
+                    <dialog class="modal" id="project-modal">
+                        <form method="dialog" id="project-form">
+                            <div>
+                                <label for="task-project" class="form-label">Project</label>
+                                <input type="text" id="task-project" class="form-control typed-form-control"
+                                    placeholder="Insert your task project here" maxlength="50">
+                            </div>
+                            <div id="project-modal-buttons-container">
+                                <button id="project-modal-cancel-button" class="modal-button">Cancel</button>
+                                <button class="confirm-button modal-button">Confirm</button>
+                            </div>
+                        </form>
+                    </dialog>
                 </div>
                 <nav>
                     <ul class="sidebar-nav-link-container">
@@ -60,32 +73,33 @@
             <div class="add-task-elem cursor-pointer" id="mainbar-add-task-div">Add task</div>
             <ul id="task-list"> </ul>
         </div>
-        <!-- Add task buttons and edit button dialog box -->
-        <dialog id="task-modal">
+        <!-- Add task buttons dialog box -->
+        <dialog id="task-modal" class="modal">
             <form method="dialog" id="task-form">
                 <button id="task-modal-close-button">&#x00d7;</button>
                 <div>
-                    <label for="task-name">Task</label>
+                    <label for="task-name" class="form-label">Task</label>
                     <textarea name="task name" placeholder="Insert your task name here" id="task-name" cols="50"
-                        rows="1" maxlength="50" class="task-form-control" required autofocus
-                        data-enable-grammarly="false" data-gramm="false" data-gramm_editor="false"
+                        rows="1" maxlength="50" class="form-control task-typed-form-control typed-form-control" required
+                        autofocus data-enable-grammarly="false" data-gramm="false" data-gramm_editor="false"
                         spellcheck="false"></textarea>
                 </div>
                 <div>
-                    <label for="task-notes">Notes</label>
+                    <label for="task-notes" class="form-label">Notes</label>
                     <textarea name="task-notes" placeholder="Insert your notes here" id="task-notes"
-                        class="task-form-control" cols="50" rows="5" spellcheck="false" data-enable-grammarly="false"
-                        data-gramm="false" data-gramm_editor="false"></textarea>
+                        class="form-control task-typed-form-control typed-form-control" cols="50" rows="5"
+                        spellcheck="false" data-enable-grammarly="false" data-gramm="false"
+                        data-gramm_editor="false"></textarea>
                 </div>
                 <div>
-                    <label for="task-project">Project</label>
-                    <select name="task project" id="task-project" class="task-form-control">
+                    <label for="task-project" class="form-label">Project</label>
+                    <select name="task project" id="task-project" class="picked-form-control form-control">
                         <option value="None">None</option>
                     </select>
                 </div>
                 <div>
-                    <label for="task-priority">Priority</label>
-                    <select name="task priority" id="task-priority" class="task-form-control">
+                    <label for="task-priority" class="form-label">Priority</label>
+                    <select name="task priority" id="task-priority" class="picked-form-control form-control">
                         <option value="Priority 4">Priority 4</option>
                         <option value="Priority 3">Priority 3</option>
                         <option value="Priority 2">Priority 2</option>
@@ -93,10 +107,11 @@
                     </select>
                 </div>
                 <div>
-                    <label for="task-due-date">Due Date</label>
-                    <input type="date" id="task-due-date" class="task-form-control">
+                    <label for="task-due-date" class="form-label">Due Date</label>
+                    <input type="date" id="task-due-date" class="picked-form-control form-control">
                 </div>
-                <button type="submit" id="task-modal-confirm-button">Confirm</button>
+                <button type="submit" id="task-modal-confirm-button"
+                    class="confirm-button modal-button">Confirm</button>
             </form>
         </dialog>
     </main>

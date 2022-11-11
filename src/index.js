@@ -2,6 +2,7 @@ import './stylesheets/main.css';
 import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
+import './stylesheets/project-modal.css';
 import { Task } from './modules/tasks';
 import {
     displayTask,
@@ -113,3 +114,9 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     addDeleteTaskElem(taskElem);
     insertTaskIndexAttr(taskElem);
 });
+
+const addProjectButtonElem = document.querySelector('#add-project-button');
+addProjectButtonElem.addEventListener('click', () => {
+    const projectModalElem = document.querySelector('#project-modal');
+    projectModalElem.showModal();
+})

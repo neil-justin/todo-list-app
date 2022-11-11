@@ -1,22 +1,9 @@
 #task-modal {
     padding: 15px 30px 30px;
-    border: 0px;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* this visually centered the modal horizontally and vertically */
-    transform: translate(-50%, -50%);
-}
-
-#task-modal::backdrop {
-    backdrop-filter: blur(2px);
 }
 
 #task-form {
     display: grid;
-    color: var(--black-color);
-    font-size: 1.8rem;
 }
 
 #task-form>*:not(:first-child):not(:last-child) {
@@ -30,52 +17,22 @@
     background-color: transparent;
 }
 
-div:has(textarea.task-form-control) {
-    display: grid;
-    row-gap: 10px;
-}
-
-.task-form-control {
-    border: 1px solid lightgray;
-    /* Since the default font of textarea element and input is different from
-    one another, I have to force them to adapt the same font */
-    font-family: sans-serif;
-}
-
-.task-form-control:focus {
-    outline: 2px solid var(--accent-color);
-    border: 0px;
-}
-
-textarea.task-form-control {
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    width: 350px;
+.task-typed-form-control {
     resize: none;
-    line-height: 2rem;
 }
 
-div:has(select.task-form-control),
-div:has(input.task-form-control) {
+div:has(.picked-form-control) {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-select.task-form-control,
-input.task-form-control {
+.picked-form-control {
     height: 30px;
     padding: 2px 8px;
     background-color: transparent;
 }
 
 #task-modal-confirm-button {
-    width: fit-content;
-    padding: 8px 16px;
-    background-color: var(--accent-color);
-    color: var(--white-color);
     justify-self: flex-end;
-    border: 0px;
-    border-radius: 5px;
 }

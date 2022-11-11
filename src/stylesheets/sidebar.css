@@ -47,3 +47,25 @@
     display: grid;
     row-gap: 3px;
 }
+
+/* This selects the direct ancestor of the element that has an id of
+#project-list-heading */
+div:has(#project-list-heading):last-of-type {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-project-button {
+    background-color: transparent;
+    border: 0px;
+    font-size: 20px;
+    height: max-content;
+    padding: 5px;
+    color: var(--black-color);
+}
+
+#add-project-button:hover {
+    background-color: var(--grayish-white-color);
+}
