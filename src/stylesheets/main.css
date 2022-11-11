@@ -94,8 +94,8 @@ dialog::backdrop {
 }
 
 .form-control:focus {
-    outline: 2px solid var(--accent-color);
-    border: 0px;
+    border: 1px solid var(--accent-color);
+    outline: 0px;
 }
 
 div:has(.typed-form-control) {
