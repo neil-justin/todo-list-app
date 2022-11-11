@@ -92,9 +92,5 @@
 }
 
 .delete-task-elem:hover {
-    text-decoration: 1px underline var(--accent-color);
-}
-
-.delete-task-elem-hovered-effect {
-    outline: 1px solid var(--accent-color);
+    color: var(--black-color);
 }
