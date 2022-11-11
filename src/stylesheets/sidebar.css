@@ -33,10 +33,6 @@
     list-style-type: none;
 }
 
-.sidebar-text:not(#project-list-heading):hover {
-    background-color: var(--grayish-white-color);
-}
-
 .sidebar-nav-link-container {
     display: grid;
     row-gap: 3px;
@@ -61,5 +57,5 @@ div:has(#project-list-heading):last-of-type {
 }
 
 #add-project-button:hover {
-    background-color: hsl(0, 0%, 94%);
+    background-color: var(--darkish-gray-color);
 }

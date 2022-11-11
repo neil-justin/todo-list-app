@@ -33,10 +33,6 @@
     color: var(--accent-color);
 }
 
-#mainbar-add-task-div:hover {
-    background-color: hsl(0, 0%, 94%);
-}
-
 .small-text-size {
     font-size: 1.2rem;
 }

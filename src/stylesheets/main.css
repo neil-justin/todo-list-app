@@ -11,6 +11,7 @@
     --white-color: #fff;
     --grayish-white-color: #f7f7f7;
     --black-color: #262626;
+    --darkish-gray-color: hsl(0, 0%, 94%);
 }
 
 html,
@@ -52,10 +53,6 @@ button:hover {
     opacity: 0.8;
 }
 
-.cursor-pointer:hover {
-    cursor: pointer;
-}
-
 .medium-text-size {
     font-size: 1.6rem;
 }
@@ -68,6 +65,11 @@ button:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.clickable-non-button:hover {
+    background-color: var(--darkish-gray-color) !important;
+    cursor: pointer;
 }
 
 dialog {
