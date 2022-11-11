@@ -4,6 +4,7 @@ import './stylesheets/sidebar.css';
 import './stylesheets/task-modal.css';
 import './stylesheets/project-modal.css';
 import { Task } from './modules/tasks';
+import { Project } from './modules/projects';
 import {
     displayTask,
     resetTaskModal,
@@ -118,4 +119,15 @@ const addProjectButtonElem = document.querySelector('#add-project-button');
 addProjectButtonElem.addEventListener('click', () => {
     const projectModalElem = document.querySelector('#project-modal');
     projectModalElem.showModal();
-})
+});
+
+const projectModalConfirmButtonElem = document.
+    querySelector('#project-modal-confirm-button');
+projectModalConfirmButtonElem.addEventListener('click', () => {
+    const projectNameInputElem = document.querySelector('#project-name');
+    const project = Project(projectNameInputElem);
+
+    project.addProject();
+    project.listProjectName();
+    project.displayProjectName();
+});

@@ -28,26 +28,12 @@
                 </nav>
             </div>
             <div>
-                <div>
+                <div id="project-list-heading-and-button-container">
                     <h2 id="project-list-heading" class="sidebar-text medium-text-size">Projects</h2>
                     <button id="add-project-button">&#43;</button>
-                    <dialog id="project-modal">
-                        <form method="dialog" id="project-form">
-                            <div>
-                                <label for="task-project" class="large-text-size">Project</label>
-                                <input type="text" id="task-project" class="form-control typed-form-control"
-                                    placeholder="Insert your project name here" maxlength="60">
-                            </div>
-                            <div id="project-modal-buttons-container">
-                                <button id="project-modal-cancel-button" class="modal-button">Cancel</button>
-                                <button id="project-modal-confirm-button"
-                                    class="confirm-button modal-button">Confirm</button>
-                            </div>
-                        </form>
-                    </dialog>
                 </div>
                 <nav>
-                    <ul class="sidebar-nav-link-container">
+                    <ul class="sidebar-nav-link-container" id="project-list">
                     </ul>
                 </nav>
             </div>
@@ -114,6 +100,19 @@
                 </div>
                 <button type="submit" id="task-modal-confirm-button"
                     class="confirm-button modal-button">Confirm</button>
+            </form>
+        </dialog>
+        <dialog id="project-modal">
+            <form method="dialog" id="project-form">
+                <div>
+                    <label for="project-name" class="large-text-size">Project</label>
+                    <input type="text" id="project-name" class="form-control typed-form-control"
+                        placeholder="Insert your project name here" maxlength="60">
+                </div>
+                <div id="project-modal-buttons-container">
+                    <button id="project-modal-cancel-button" class="modal-button">Cancel</button>
+                    <button id="project-modal-confirm-button" class="confirm-button modal-button">Confirm</button>
+                </div>
             </form>
         </dialog>
     </main>

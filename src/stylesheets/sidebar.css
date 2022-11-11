@@ -38,9 +38,7 @@
     row-gap: 3px;
 }
 
-/* This selects the direct ancestor of the element that has an id of
-#project-list-heading */
-div:has(#project-list-heading):last-of-type {
+#project-list-heading-and-button-container {
     display: flex;
     width: 100%;
     justify-content: space-between;
