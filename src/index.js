@@ -81,8 +81,9 @@ taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
     taskNameElem.removeAttribute('required');
 
-    if (taskElem.hasAttribute('data-editing-task')) {
-        taskElem.removeAttribute('data-editing-task');
+    if (document.querySelector('[data-editing-task')) {
+        document.querySelector('[data-editing-task').
+            removeAttribute('data-editing-task');
     }
 });
 
