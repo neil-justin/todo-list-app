@@ -48,11 +48,29 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    opacity: 0.8;
+}
+
 .cursor-pointer:hover {
     cursor: pointer;
 }
 
-.modal {
+.medium-text-size {
+    font-size: 1.6rem;
+}
+
+.large-text-size {
+    font-size: 1.8rem;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+dialog {
     padding: 30px;
     border: 0;
     border-radius: 5px;
@@ -62,7 +80,7 @@ button {
     transform: translate(-50%, -50%);
 }
 
-.modal::backdrop {
+dialog::backdrop {
     backdrop-filter: blur(2px);
 }
 
@@ -91,9 +109,8 @@ div:has(.typed-form-control) {
     line-height: 2rem;
 }
 
-.form-label {
+label {
     color: var(--black-color);
-    font-size: 1.8rem;
 }
 
 .modal-button {

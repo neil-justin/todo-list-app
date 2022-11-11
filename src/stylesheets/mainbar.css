@@ -14,7 +14,6 @@
 
 #sort-by-and-order-container {
     display: flex;
-    font-size: 1.6rem;
     gap: 10px;
     flex-wrap: wrap;
     justify-self: end;
@@ -22,21 +21,24 @@
 }
 
 #sort-by-and-order-container select {
-    height: 25px;
     border: 2px solid var(--accent-color);
     background-color: var(--white-color);
-    padding: 0px 2px;
+    padding: 2px;
+    margin-left: 4px;
 }
 
 #mainbar-add-task-div {
     background-color: var(--white-color);
-    font-size: 1.6rem;
     padding: 18px;
     color: var(--accent-color);
 }
 
 #mainbar-add-task-div:hover {
     background-color: hsl(0, 0%, 94%);
+}
+
+.small-text-size {
+    font-size: 1.2rem;
 }
 
 #task-list {
@@ -58,20 +60,8 @@
     width: 100%;
 }
 
-.task-name {
-    font-size: 1.55rem;
-}
-
-.task-elem-small-text {
-    font-size: 1.2rem;
-}
-
 .task-notes {
     color: #666666;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
 }
 
 .task-additional-info {

@@ -16,7 +16,6 @@
 
 #sidebar-add-task-button {
     width: fit-content;
-    font-size: 1.6rem;
     color: var(--white-color);
     background-color: var(--accent-color);
     padding: 15px 20px;
@@ -24,14 +23,9 @@
     border: 0px;
 }
 
-#sidebar-add-task-button:hover {
-    opacity: 0.8;
-}
-
 .sidebar-text {
     line-height: 4rem;
     padding-left: 10px;
-    font-size: 1.6rem;
     color: var(--black-color);
 }
 
@@ -60,12 +54,12 @@ div:has(#project-list-heading):last-of-type {
 #add-project-button {
     background-color: transparent;
     border: 0px;
-    font-size: 20px;
+    font-size: 2rem;
     height: max-content;
     padding: 5px;
     color: var(--black-color);
 }
 
 #add-project-button:hover {
-    background-color: var(--grayish-white-color);
+    background-color: hsl(0, 0%, 94%);
 }

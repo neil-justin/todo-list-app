@@ -27,19 +27,19 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
 
     const taskNameElem = document.createElement('h3');
     taskNameElem.textContent = `${task.name.value}`;
-    taskNameElem.classList.add('task-name');
+    taskNameElem.classList.add('task-name', 'medium-text-size', 'text-ellipsis');
     taskInfoContainerElem.appendChild(taskNameElem);
 
     if (isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
         taskNotesElem.textContent = `${task.notes.value}`;
-        taskNotesElem.classList.add('task-notes', 'task-elem-small-text');
+        taskNotesElem.classList.add('task-notes', 'small-text-size', 'text-ellipsis');
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
     /* this element wraps the taskDueDate and taskPriority elements */
     const taskAdditionalInfoElem = document.createElement('p');
-    taskAdditionalInfoElem.classList.add('task-additional-info', 'task-elem-small-text');
+    taskAdditionalInfoElem.classList.add('task-additional-info', 'text-ellipsis');
     taskInfoContainerElem.appendChild(taskAdditionalInfoElem);
 
     if (taskDueDate !== null) {
@@ -59,6 +59,7 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
 
     const taskPriorityElem = document.createElement('span');
     taskPriorityElem.textContent = `${task.priority.value}`;
+    taskPriorityElem.classList.add('small-text-size');
     taskAdditionalInfoElem.appendChild(taskPriorityElem);
 }
 
@@ -83,7 +84,7 @@ function addTaskCheckbox(taskElem, taskInfoElem) {
 function addDeleteTaskElem(taskElem) {
     const deleteTaskElem = document.createElement('span');
     deleteTaskElem.textContent = 'Delete';
-    deleteTaskElem.classList.add('delete-task-elem', 'task-elem-small-text');
+    deleteTaskElem.classList.add('delete-task-elem', 'small-text-size');
     taskElem.appendChild(deleteTaskElem);
 
     deleteTaskElem.addEventListener('mouseover', () => {
