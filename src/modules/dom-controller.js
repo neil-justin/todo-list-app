@@ -1,8 +1,8 @@
 export {
     displayTask,
     resetTaskModal,
-    addTaskCheckbox,
-    addDeleteTaskElem,
+    createTaskCheckbox,
+    createDeleteTaskElem,
     removeTaskDisplay,
     defineTaskElem,
     insertEditingTaskAttr,
@@ -75,13 +75,13 @@ function resetTaskModal(taskFormControl) {
     }
 }
 
-function addTaskCheckbox(taskElem, taskInfoElem) {
+function createTaskCheckbox(taskElem, taskInfoElem) {
     const taskCheckboxElem = document.createElement('button');
     taskCheckboxElem.classList.add('task-checkbox');
     taskElem.insertBefore(taskCheckboxElem, taskInfoElem);
 }
 
-function addDeleteTaskElem(taskElem) {
+function createDeleteTaskElem(taskElem) {
     const deleteTaskElem = document.createElement('span');
     deleteTaskElem.textContent = 'Delete';
     deleteTaskElem.classList.add('delete-task-elem', 'small-text-size');

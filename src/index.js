@@ -7,8 +7,8 @@ import { Task } from './modules/tasks';
 import {
     displayTask,
     resetTaskModal,
-    addTaskCheckbox,
-    addDeleteTaskElem,
+    createTaskCheckbox,
+    createDeleteTaskElem,
     removeTaskDisplay,
     defineTaskElem,
     insertEditingTaskAttr,
@@ -39,8 +39,6 @@ addTaskElems.forEach(addTaskElem => {
     });
 });
 
-/* The task variable will contain the task DOM element that the user interacts
-with */
 let task;
 let taskElem;
 let taskInfoElem;
@@ -111,8 +109,8 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     taskElem = taskListElem.lastElementChild;
     taskInfoElem = taskElem.querySelector('.task-info-container');
 
-    addTaskCheckbox(taskElem, taskInfoElem);
-    addDeleteTaskElem(taskElem);
+    createTaskCheckbox(taskElem, taskInfoElem);
+    createDeleteTaskElem(taskElem);
     insertTaskIndexAttr(taskElem);
 });
 

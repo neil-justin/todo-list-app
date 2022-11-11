@@ -18,7 +18,7 @@ function Task(taskFormControl) {
         tasks.push(task);
     }
 
-    function textareaNotEmpty(key) {
+    function taskPropertyNotEmpty(key) {
         /* The key parameter could either be the task name or notes */
         return taskFormControl[key].value.trim().length !== 0;
     }
@@ -102,7 +102,7 @@ function Task(taskFormControl) {
 
     return {
         addTask,
-        textareaNotEmpty,
+        taskPropertyNotEmpty,
         getDayOfTheWeek,
         getLongDateFormat,
         getTaskDueDate,

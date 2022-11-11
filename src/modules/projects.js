@@ -1,0 +1,3 @@
+export { projects };
+
+const projects = [];
