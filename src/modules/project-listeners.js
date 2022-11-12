@@ -15,7 +15,7 @@ const projectModalConfirmButtonElem = document.
     querySelector('#project-modal-confirm-button');
 
 projectModalConfirmButtonElem.addEventListener('click', () => {
-    if (valueNotEmpty(projectNameInputElem.value)) {
+    if (valueNotEmpty(projectNameInputElem)) {
         const project = Project();
 
         project.addProject();

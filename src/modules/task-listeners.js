@@ -92,19 +92,19 @@ const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-b
 taskModalConfirmButtonElem.addEventListener('click', () => {
     task = Task(taskFormControl);
 
-    if (valueNotEmpty(taskFormControl, 'name')) {
+    if (valueNotEmpty(taskFormControl.name)) {
         task.addTask();
 
         if (taskFormControl.dueDate.valueAsDate !== null) {
             displayTask(
-                taskFormControl, valueNotEmpty(taskFormControl, 'notes'),
+                taskFormControl, valueNotEmpty(taskFormControl.notes),
                 task.getTaskDueDate(differenceInCalendarDays(
                     taskFormControl.dueDate.valueAsDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                taskFormControl, valueNotEmpty(taskFormControl, 'notes'),
+                taskFormControl, valueNotEmpty(taskFormControl.notes),
             );
         }
 
