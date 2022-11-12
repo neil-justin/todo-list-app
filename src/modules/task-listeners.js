@@ -107,12 +107,12 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
                 taskFormControl, valueNotEmpty(taskFormControl, 'notes'),
             );
         }
+
+        taskElem = taskListElem.lastElementChild;
+        taskInfoElem = taskElem.querySelector('.task-info-container');
+
+        createTaskCheckbox(taskElem, taskInfoElem);
+        createDeleteTaskElem(taskElem);
+        insertTaskIndexAttr(taskElem);
     }
-
-    taskElem = taskListElem.lastElementChild;
-    taskInfoElem = taskElem.querySelector('.task-info-container');
-
-    createTaskCheckbox(taskElem, taskInfoElem);
-    createDeleteTaskElem(taskElem);
-    insertTaskIndexAttr(taskElem);
 });
