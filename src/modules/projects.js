@@ -1,8 +1,9 @@
-export { Project };
+export { Project, projectNameInputElem };
+
+const projectNameInputElem = document.querySelector('#project-name');
 
 function Project() {
     const projects = [];
-    const projectNameInputElem = document.querySelector('#project-name');
 
     function addProject() {
         projects.push(projectNameInputElem.value);
