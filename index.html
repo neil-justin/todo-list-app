@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta namse="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List App</title>
     <script src="../dist/tasks.bundle.js" defer></script>
     <script src="../dist/index.bundle.js" defer></script>
     <script src="../dist/domController.bundle.js" defer></script>
-<script defer src="index.bundle.js"></script><script defer src="tasks.bundle.js"></script><script defer src="domController.bundle.js"></script></head>
+    <script src="../dist/projects.bundle.js" defer></script>
+    <script src="../dist/projectsListeners.bundle.js" defer></script>
+<script defer src="index.bundle.js"></script><script defer src="tasks.bundle.js"></script><script defer src="domController.bundle.js"></script><script defer src="projects.bundle.js"></script><script defer src="projectsListeners.bundle.js"></script></head>
 
 <body>
     <header>
@@ -107,7 +109,7 @@
                 <div>
                     <label for="project-name" class="large-text-size">Project</label>
                     <input type="text" id="project-name" class="form-control typed-form-control"
-                        placeholder="Insert your project name here" maxlength="60">
+                        placeholder="Insert your project name here" maxlength="60" required>
                 </div>
                 <div id="project-modal-buttons-container">
                     <button id="project-modal-cancel-button" class="modal-button">Cancel</button>
