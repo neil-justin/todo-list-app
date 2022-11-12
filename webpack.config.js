@@ -7,6 +7,8 @@ module.exports = {
         index: './src/index.js',
         tasks: './src/modules/tasks.js',
         domController: './src/modules/dom-controller.js',
+        projects: './src/modules/projects.js',
+        projectsListeners: './src/modules/projects-listeners.js',
     },
     devtool: 'inline-source-map',
     plugins: [

@@ -1,17 +1,18 @@
 export { Project };
 
-function Project(projectNameInput) {
+function Project() {
     const projects = [];
+    const projectNameInputElem = document.querySelector('#project-name');
 
     function addProject() {
-        projects.push(projectNameInput.value);
+        projects.push(projectNameInputElem.value);
     }
 
     function listProjectName() {
         const taskModalProjectSelectElem = document.querySelector('#task-project');
         const taskModalProjectOptionElem = document.createElement('option');
-        taskModalProjectOptionElem.value = `${projectNameInput.value}`;
-        taskModalProjectOptionElem.textContent = `${projectNameInput.value}`;
+        taskModalProjectOptionElem.value = `${projectNameInputElem.value}`;
+        taskModalProjectOptionElem.textContent = `${projectNameInputElem.value}`;
 
         taskModalProjectSelectElem.appendChild(taskModalProjectOptionElem);
     }
@@ -19,7 +20,7 @@ function Project(projectNameInput) {
     function displayProjectName() {
         const projectListElem = document.querySelector('#project-list');
         const projectItemElem = document.createElement('li');
-        projectItemElem.textContent = `${projectNameInput.value}`;
+        projectItemElem.textContent = `${projectNameInputElem.value}`;
         projectItemElem.classList
             .add('sidebar-text', 'medium-text-size', 'clickable-non-button');
 
