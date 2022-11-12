@@ -1,0 +1,58 @@
+dialog {
+    padding: 30px;
+    border: 0;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(2px);
+}
+
+.form-control {
+    border: 1px solid lightgray;
+    /* Since the default font of textarea element and input is different from
+    one another, I have to force them to adapt the same font */
+    font-family: sans-serif;
+}
+
+.form-control:focus {
+    border: 1px solid var(--accent-color);
+    outline: 0px;
+}
+
+div:has(.typed-form-control) {
+    display: grid;
+    row-gap: 10px;
+}
+
+.typed-form-control {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    width: 350px;
+    line-height: 2rem;
+}
+
+label {
+    color: var(--black-color);
+}
+
+.modal-button {
+    width: fit-content;
+    padding: 8px 16px;
+    border: 0px;
+    border-radius: 5px;
+}
+
+.confirm-button {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}
+
+.confirm-button:hover {
+    opacity: 0.8;
+}
