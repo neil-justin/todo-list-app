@@ -1,4 +1,4 @@
-import { Project, projectNameInputElem } from "./projects";
+import { Project, projectNameInputElem } from "./project";
 
 const addProjectButtonElem = document.querySelector('#add-project-button');
 addProjectButtonElem.addEventListener('click', () => {

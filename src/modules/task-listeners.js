@@ -1,11 +1,11 @@
-import './stylesheets/main.css';
-import './stylesheets/mainbar.css';
-import './stylesheets/sidebar.css';
-import './stylesheets/modal.css';
-import './stylesheets/task-modal.css';
-import './stylesheets/project-modal.css';
+import '../stylesheets/main.css';
+import '../stylesheets/mainbar.css';
+import '../stylesheets/sidebar.css';
+import '../stylesheets/modal.css';
+import '../stylesheets/task-modal.css';
+import '../stylesheets/project-modal.css';
 
-import { Task } from './modules/tasks';
+import { Task } from './task';
 import {
     displayTask,
     resetTaskModal,
@@ -15,7 +15,7 @@ import {
     defineTaskElem,
     insertEditingTaskAttr,
     insertTaskIndexAttr,
-} from './modules/dom-controller';
+} from './dom-controller';
 import { differenceInCalendarDays } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');

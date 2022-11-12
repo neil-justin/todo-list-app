@@ -4,11 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        index: './src/index.js',
-        tasks: './src/modules/tasks.js',
+        taskListeners: './src/modules/task-listeners.js',
+        task: './src/modules/task.js',
         domController: './src/modules/dom-controller.js',
-        projects: './src/modules/projects.js',
-        projectsListeners: './src/modules/projects-listeners.js',
+        project: './src/modules/project.js',
+        projectListeners: './src/modules/project-listeners.js',
     },
     devtool: 'inline-source-map',
     plugins: [

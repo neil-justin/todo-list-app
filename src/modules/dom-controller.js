@@ -12,7 +12,7 @@ export {
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
-import { tasks } from './tasks.js';
+import { tasks } from './task.js';
 
 function displayTask(task, isNotesEmpty, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
