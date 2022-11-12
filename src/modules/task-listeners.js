@@ -16,6 +16,7 @@ import {
     insertEditingTaskAttr,
     insertTaskIndexAttr,
 } from './dom-controller';
+import { valueNotEmpty } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
@@ -91,19 +92,19 @@ const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-b
 taskModalConfirmButtonElem.addEventListener('click', () => {
     task = Task(taskFormControl);
 
-    if (task.textareaNotEmpty('name')) {
+    if (valueNotEmpty(taskFormControl, 'name')) {
         task.addTask();
 
         if (taskFormControl.dueDate.valueAsDate !== null) {
             displayTask(
-                taskFormControl, task.textareaNotEmpty('notes'),
+                taskFormControl, valueNotEmpty(taskFormControl, 'notes'),
                 task.getTaskDueDate(differenceInCalendarDays(
                     taskFormControl.dueDate.valueAsDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                taskFormControl, task.textareaNotEmpty('notes'),
+                taskFormControl, valueNotEmpty(taskFormControl, 'notes'),
             );
         }
     }

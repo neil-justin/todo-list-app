@@ -17,12 +17,7 @@ function Task(taskFormControl) {
 
         tasks.push(task);
     }
-
-    function taskPropertyNotEmpty(key) {
-        /* The key parameter could either be the task name or notes */
-        return taskFormControl[key].value.trim().length !== 0;
-    }
-
+    
     function getDayOfTheWeek() {
         const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday'];
@@ -102,7 +97,6 @@ function Task(taskFormControl) {
 
     return {
         addTask,
-        taskPropertyNotEmpty,
         getDayOfTheWeek,
         getLongDateFormat,
         getTaskDueDate,
