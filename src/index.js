@@ -1,8 +1,10 @@
 import './stylesheets/main.css';
 import './stylesheets/mainbar.css';
 import './stylesheets/sidebar.css';
+import './stylesheets/modal.css';
 import './stylesheets/task-modal.css';
 import './stylesheets/project-modal.css';
+
 import { Task } from './modules/tasks';
 import {
     displayTask,
