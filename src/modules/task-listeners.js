@@ -5,7 +5,11 @@ import '../stylesheets/modal.css';
 import '../stylesheets/task-modal.css';
 import '../stylesheets/project-modal.css';
 
-import { Task } from './task';
+import {
+    Task,
+    tasks,
+    task as newTask,
+} from './task';
 import {
     displayTask,
     resetTaskModal,
@@ -16,7 +20,10 @@ import {
     insertEditingTaskAttr,
     insertTaskIndexAttr,
 } from './dom-controller';
-import { valueNotEmpty } from './helper';
+import {
+    valueNotEmpty,
+    filterByProperty
+} from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
 const taskNameElem = document.querySelector('#task-name');
@@ -95,16 +102,16 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     if (valueNotEmpty(taskFormControl.name)) {
         task.addTask();
 
-        if (taskFormControl.dueDate.valueAsDate !== null) {
+        if (newTask.dueDate !== null) {
             displayTask(
-                taskFormControl, valueNotEmpty(taskFormControl.notes),
+                newTask, valueNotEmpty(newTask.notes),
                 task.getTaskDueDate(differenceInCalendarDays(
-                    taskFormControl.dueDate.valueAsDate, new Date()
+                    newTask.dueDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                taskFormControl, valueNotEmpty(taskFormControl.notes),
+                newTask, valueNotEmpty(newTask.notes),
             );
         }
 
@@ -114,5 +121,32 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
         createTaskCheckbox(taskElem, taskInfoElem);
         createDeleteTaskElem(taskElem);
         insertTaskIndexAttr(taskElem);
+    }
+});
+
+const taskNavElem = document.querySelector('#task-nav');
+taskNavElem.addEventListener('click', (e) => {
+    if (tasks.length !== 0) {
+        const filteredTasks = filterByProperty(tasks, 'project', e);
+
+        if (filteredTasks.length !== 0) {
+            if (e.target.textContent === 'Inbox') {
+                for (let i = 0; i < tasks.length; i++) {
+                    displayTask(
+                        filteredTasks[i], valueNotEmpty(filteredTasks[i].notes),
+                        filteredTasks[i].dueDate
+                    );
+                }
+            } else {
+                console.log('hey');
+            }
+
+            taskElem = taskListElem.lastElementChild;
+            taskInfoElem = taskElem.querySelector('.task-info-container');
+
+            createTaskCheckbox(taskElem, taskInfoElem);
+            createDeleteTaskElem(taskElem);
+            insertTaskIndexAttr(taskElem);
+        }
     }
 });

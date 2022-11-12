@@ -28,13 +28,13 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
     taskElem.appendChild(taskInfoContainerElem);
 
     const taskNameElem = document.createElement('h3');
-    taskNameElem.textContent = `${task.name.value}`;
+    taskNameElem.textContent = `${task.name}`;
     taskNameElem.classList.add('task-name', 'medium-text-size', 'text-ellipsis');
     taskInfoContainerElem.appendChild(taskNameElem);
 
     if (isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
-        taskNotesElem.textContent = `${task.notes.value}`;
+        taskNotesElem.textContent = `${task.notes}`;
         taskNotesElem.classList.add('task-notes', 'small-text-size', 'text-ellipsis');
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
@@ -60,7 +60,7 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
     }
 
     const taskPriorityElem = document.createElement('span');
-    taskPriorityElem.textContent = `${task.priority.value}`;
+    taskPriorityElem.textContent = `${task.priority}`;
     taskPriorityElem.classList.add('small-text-size');
     taskAdditionalInfoElem.appendChild(taskPriorityElem);
 }
@@ -70,7 +70,7 @@ function resetTaskModal(taskFormControl) {
         if (key === 'priority') {
             taskFormControl[key].value = 'Priority 4';
         } else if (key === 'project') {
-            taskFormControl[key].value = 'None';
+            taskFormControl[key].value = 'Inbox';
         } else {
             taskFormControl[key].value = '';
         }

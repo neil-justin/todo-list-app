@@ -1,11 +1,12 @@
 import { differenceInCalendarYears } from "date-fns";
-export { tasks, Task };
+export { tasks, task, Task };
 
 const tasks = [];
+let task;
 
 function Task(taskFormControl) {
     function addTask() {
-        const task = Object.assign({}, taskFormControl);
+        task = Object.assign({}, taskFormControl);
 
         for (const property in task) {
             if (property === 'dueDate') {
@@ -17,7 +18,7 @@ function Task(taskFormControl) {
 
         tasks.push(task);
     }
-    
+
     function getDayOfTheWeek() {
         const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
             'Thursday', 'Friday', 'Saturday'];
