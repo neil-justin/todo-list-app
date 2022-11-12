@@ -7,6 +7,8 @@ export {
     defineTaskElem,
     insertEditingTaskAttr,
     insertTaskIndexAttr,
+    listProjectName,
+    displayProjectName,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -106,4 +108,23 @@ function insertEditingTaskAttr(taskElem) {
 
 function insertTaskIndexAttr(taskElem) {
     taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+}
+
+function listProjectName(projectNameInputElem) {
+    const taskModalProjectSelectElem = document.querySelector('#task-project');
+    const taskModalProjectOptionElem = document.createElement('option');
+    taskModalProjectOptionElem.value = `${projectNameInputElem.value}`;
+    taskModalProjectOptionElem.textContent = `${projectNameInputElem.value}`;
+
+    taskModalProjectSelectElem.appendChild(taskModalProjectOptionElem);
+}
+
+function displayProjectName(projectNameInputElem) {
+    const projectListElem = document.querySelector('#project-list');
+    const projectItemElem = document.createElement('li');
+    projectItemElem.textContent = `${projectNameInputElem.value}`;
+    projectItemElem.classList
+        .add('sidebar-text', 'medium-text-size', 'pointer-cursor');
+
+    projectListElem.appendChild(projectItemElem);
 }

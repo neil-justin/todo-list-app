@@ -1,5 +1,9 @@
 import { Project, projectNameInputElem } from "./project";
 import { valueNotEmpty } from "./helper";
+import {
+    listProjectName,
+    displayProjectName
+} from "./dom-controller";
 
 const addProjectButtonElem = document.querySelector('#add-project-button');
 addProjectButtonElem.addEventListener('click', () => {
@@ -19,8 +23,8 @@ projectModalConfirmButtonElem.addEventListener('click', () => {
         const project = Project();
 
         project.addProject();
-        project.listProjectName();
-        project.displayProjectName();
+        listProjectName(projectNameInputElem);
+        displayProjectName(projectNameInputElem);
     }
 });
 
