@@ -33,6 +33,10 @@
     list-style-type: none;
 }
 
+.sidebar-text:not(#project-list-heading):hover {
+    background: var(--darkish-gray-color);
+}
+
 .sidebar-nav-link-container {
     display: grid;
     row-gap: 3px;

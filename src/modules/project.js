@@ -23,7 +23,7 @@ function Project() {
         const projectItemElem = document.createElement('li');
         projectItemElem.textContent = `${projectNameInputElem.value}`;
         projectItemElem.classList
-            .add('sidebar-text', 'medium-text-size', 'clickable-non-button');
+            .add('sidebar-text', 'medium-text-size', 'pointer-cursor');
 
         projectListElem.appendChild(projectItemElem);
     }

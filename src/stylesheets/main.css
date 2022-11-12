@@ -67,7 +67,6 @@ button:hover {
     text-overflow: ellipsis;
 }
 
-.clickable-non-button:hover {
-    background-color: var(--darkish-gray-color) !important;
+.pointer-cursor:hover {
     cursor: pointer;
 }

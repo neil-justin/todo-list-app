@@ -33,6 +33,10 @@
     color: var(--accent-color);
 }
 
+#mainbar-add-task-div:hover {
+    background: var(--darkish-gray-color);
+}
+
 .small-text-size {
     font-size: 1.2rem;
 }

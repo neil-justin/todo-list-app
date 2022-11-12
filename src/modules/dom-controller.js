@@ -18,7 +18,7 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
 
     const taskElem = document.createElement('li');
-    taskElem.classList.add('task', 'cursor-pointer');
+    taskElem.classList.add('task', 'pointer-cursor');
     taskListElem.appendChild(taskElem);
 
     const taskInfoContainerElem = document.createElement('section');
