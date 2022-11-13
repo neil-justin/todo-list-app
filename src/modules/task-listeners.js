@@ -22,7 +22,7 @@ import {
 } from './dom-controller';
 import {
     valueNotEmpty,
-    filterByProperty
+    filterByTaskProperty
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -126,27 +126,21 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
 const taskNavElem = document.querySelector('#task-nav');
 taskNavElem.addEventListener('click', (e) => {
-    if (tasks.length !== 0) {
-        const filteredTasks = filterByProperty(tasks, 'project', e);
+    const filteredTasks = filterByTaskProperty(tasks, 'project', e);
 
-        if (filteredTasks.length !== 0) {
-            if (e.target.textContent === 'Inbox') {
-                for (let i = 0; i < tasks.length; i++) {
-                    displayTask(
-                        filteredTasks[i], valueNotEmpty(filteredTasks[i].notes),
-                        filteredTasks[i].dueDate
-                    );
-                }
-            } else {
-                console.log('hey');
-            }
+    if (filteredTasks.length === 0) return;
 
-            taskElem = taskListElem.lastElementChild;
-            taskInfoElem = taskElem.querySelector('.task-info-container');
-
-            createTaskCheckbox(taskElem, taskInfoElem);
-            createDeleteTaskElem(taskElem);
-            insertTaskIndexAttr(taskElem);
-        }
+    for (let i = 0; i < filteredTasks.length; i++) {
+        displayTask(
+            filteredTasks[i], valueNotEmpty(filteredTasks[i].notes),
+            filteredTasks[i].dueDate
+        );
     }
+
+    taskElem = taskListElem.lastElementChild;
+    taskInfoElem = taskElem.querySelector('.task-info-container');
+
+    createTaskCheckbox(taskElem, taskInfoElem);
+    createDeleteTaskElem(taskElem);
+    insertTaskIndexAttr(taskElem);
 });

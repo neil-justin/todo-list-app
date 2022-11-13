@@ -1,7 +1,8 @@
 export {
     valueNotEmpty,
-    filterByProperty
+    filterByTaskProperty
 };
+
 
 function valueNotEmpty(data) {
     if (typeof data === 'object') {
@@ -11,7 +12,7 @@ function valueNotEmpty(data) {
     }
 }
 
-function filterByProperty(array, property, event) {
+function filterByTaskProperty(array, property, event) {
     switch (property) {
         case 'project':
             const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
