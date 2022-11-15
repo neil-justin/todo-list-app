@@ -3,10 +3,7 @@ export {
     resetTaskModal,
     createTaskCheckbox,
     createDeleteTaskElem,
-    removeTaskDisplay,
-    defineTaskElem,
-    insertEditingTaskAttr,
-    insertTaskIndexAttr,
+    defineTaskItemElem,
     listProjectName,
     displayProjectName,
 };
@@ -14,28 +11,27 @@ export {
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
-import { tasks } from './task.js';
 
 function displayTask(task, isNotesEmpty, taskDueDate = null) {
     const taskListElem = document.querySelector('#task-list');
 
-    const taskElem = document.createElement('li');
-    taskElem.classList.add('task', 'pointer-cursor');
-    taskListElem.appendChild(taskElem);
+    const taskItemElem = document.createElement('li');
+    taskItemElem.classList.add('task', 'pointer-cursor');
+    taskListElem.appendChild(taskItemElem);
 
     const taskInfoContainerElem = document.createElement('section');
     taskInfoContainerElem.classList.add('task-info-container');
-    taskElem.appendChild(taskInfoContainerElem);
+    taskItemElem.appendChild(taskInfoContainerElem);
 
     const taskNameElem = document.createElement('h3');
     taskNameElem.textContent = `${task.name}`;
-    taskNameElem.classList.add('task-name', 'medium-text-size', 'text-ellipsis');
+    taskNameElem.classList.add('task-name', 'medium-text', 'text-ellipsis');
     taskInfoContainerElem.appendChild(taskNameElem);
 
-    if (isNotesEmpty) {
+    if (!isNotesEmpty) {
         const taskNotesElem = document.createElement('p');
         taskNotesElem.textContent = `${task.notes}`;
-        taskNotesElem.classList.add('task-notes', 'small-text-size', 'text-ellipsis');
+        taskNotesElem.classList.add('task-notes', 'small-text', 'text-ellipsis');
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
@@ -50,18 +46,16 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
         taskAdditionalInfoElem.appendChild(taskDueDateElem);
 
         const dividerElem = document.createElement('span');
-        /* The he.decode method decode the passed argument, in this case the html
-        entity 'bullet point', then display it as a symbol */
-        /* Element.innerhtml may also work in this case, however the drawbacks
-        is it may cause vulnerabilities if ever a malicious scripts were
-        injected to it */
+        /* Since textContent property can't decode HTML entity, I have to use
+        the he.decode method to do so. Element.innerhtml can decode HTML entity,
+        however, Element.innerhtml is unsafe and may cause vulnerabilities */
         dividerElem.textContent = ` ${he.decode('&bull;')} `;
         taskAdditionalInfoElem.appendChild(dividerElem);
     }
 
     const taskPriorityElem = document.createElement('span');
     taskPriorityElem.textContent = `${task.priority}`;
-    taskPriorityElem.classList.add('small-text-size');
+    taskPriorityElem.classList.add('small-text');
     taskAdditionalInfoElem.appendChild(taskPriorityElem);
 }
 
@@ -77,37 +71,25 @@ function resetTaskModal(taskFormControl) {
     }
 }
 
-function createTaskCheckbox(taskElem, taskInfoElem) {
+function createTaskCheckbox(taskItemElem, taskInfoElem) {
     const taskCheckboxElem = document.createElement('button');
     taskCheckboxElem.classList.add('task-checkbox');
-    taskElem.insertBefore(taskCheckboxElem, taskInfoElem);
+    taskItemElem.insertBefore(taskCheckboxElem, taskInfoElem);
 }
 
-function createDeleteTaskElem(taskElem) {
+function createDeleteTaskElem(taskItemElem) {
     const deleteTaskElem = document.createElement('span');
     deleteTaskElem.textContent = 'Delete';
-    deleteTaskElem.classList.add('delete-task-elem', 'small-text-size');
-    taskElem.appendChild(deleteTaskElem);
+    deleteTaskElem.classList.add('delete-task-elem', 'small-text');
+    taskItemElem.appendChild(deleteTaskElem);
 }
 
-function removeTaskDisplay(taskElem) {
-    taskElem.remove();
-}
-
-function defineTaskElem(event) {
+function defineTaskItemElem(event) {
     if (event.target.classList.contains('task')) {
         return event.target;
     } else {
         return event.target.closest('.task');
     }
-}
-
-function insertEditingTaskAttr(taskElem) {
-    taskElem.setAttribute('data-editing-task', '');
-}
-
-function insertTaskIndexAttr(taskElem) {
-    taskElem.setAttribute('data-task-index', `${tasks.length - 1}`);
 }
 
 function listProjectName(projectNameInputElem) {
@@ -124,7 +106,7 @@ function displayProjectName(projectNameInputElem) {
     const projectItemElem = document.createElement('li');
     projectItemElem.textContent = `${projectNameInputElem.value}`;
     projectItemElem.classList
-        .add('sidebar-text', 'medium-text-size', 'pointer-cursor');
+        .add('sidebar-text', 'medium-text', 'pointer-cursor');
 
     projectListElem.appendChild(projectItemElem);
 }

@@ -20,75 +20,74 @@
     <main>
         <div id="sidebar">
             <div>
-                <button class="add-task-elem medium-text-size" id="sidebar-add-task-button">Add task</button>
+                <button class="add-task-elem medium-text" id="sidebar-add-task-button">Add task</button>
                 <nav>
-                    <ul id="task-nav" class="sidebar-nav-link-container">
-                        <li id="inbox-nav-link" class="sidebar-text medium-text-size pointer-cursor">Inbox</li>
-                        <li class="sidebar-text medium-text-size pointer-cursor">Today</li>
-                        <li class="sidebar-text medium-text-size pointer-cursor">Upcoming</li>
+                    <ul id="project-inbox-container" class="sidebar-nav-link-container">
+                        <li id="inbox-nav-link" class="sidebar-text medium-text pointer-cursor">Inbox</li>
+                        <li class="sidebar-text medium-text pointer-cursor">Today</li>
+                        <li class="sidebar-text medium-text pointer-cursor">Upcoming</li>
                     </ul>
                 </nav>
             </div>
             <div>
                 <div id="project-list-heading-and-button-container">
-                    <h2 id="project-list-heading" class="sidebar-text medium-text-size">Projects</h2>
+                    <h2 id="project-list-heading" class="sidebar-text medium-text">Projects</h2>
                     <button id="add-project-button">&#43;</button>
                 </div>
                 <nav>
-                    <ul class="sidebar-nav-link-container" id="project-list">
-                    </ul>
+                    <ul class="sidebar-nav-link-container" id="project-list"></ul>
                 </nav>
             </div>
         </div>
-        <div id="mainbar">
-            <h1 id="mainbar-main-heading" class="text-ellipsis">Lorem Ipsum</h1>
-            <div id="sort-by-and-order-container">
+        <div id="main-content">
+            <h1 id="main-content-heading" class="text-ellipsis">Lorem Ipsum</h1>
+            <div id="sort-by-and-order-by-container">
                 <div>
-                    <label for="sort-by" class="medium-text-size">Sort by</label>
-                    <select id="sort-by" class="medium-text-size">
+                    <label for="sort-by" class="medium-text">Sort by</label>
+                    <select id="sort-by" class="medium-text">
                         <option value="Default">Default</option>
                         <option value="Priority">Priority</option>
                         <option value="Due date">Due date</option>
                     </select>
                 </div>
                 <div>
-                    <label for="order" class="medium-text-size">Order by</label>
-                    <select id="order" class="medium-text-size">
+                    <label for="order" class="medium-text">Order by</label>
+                    <select id="order" class="medium-text">
                         <option value="None">None</option>
                         <option value="Ascending">Ascending</option>
                         <option value="Descending">Descending</option>
                     </select>
                 </div>
             </div>
-            <div class="add-task-elem medium-text-size pointer-cursor" id="mainbar-add-task-div">Add task</div>
             <ul id="task-list"> </ul>
+            <div class="add-task-elem medium-text pointer-cursor" id="main-content-add-task-elem">Add task</div>
         </div>
         <!-- Add task buttons dialog box -->
         <dialog id="task-modal">
             <form method="dialog" id="task-form">
                 <button id="task-modal-close-button">&#x00d7;</button>
                 <div>
-                    <label for="task-name" class="large-text-size">Task</label>
+                    <label for="task-name" class="large-text">Task</label>
                     <textarea placeholder="Insert your task name here" id="task-name" cols="50" rows="1" maxlength="60"
                         class="form-control task-typed-form-control typed-form-control" required autofocus
                         data-enable-grammarly="false" data-gramm="false" data-gramm_editor="false"
                         spellcheck="false"></textarea>
                 </div>
                 <div>
-                    <label for="task-notes" class="large-text-size">Notes</label>
+                    <label for="task-notes" class="large-text">Notes</label>
                     <textarea placeholder="Insert your notes here" id="task-notes"
                         class="form-control task-typed-form-control typed-form-control" cols="50" rows="5"
                         spellcheck="false" data-enable-grammarly="false" data-gramm="false"
                         data-gramm_editor="false"></textarea>
                 </div>
                 <div>
-                    <label for="task-project" class="large-text-size">Project</label>
+                    <label for="task-project" class="large-text">Project</label>
                     <select id="task-project" class="picked-form-control form-control">
                         <option value="Inbox">Inbox</option>
                     </select>
                 </div>
                 <div>
-                    <label for="task-priority" class="large-text-size">Priority</label>
+                    <label for="task-priority" class="large-text">Priority</label>
                     <select id="task-priority" class="picked-form-control form-control">
                         <option value="Priority 4">Priority 4</option>
                         <option value="Priority 3">Priority 3</option>
@@ -97,7 +96,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="task-due-date" class="large-text-size">Due Date</label>
+                    <label for="task-due-date" class="large-text">Due Date</label>
                     <input type="date" id="task-due-date" class="picked-form-control form-control">
                 </div>
                 <button type="submit" id="task-modal-confirm-button"
@@ -107,7 +106,7 @@
         <dialog id="project-modal">
             <form method="dialog" id="project-form">
                 <div>
-                    <label for="project-name" class="large-text-size">Project</label>
+                    <label for="project-name" class="large-text">Project</label>
                     <input type="text" id="project-name" class="form-control typed-form-control"
                         placeholder="Insert your project name here" maxlength="60" required>
                 </div>

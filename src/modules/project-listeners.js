@@ -1,5 +1,5 @@
 import { Project, projectNameInputElem } from "./project";
-import { valueNotEmpty } from "./helper";
+import { isValueEmpty } from "./helper";
 import {
     listProjectName,
     displayProjectName
@@ -19,7 +19,7 @@ const projectModalConfirmButtonElem = document.
     querySelector('#project-modal-confirm-button');
 
 projectModalConfirmButtonElem.addEventListener('click', () => {
-    if (valueNotEmpty(projectNameInputElem)) {
+    if (!isValueEmpty(projectNameInputElem)) {
         const project = Project();
 
         project.addProject();

@@ -1,35 +1,29 @@
-import '../stylesheets/main.css';
-import '../stylesheets/mainbar.css';
+import '../stylesheets/index.css';
+import '../stylesheets/main-content.css';
 import '../stylesheets/sidebar.css';
 import '../stylesheets/modal.css';
 import '../stylesheets/task-modal.css';
 import '../stylesheets/project-modal.css';
-
-import {
-    Task,
-    tasks,
-    task as newTask,
-} from './task';
+import { Task, tasks, } from './task';
 import {
     displayTask,
     resetTaskModal,
     createTaskCheckbox,
     createDeleteTaskElem,
-    removeTaskDisplay,
-    defineTaskElem,
-    insertEditingTaskAttr,
-    insertTaskIndexAttr,
+    defineTaskItemElem,
 } from './dom-controller';
 import {
-    valueNotEmpty,
-    filterByTaskProperty
+    isValueEmpty,
+    filterByTaskProperty,
+    getTaskDetails,
+    shouldDeleteTask
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
-const taskNameElem = document.querySelector('#task-name');
+const taskNameTextareaElem = document.querySelector('#task-name');
 const taskModalElem = document.querySelector('#task-modal');
 const taskFormControl = {
-    name: taskNameElem,
+    name: taskNameTextareaElem,
     notes: document.querySelector('#task-notes'),
     project: document.querySelector('#task-project'),
     priority: document.querySelector('#task-priority'),
@@ -41,16 +35,16 @@ addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
         taskModalElem.showModal();
 
-        if (!taskNameElem.hasAttribute('required')) {
-            taskNameElem.setAttribute('required', '');
+        if (!taskNameTextareaElem.hasAttribute('required')) {
+            taskNameTextareaElem.setAttribute('required', '');
         }
 
         resetTaskModal(taskFormControl);
     });
 });
 
-let task;
-let taskElem;
+let taskInstance;
+let taskItemElem;
 let taskInfoElem;
 
 const taskListElem = document.querySelector('#task-list');
@@ -58,9 +52,9 @@ taskListElem.addEventListener('click', (e) => {
     let taskIndex;
 
     while (typeof taskIndex === 'undefined') {
-        taskElem = defineTaskElem(e);
-        taskInfoElem = taskElem.querySelector('.task-info-container');
-        taskIndex = task.getTaskIndex(e);
+        taskItemElem = defineTaskItemElem(e);
+        taskInfoElem = taskItemElem.querySelector('.task-info-container');
+        taskIndex = taskInstance.getTaskIndex(e);
 
         const taskCheckboxElem = taskInfoElem.previousElementSibling;
         const deleteTaskElem = taskInfoElem.nextElementSibling;
@@ -68,18 +62,13 @@ taskListElem.addEventListener('click', (e) => {
         if (e.target === taskListElem) {
             break;
         } else if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
-            if (e.target === deleteTaskElem) {
-                if (!window.
-                    confirm('Are you sure you want to delete this item?')) {
-                    break;
-                }
-            }
+            if (e.target === deleteTaskElem && !shouldDeleteTask()) break;
 
-            task.removeTask(taskIndex);
-            removeTaskDisplay(taskElem);
+            taskInstance.removeTask(taskIndex);
+            taskItemElem.remove();
         } else {
             taskModalElem.showModal();
-            insertEditingTaskAttr(taskElem);
+            taskItemElem.setAttribute('data-editing-task', '');
         }
     }
 });
@@ -87,60 +76,63 @@ taskListElem.addEventListener('click', (e) => {
 const taskModalCloseButtonElem = document.querySelector('#task-modal-close-button');
 taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
-    taskNameElem.removeAttribute('required');
+    taskNameTextareaElem.removeAttribute('required');
 
-    if (document.querySelector('[data-editing-task')) {
-        document.querySelector('[data-editing-task').
-            removeAttribute('data-editing-task');
+    const editedTaskElem = document.querySelector('[data-editing-task');
+
+    if (editedTaskElem) {
+        editedTaskElem.removeAttribute('data-editing-task');
     }
 });
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    task = Task(taskFormControl);
+    const taskDetails = getTaskDetails(taskFormControl);
 
-    if (valueNotEmpty(taskFormControl.name)) {
-        task.addTask();
+    taskInstance = Task(taskDetails);
 
-        if (newTask.dueDate !== null) {
+    if (!isValueEmpty(taskDetails.name)) {
+        taskInstance.addTask();
+
+        if (taskDetails.dueDate !== null) {
             displayTask(
-                newTask, valueNotEmpty(newTask.notes),
-                task.getTaskDueDate(differenceInCalendarDays(
-                    newTask.dueDate, new Date()
+                taskDetails, isValueEmpty(taskDetails.notes),
+                taskInstance.getTaskDueDate(differenceInCalendarDays(
+                    taskDetails.dueDate, new Date()
                 )),
             );
         } else {
             displayTask(
-                newTask, valueNotEmpty(newTask.notes),
+                taskDetails, isValueEmpty(taskDetails.notes),
             );
         }
 
-        taskElem = taskListElem.lastElementChild;
-        taskInfoElem = taskElem.querySelector('.task-info-container');
+        taskItemElem = taskListElem.lastElementChild;
+        taskInfoElem = taskItemElem.querySelector('.task-info-container');
 
-        createTaskCheckbox(taskElem, taskInfoElem);
-        createDeleteTaskElem(taskElem);
-        insertTaskIndexAttr(taskElem);
+        createTaskCheckbox(taskItemElem, taskInfoElem);
+        createDeleteTaskElem(taskItemElem);
+        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
     }
 });
 
-const taskNavElem = document.querySelector('#task-nav');
-taskNavElem.addEventListener('click', (e) => {
+const projectInboxListElem = document.querySelector('#project-inbox-container');
+projectInboxListElem.addEventListener('click', (e) => {
     const filteredTasks = filterByTaskProperty(tasks, 'project', e);
 
     if (filteredTasks.length === 0) return;
 
     for (let i = 0; i < filteredTasks.length; i++) {
         displayTask(
-            filteredTasks[i], valueNotEmpty(filteredTasks[i].notes),
+            filteredTasks[i], isValueEmpty(filteredTasks[i].notes),
             filteredTasks[i].dueDate
         );
     }
 
-    taskElem = taskListElem.lastElementChild;
-    taskInfoElem = taskElem.querySelector('.task-info-container');
+    taskItemElem = taskListElem.lastElementChild;
+    taskInfoElem = taskItemElem.querySelector('.task-info-container');
 
-    createTaskCheckbox(taskElem, taskInfoElem);
-    createDeleteTaskElem(taskElem);
-    insertTaskIndexAttr(taskElem);
+    createTaskCheckbox(taskItemElem, taskInfoElem);
+    createDeleteTaskElem(taskItemElem);
+    taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
 });

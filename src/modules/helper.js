@@ -1,15 +1,13 @@
 export {
-    valueNotEmpty,
-    filterByTaskProperty
+    isValueEmpty,
+    filterByTaskProperty,
+    getTaskDetails,
+    shouldDeleteTask
 };
 
 
-function valueNotEmpty(data) {
-    if (typeof data === 'object') {
-        return data.value.trim().length !== 0;
-    } else {
-        return data.trim().length !== 0;
-    }
+function isValueEmpty(data) {
+    return data.trim().length === 0;
 }
 
 function filterByTaskProperty(array, property, event) {
@@ -24,4 +22,22 @@ function filterByTaskProperty(array, property, event) {
                 return array.filter(elem => elem['project'] === chosenProject);
             }
     }
+}
+
+function getTaskDetails(taskForm) {
+    const taskDetails = Object.assign({}, taskForm);
+
+    for (const property in taskDetails) {
+        if (property === 'dueDate') {
+            taskDetails.dueDate = taskDetails.dueDate.valueAsDate;
+        } else {
+            taskDetails[property] = taskDetails[property].value;
+        }
+    }
+
+    return taskDetails;
+}
+
+function shouldDeleteTask() {
+    return window.confirm('Are you sure you want to delete this item?')
 }

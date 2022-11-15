@@ -1,45 +1,35 @@
 import { differenceInCalendarYears } from "date-fns";
-export { tasks, task, Task };
+export { tasks, Task, };
 
 const tasks = [];
-let task;
 
-function Task(taskFormControl) {
+function Task(taskDetails) {
     function addTask() {
-        task = Object.assign({}, taskFormControl);
+        tasks.push(taskDetails);
+    };
 
-        for (const property in task) {
-            if (property === 'dueDate') {
-                task.dueDate = task.dueDate.valueAsDate;
-            } else {
-                task[property] = task[property].value;
+    const _dateFormatter = {
+        getDayOfTheWeek: function () {
+            const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                'Thursday', 'Friday', 'Saturday'];
+
+            return week[taskDetails.dueDate.getDay()];
+        },
+
+        getLongDate: function (diffInYears) {
+            const options = {
+                weekday: 'short',
+                month: 'long',
+                day: 'numeric'
             }
-        }
 
-        tasks.push(task);
-    }
+            if (diffInYears >= 1 || diffInYears <= 1) {
+                options.year = 'numeric';
+            }
 
-    function getDayOfTheWeek() {
-        const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-            'Thursday', 'Friday', 'Saturday'];
-
-        return week[taskFormControl.dueDate.valueAsDate.getDay()];
-    }
-
-    function getLongDateFormat(diffInYears) {
-        const options = {
-            weekday: 'short',
-            month: 'long',
-            day: 'numeric'
-        }
-
-        if (diffInYears > 0 || diffInYears < 0) {
-            options.year = 'numeric';
-        }
-
-        return taskFormControl.dueDate.valueAsDate
-            .toLocaleDateString('en-US', options);
-    }
+            return taskDetails.dueDate.toLocaleDateString('en-US', options);
+        },
+    };
 
     function getTaskDueDate(differenceInDays) {
         let taskDueDate;
@@ -53,12 +43,12 @@ function Task(taskFormControl) {
                     taskDueDate = 'Tomorrow';
                     break;
                 case differenceInDays <= 7:
-                    taskDueDate = this.getDayOfTheWeek();
+                    taskDueDate = _dateFormatter.getDayOfTheWeek();
                     break;
                 default:
-                    taskDueDate = this.getLongDateFormat(
+                    taskDueDate = _dateFormatter.getLongDate(
                         differenceInCalendarYears(
-                            taskFormControl.dueDate.valueAsDate, new Date()
+                            taskDetails.dueDate, new Date()
                         )
                     );
             }
@@ -68,9 +58,9 @@ function Task(taskFormControl) {
             if (differenceInDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
-                taskDueDate = this.getLongDateFormat(
+                taskDueDate = _dateFormatter.getLongDate(
                     differenceInCalendarYears(
-                        taskFormControl.dueDate.valueAsDate, new Date()
+                        taskDetails.dueDate, new Date()
                     )
                 );
             }
@@ -98,8 +88,6 @@ function Task(taskFormControl) {
 
     return {
         addTask,
-        getDayOfTheWeek,
-        getLongDateFormat,
         getTaskDueDate,
         getTaskIndex,
         removeTask,

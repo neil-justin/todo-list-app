@@ -7,11 +7,11 @@
 }
 
 :root {
-    --accent-color: #d95550;
-    --white-color: #fff;
-    --grayish-white-color: #f7f7f7;
+    --accent-color: hsl(2, 64%, 58%);
+    --light-accent-color: hsl(2, 64%, 95%);
+    --white-color: hsl(0, 0%, 99%);
+    --lightgray-color: hsl(0, 0%, 97%);
     --black-color: #262626;
-    --darkish-gray-color: hsl(0, 0%, 94%);
 }
 
 html,
@@ -53,11 +53,11 @@ button:hover {
     opacity: 0.8;
 }
 
-.medium-text-size {
+.medium-text {
     font-size: 1.6rem;
 }
 
-.large-text-size {
+.large-text {
     font-size: 1.8rem;
 }
 

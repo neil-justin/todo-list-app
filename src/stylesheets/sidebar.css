@@ -11,7 +11,7 @@
 
 #sidebar>div:first-of-type {
     display: grid;
-    row-gap: 10px;
+    row-gap: 25px;
 }
 
 #sidebar-add-task-button {
@@ -24,7 +24,7 @@
 }
 
 .sidebar-text {
-    line-height: 4rem;
+    line-height: 3.8rem;
     padding-left: 10px;
     color: var(--black-color);
 }
@@ -34,12 +34,12 @@
 }
 
 .sidebar-text:not(#project-list-heading):hover {
-    background: var(--darkish-gray-color);
+    background-color: var(--lightgray-color);
 }
 
 .sidebar-nav-link-container {
     display: grid;
-    row-gap: 3px;
+    row-gap: 8px;
 }
 
 #project-list-heading-and-button-container {
@@ -59,5 +59,14 @@
 }
 
 #add-project-button:hover {
-    background-color: var(--darkish-gray-color);
+    background-color: var(--lightgray-color);
+}
+
+[current-tab] {
+    border-left: 2px solid var(--accent-color);
+    background-color: var(--light-accent-color);
+}
+
+[current-tab]:hover {
+    background-color: var(--light-accent-color) !important;
 }
