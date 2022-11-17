@@ -18,12 +18,9 @@ const userTasks = storedTasks ?? defaultTasks;
 
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
-for (let i = 0; i < inboxTasks.length - 1; i++) {
-    if (inboxTasks[i].notes === null) {
-        displayTask(inboxTasks[i], !inboxTasks[i].notes, inboxTasks[i].dueDate);
-    } else {
-        displayTask(inboxTasks[i], inboxTasks[i].notes, inboxTasks[i].dueDate);
-    }
+for (let i = 0; i < inboxTasks.length; i++) {
+    displayTask(inboxTasks[i], !inboxTasks[i].notes, inboxTasks[i].dueDate);
+    tasks.push(inboxTasks[i]);
 
     const taskItemElem = taskListElem.lastElementChild;
     const taskInfoElem = taskItemElem.querySelector('.task-info-container');

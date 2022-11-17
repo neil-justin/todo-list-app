@@ -56,6 +56,10 @@
     align-items: center;
 }
 
+.task-name {
+    font-weight: 100;
+}
+
 .task-info-container {
     display: grid;
     width: 100%;
