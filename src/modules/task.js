@@ -1,5 +1,29 @@
 import { differenceInCalendarYears } from "date-fns";
-export { tasks, Task, };
+export { defaultTasks, tasks, Task, };
+
+const defaultTasks = [
+    {
+        name: 'Go to the wet market',
+        notes: null,
+        project: 'Inbox',
+        priority: 'Priority 4',
+        dueDate: 'Today'
+    },
+    {
+        name: 'Export bitwarden passwords',
+        notes: null,
+        project: 'Inbox',
+        priority: 'Priority 1',
+        dueDate: 'Today'
+    },
+    {
+        name: 'Wash laptop\'s cleaning cloth',
+        notes: 'Do not forget that you have three of these!',
+        project: 'Inbox',
+        priority: 'Priority 2',
+        dueDate: 'Yesterday'
+    }
+]
 
 const tasks = [];
 

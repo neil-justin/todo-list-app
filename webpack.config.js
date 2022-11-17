@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
+        defaultState: './src/modules/default-state.js',
         taskListeners: './src/modules/task-listeners.js',
         task: './src/modules/task.js',
         domController: './src/modules/dom-controller.js',

@@ -20,6 +20,8 @@ import {
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
+export { taskListElem };
+
 const taskNameTextareaElem = document.querySelector('#task-name');
 const taskModalElem = document.querySelector('#task-modal');
 const taskFormControl = {
