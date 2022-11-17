@@ -18,7 +18,7 @@ const userTasks = storedTasks ?? defaultTasks;
 
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
-for (let i = 0; i < inboxTasks.length; i++) {
+for (let i = 0; i < inboxTasks.length - 1; i++) {
     if (inboxTasks[i].notes === null) {
         displayTask(inboxTasks[i], !inboxTasks[i].notes, inboxTasks[i].dueDate);
     } else {

@@ -35,28 +35,21 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
         taskInfoContainerElem.appendChild(taskNotesElem);
     }
 
-    /* this element wraps the taskDueDate and taskPriority elements */
     const taskAdditionalInfoElem = document.createElement('p');
-    taskAdditionalInfoElem.classList.add('task-additional-info', 'text-ellipsis');
+    taskAdditionalInfoElem.classList.add('task-additional-info', 'text-ellipsis', 'small-text');
     taskInfoContainerElem.appendChild(taskAdditionalInfoElem);
 
     if (taskDueDate !== null) {
-        const taskDueDateElem = document.createElement('span');
-        taskDueDateElem.textContent = `${taskDueDate}`;
-        taskAdditionalInfoElem.appendChild(taskDueDateElem);
+        const taskDueDateText = document.createTextNode(taskDueDate);
+        taskAdditionalInfoElem.appendChild(taskDueDateText);
 
-        const dividerElem = document.createElement('span');
-        /* Since textContent property can't decode HTML entity, I have to use
-        the he.decode method to do so. Element.innerhtml can decode HTML entity,
-        however, Element.innerhtml is unsafe and may cause vulnerabilities */
-        dividerElem.textContent = ` ${he.decode('&bull;')} `;
-        taskAdditionalInfoElem.appendChild(dividerElem);
+        const bulletPointText = document.
+            createTextNode(` ${he.decode('&bull;')} `);
+        taskAdditionalInfoElem.appendChild(bulletPointText);
     }
 
-    const taskPriorityElem = document.createElement('span');
-    taskPriorityElem.textContent = `${task.priority}`;
-    taskPriorityElem.classList.add('small-text');
-    taskAdditionalInfoElem.appendChild(taskPriorityElem);
+    const taskPriorityText = document.createTextNode(task.priority);
+    taskAdditionalInfoElem.appendChild(taskPriorityText);
 }
 
 function resetTaskModal(taskFormControl) {
