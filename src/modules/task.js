@@ -28,9 +28,6 @@ const defaultTasks = [
 const tasks = [];
 
 function Task(taskDetails) {
-    function addTask() {
-        tasks.push(taskDetails);
-    };
 
     const _dateFormatter = {
         getDayOfTheWeek: function () {
@@ -93,27 +90,12 @@ function Task(taskDetails) {
         }
     }
 
-    function getTaskIndex(event) {
-        let taskIndex;
-
-        if (event.target.hasAttribute('data-task-index')) {
-            taskIndex = event.target.getAttribute('data-task-index');
-        } else {
-            taskIndex = event.target.closest('.task').
-                getAttribute('data-task-index');
-        }
-
-        return taskIndex;
-    }
-
     function removeTask(taskIndex) {
         tasks.splice(taskIndex, 1);
     }
 
     return {
-        addTask,
         getTaskDueDate,
-        getTaskIndex,
         removeTask,
     }
 }

@@ -16,7 +16,8 @@ import {
     isValueEmpty,
     filterByTaskProperty,
     getTaskDetails,
-    shouldDeleteTask
+    shouldDeleteTask,
+    getTaskIndex
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
@@ -55,14 +56,14 @@ taskListElem.addEventListener('click', (e) => {
     while (typeof taskIndex === 'undefined') {
         taskItemElem = defineTaskItemElem(e);
         taskInfoElem = taskItemElem.querySelector('.task-info-container');
-        taskIndex = taskInstance.getTaskIndex(e);
+        taskIndex = getTaskIndex(e);
 
         const taskCheckboxElem = taskInfoElem.previousElementSibling;
         const deleteTaskElem = taskInfoElem.nextElementSibling;
 
-        if (e.target === taskListElem) {
-            break;
-        } else if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
+        if (e.target === taskListElem) break;
+
+        if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
             if (e.target === deleteTaskElem && !shouldDeleteTask()) break;
 
             taskInstance.removeTask(taskIndex);
@@ -93,7 +94,7 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     taskInstance = Task(taskDetails);
 
     if (!isValueEmpty(taskDetails.name)) {
-        taskInstance.addTask();
+        tasks.push(taskDetails);
 
         if (taskDetails.dueDate !== null) {
             displayTask(

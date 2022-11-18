@@ -19,7 +19,6 @@ const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
 for (let i = 0; i < inboxTasks.length; i++) {
     displayTask(inboxTasks[i], !inboxTasks[i].notes, inboxTasks[i].dueDate);
-    tasks.push(inboxTasks[i]);
 
     const taskListElem = document.querySelector('#task-list');
     const taskItemElem = taskListElem.lastElementChild;
@@ -27,6 +26,5 @@ for (let i = 0; i < inboxTasks.length; i++) {
 
     createTaskCheckbox(taskItemElem, taskInfoElem);
     createDeleteTaskElem(taskItemElem);
-    taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
-    console.log(tasks);
+    taskItemElem.setAttribute('data-task-index', `${i}`);
 }
