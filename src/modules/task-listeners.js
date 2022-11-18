@@ -66,7 +66,7 @@ taskListElem.addEventListener('click', (e) => {
         if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
             if (e.target === deleteTaskElem && !shouldDeleteTask()) break;
 
-            taskInstance.removeTask(taskIndex);
+            tasks.splice(taskIndex, 1);
             taskItemElem.remove();
         } else {
             taskModalElem.showModal();

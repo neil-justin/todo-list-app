@@ -90,12 +90,7 @@ function Task(taskDetails) {
         }
     }
 
-    function removeTask(taskIndex) {
-        tasks.splice(taskIndex, 1);
-    }
-
     return {
         getTaskDueDate,
-        removeTask,
     }
 }
