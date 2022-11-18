@@ -102,30 +102,30 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
     taskInstance = Task(taskDetails);
 
-    if (!isValueEmpty(taskDetails.name)) {
-        taskInstance.pushTask(taskDetails);
+    if (isValueEmpty(taskDetails.name)) return;
 
-        if (taskDetails.dueDate !== null) {
-            displayTask(
-                taskDetails, isValueEmpty(taskDetails.notes),
-                taskInstance.getTaskDueDate(differenceInCalendarDays(
-                    taskDetails.dueDate, new Date()
-                )),
-            );
-        } else {
-            displayTask(
-                taskDetails, isValueEmpty(taskDetails.notes),
-            );
-        }
+    taskInstance.pushTask(taskDetails);
 
-        taskItemElem = taskListElem.lastElementChild;
-        taskInfoElem = taskItemElem.querySelector('.task-info-container');
-
-        createTaskCheckbox(taskItemElem, taskInfoElem);
-        createDeleteTaskElem(taskItemElem);
-        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
-        console.log(tasks);
+    if (taskDetails.dueDate !== null) {
+        displayTask(
+            taskDetails, isValueEmpty(taskDetails.notes),
+            taskInstance.getTaskDueDate(differenceInCalendarDays(
+                taskDetails.dueDate, new Date()
+            )),
+        );
+    } else {
+        displayTask(
+            taskDetails, isValueEmpty(taskDetails.notes),
+        );
     }
+
+    taskItemElem = taskListElem.lastElementChild;
+    taskInfoElem = taskItemElem.querySelector('.task-info-container');
+
+    createTaskCheckbox(taskItemElem, taskInfoElem);
+    createDeleteTaskElem(taskItemElem);
+    taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+    console.log(tasks);
 });
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');
