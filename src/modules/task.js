@@ -29,7 +29,11 @@ const tasks = [];
 
 function Task(taskDetails) {
 
-    const _dateFormatter = {
+    function pushTask(task) {
+        tasks.push(task);
+    }
+
+    const dateFormatter = {
         getDayOfTheWeek: function () {
             const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday'];
@@ -50,6 +54,13 @@ function Task(taskDetails) {
 
             return taskDetails.dueDate.toLocaleDateString('en-US', options);
         },
+
+        getYesterdayDate: function () {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            return yesterday;
+        }
     };
 
     function getTaskDueDate(differenceInDays) {
@@ -64,10 +75,10 @@ function Task(taskDetails) {
                     taskDueDate = 'Tomorrow';
                     break;
                 case differenceInDays <= 7:
-                    taskDueDate = _dateFormatter.getDayOfTheWeek();
+                    taskDueDate = dateFormatter.getDayOfTheWeek();
                     break;
                 default:
-                    taskDueDate = _dateFormatter.getLongDate(
+                    taskDueDate = dateFormatter.getLongDate(
                         differenceInCalendarYears(
                             taskDetails.dueDate, new Date()
                         )
@@ -79,7 +90,7 @@ function Task(taskDetails) {
             if (differenceInDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
-                taskDueDate = _dateFormatter.getLongDate(
+                taskDueDate = dateFormatter.getLongDate(
                     differenceInCalendarYears(
                         taskDetails.dueDate, new Date()
                     )
@@ -91,6 +102,8 @@ function Task(taskDetails) {
     }
 
     return {
+        pushTask,
+        dateFormatter,
         getTaskDueDate,
     }
 }

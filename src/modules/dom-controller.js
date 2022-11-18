@@ -1,3 +1,5 @@
+import { add } from 'date-fns';
+
 export {
     displayTask,
     resetTaskModal,
@@ -6,6 +8,7 @@ export {
     defineTaskItemElem,
     listProjectName,
     displayProjectName,
+    populateFormControl
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -102,4 +105,30 @@ function displayProjectName(projectNameInputElem) {
         .add('sidebar-text', 'medium-text', 'pointer-cursor');
 
     projectListElem.appendChild(projectItemElem);
+}
+
+function populateFormControl(formControl, data, taskInstance) {
+    for (const property in data) {
+        if (!data[property]) continue;
+
+        if (property === 'dueDate') {
+            switch (data.dueDate) {
+                case 'Today':
+                    formControl.dueDate.valueAsDate = new Date;
+                    break;
+                case 'Tomorrow':
+                    formControl.dueDate.valueAsDate =
+                        add(new Date(), { days: 1 });
+                    break;
+                case 'Yesterday':
+                    formControl.dueDate.valueAsDate =
+                        taskInstance.dateFormatter.getYesterdayDate();
+                    break;
+                default:
+                    formControl.dueDate.valueAsDate = data.dueDate.valueAsDate;
+            }
+        } else {
+            formControl[property].value = data[property];
+        }
+    }
 }

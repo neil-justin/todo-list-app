@@ -11,6 +11,7 @@ import {
     createTaskCheckbox,
     createDeleteTaskElem,
     defineTaskItemElem,
+    populateFormControl
 } from './dom-controller';
 import {
     isValueEmpty,
@@ -69,8 +70,16 @@ taskListElem.addEventListener('click', (e) => {
             tasks.splice(taskIndex, 1);
             taskItemElem.remove();
         } else {
+            const storedTasks = JSON.parse(window.localStorage.getItem('tasks'));
+            taskInstance = Task(storedTasks[taskIndex]);
+
+            for (let i = 0; i < storedTasks.length; i++) {
+                taskInstance.pushTask(storedTasks[i]);
+            }
+
             taskModalElem.showModal();
             taskItemElem.setAttribute('data-editing-task', '');
+            populateFormControl(taskFormControl, tasks[taskIndex], taskInstance);
         }
     }
 });
@@ -94,7 +103,7 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     taskInstance = Task(taskDetails);
 
     if (!isValueEmpty(taskDetails.name)) {
-        tasks.push(taskDetails);
+        taskInstance.pushTask(taskDetails);
 
         if (taskDetails.dueDate !== null) {
             displayTask(
