@@ -7,21 +7,21 @@ const defaultTasks = [
         notes: null,
         project: 'Inbox',
         priority: 'Priority 4',
-        dueDate: 'Today'
+        dueDate: new Date(2022, 10, 18)
     },
     {
         name: 'Export bitwarden passwords',
         notes: null,
         project: 'Inbox',
         priority: 'Priority 1',
-        dueDate: 'Today'
+        dueDate: new Date(2022, 10, 25)
     },
     {
         name: 'Wash laptop\'s cleaning cloth',
         notes: 'Do not forget that you have three of these!',
         project: 'Inbox',
         priority: 'Priority 2',
-        dueDate: 'Yesterday'
+        dueDate: new Date(2022, 11, 13)
     }
 ]
 
