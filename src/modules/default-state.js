@@ -4,7 +4,6 @@ import {
     createTaskCheckbox,
     createDeleteTaskElem
 } from './dom-controller';
-import { taskListElem } from './task-listeners';
 import { filterByTaskProperty } from './helper';
 
 const inboxTabElem = document.querySelector('#inbox-nav-link');
@@ -22,10 +21,12 @@ for (let i = 0; i < inboxTasks.length; i++) {
     displayTask(inboxTasks[i], !inboxTasks[i].notes, inboxTasks[i].dueDate);
     tasks.push(inboxTasks[i]);
 
+    const taskListElem = document.querySelector('#task-list');
     const taskItemElem = taskListElem.lastElementChild;
     const taskInfoElem = taskItemElem.querySelector('.task-info-container');
 
     createTaskCheckbox(taskItemElem, taskInfoElem);
     createDeleteTaskElem(taskItemElem);
     taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+    console.log(tasks);
 }

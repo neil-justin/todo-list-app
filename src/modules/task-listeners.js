@@ -20,8 +20,6 @@ import {
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
 
-export { taskListElem };
-
 const taskNameTextareaElem = document.querySelector('#task-name');
 const taskModalElem = document.querySelector('#task-modal');
 const taskFormControl = {
@@ -35,6 +33,7 @@ const taskFormControl = {
 const addTaskElems = document.querySelectorAll('.add-task-elem');
 addTaskElems.forEach(addTaskElem => {
     addTaskElem.addEventListener('click', () => {
+        taskModalElem.removeAttribute('open');
         taskModalElem.showModal();
 
         if (!taskNameTextareaElem.hasAttribute('required')) {
@@ -115,6 +114,7 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
         createTaskCheckbox(taskItemElem, taskInfoElem);
         createDeleteTaskElem(taskItemElem);
         taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+        console.log(tasks);
     }
 });
 
