@@ -11,7 +11,8 @@ import {
     createTaskCheckbox,
     createDeleteTaskElem,
     defineTaskItemElem,
-    populateFormControl
+    populateFormControl,
+    updateTaskDisplay
 } from './dom-controller';
 import {
     isValueEmpty,
@@ -74,7 +75,7 @@ taskListElem.addEventListener('click', (e) => {
             taskInstance = Task(storedTasks[taskIndex]);
 
             for (let i = 0; i < storedTasks.length; i++) {
-                taskInstance.pushTask(storedTasks[i]);
+                taskInstance.updateTasks(storedTasks[i], 'add');
             }
 
             taskModalElem.showModal();
@@ -84,12 +85,14 @@ taskListElem.addEventListener('click', (e) => {
     }
 });
 
+let editedTaskElem;
+
 const taskModalCloseButtonElem = document.querySelector('#task-modal-close-button');
 taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
     taskNameTextareaElem.removeAttribute('required');
 
-    const editedTaskElem = document.querySelector('[data-editing-task');
+    editedTaskElem = document.querySelector('[data-editing-task');
 
     if (editedTaskElem) {
         editedTaskElem.removeAttribute('data-editing-task');
@@ -97,35 +100,60 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 });
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
-taskModalConfirmButtonElem.addEventListener('click', () => {
+taskModalConfirmButtonElem.addEventListener('click', (e) => {
     const taskDetails = getTaskDetails(taskFormControl);
-
-    taskInstance = Task(taskDetails);
 
     if (isValueEmpty(taskDetails.name)) return;
 
-    taskInstance.pushTask(taskDetails);
+    taskInstance = Task(taskDetails);
+    editedTaskElem = document.querySelector('[data-editing-task')
 
-    if (taskDetails.dueDate !== null) {
-        displayTask(
-            taskDetails, isValueEmpty(taskDetails.notes),
-            taskInstance.getTaskDueDate(differenceInCalendarDays(
-                taskDetails.dueDate, new Date()
-            )),
-        );
+    if (editedTaskElem) {
+        const editedTaskIndex = parseInt(editedTaskElem.getAttribute('data-task-index'));
+
+        taskInstance.updateTasks(taskDetails, 'edit', editedTaskIndex);
+
+        if (taskDetails.dueDate !== null) {
+            updateTaskDisplay(
+                taskDetails, defineTaskItemElem(e, editedTaskIndex),
+                isValueEmpty(taskDetails.notes),
+                taskInstance.getTaskDueDate(
+                    differenceInCalendarDays(
+                        taskDetails.dueDate, new Date()
+                    )
+                ),
+            );
+        } else {
+            updateTaskDisplay(
+                taskDetails, defineTaskItemElem(e, editedTaskIndex),
+                isValueEmpty(taskDetails.notes),
+            );
+        }
     } else {
-        displayTask(
-            taskDetails, isValueEmpty(taskDetails.notes),
-        );
+        taskInstance.updateTasks(taskDetails, 'add');
+
+        if (taskDetails.dueDate !== null) {
+            displayTask(
+                taskDetails, isValueEmpty(taskDetails.notes),
+                taskInstance.getTaskDueDate(differenceInCalendarDays(
+                    taskDetails.dueDate, new Date()
+                )),
+            );
+        } else {
+            displayTask(
+                taskDetails, isValueEmpty(taskDetails.notes),
+            );
+        }
+
+        taskItemElem = taskListElem.lastElementChild;
+        taskInfoElem = taskItemElem.querySelector('.task-info-container');
+
+        createTaskCheckbox(taskItemElem, taskInfoElem);
+        createDeleteTaskElem(taskItemElem);
+        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
     }
 
-    taskItemElem = taskListElem.lastElementChild;
-    taskInfoElem = taskItemElem.querySelector('.task-info-container');
-
-    createTaskCheckbox(taskItemElem, taskInfoElem);
-    createDeleteTaskElem(taskItemElem);
-    taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
-    console.log(tasks);
+    window.localStorage.setItem('tasks', JSON.stringify(tasks));
 });
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');

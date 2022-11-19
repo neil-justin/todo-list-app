@@ -8,7 +8,8 @@ export {
     defineTaskItemElem,
     listProjectName,
     displayProjectName,
-    populateFormControl
+    populateFormControl,
+    updateTaskDisplay
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -80,12 +81,16 @@ function createDeleteTaskElem(taskItemElem) {
     taskItemElem.appendChild(deleteTaskElem);
 }
 
-function defineTaskItemElem(event) {
-    if (event.target.classList.contains('task')) {
-        return event.target;
-    } else {
-        return event.target.closest('.task');
+function defineTaskItemElem(event, index = null) {
+    const taskListElem = document.querySelector('#task-list');
+
+    if (event.currentTarget === taskListElem) {
+        return event.target.classList.contains('task') ?
+            event.target :
+            event.target.closest('.task');
     }
+
+    return document.querySelector(`[data-task-index='${index}']`);
 }
 
 function listProjectName(projectNameInputElem) {
@@ -131,4 +136,38 @@ function populateFormControl(formControl, data, taskInstance) {
             formControl[property].value = data[property];
         }
     }
+}
+
+function updateTaskDisplay(taskDetails, taskItemElem, isNotesEmpty, taskDueDate = null) {
+    const taskInfoElem = taskItemElem.querySelector('.task-info-container');
+
+    const taskNameElem = taskInfoElem.querySelector('.task-name');
+    taskNameElem.textContent = `${taskDetails.name}`;
+
+    const taskNotesElem = taskInfoElem.querySelector('task-notes');
+
+    if (!isNotesEmpty) {
+        taskNotesElem.textContent = `${taskDetails.notes}`;
+    }
+
+    if (taskNotesElem) {
+        taskNotesElem.remove();
+    }
+
+    const taskAdditionalInfoElem = taskInfoElem.
+        querySelector('.task-additional-info');
+    taskAdditionalInfoElem.textContent = '';
+
+
+    if (taskDueDate !== null) {
+        const taskDueDateText = document.createTextNode(taskDueDate);
+        taskAdditionalInfoElem.appendChild(taskDueDateText);
+
+        const bulletPointText = document.
+            createTextNode(` ${he.decode('&bull;')} `);
+        taskAdditionalInfoElem.appendChild(bulletPointText);
+    }
+
+    const taskPriorityText = document.createTextNode(taskDetails.priority);
+    taskAdditionalInfoElem.appendChild(taskPriorityText);
 }

@@ -29,8 +29,14 @@ const tasks = [];
 
 function Task(taskDetails) {
 
-    function pushTask(task) {
-        tasks.push(task);
+    function updateTasks(task, update, index = null) {
+        if (update === 'add') {
+            return tasks.push(task);
+        }
+
+        if (update === 'edit') {
+            return tasks[index] = task;
+        }
     }
 
     const dateFormatter = {
@@ -52,7 +58,11 @@ function Task(taskDetails) {
                 options.year = 'numeric';
             }
 
-            return taskDetails.dueDate.toLocaleDateString('en-US', options);
+            if (taskDetails.dueDate !== null) {
+                return taskDetails.dueDate.toLocaleDateString('en-US', options);
+            }
+
+            return taskDetails.dueDate;
         },
 
         getYesterdayDate: function () {
@@ -102,7 +112,7 @@ function Task(taskDetails) {
     }
 
     return {
-        pushTask,
+        updateTasks,
         dateFormatter,
         getTaskDueDate,
     }

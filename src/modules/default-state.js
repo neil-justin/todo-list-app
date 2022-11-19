@@ -5,7 +5,7 @@ import {
     createDeleteTaskElem
 } from './dom-controller';
 import { filterByTaskProperty } from './helper';
-import { differenceInCalendarDays, format } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 
 const inboxTabElem = document.querySelector('#inbox-nav-link');
 inboxTabElem.setAttribute('current-tab', '');
@@ -21,20 +21,25 @@ window.localStorage.setItem('tasks', JSON.stringify(userTasks));
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
 for (let i = 0; i < inboxTasks.length; i++) {
-    const parsedTaskDueDate = new Date(`${inboxTasks[i].dueDate}`);
+    let parsedTaskDueDate = inboxTasks[i].dueDate;
+    const taskInstance = Task(inboxTasks[i]);
 
     /* Parsing the task's due date before passing the task object as the
     parameter of the 'Task' object in order to avoid receiving date error in
     the console */
-    inboxTasks[i].dueDate = parsedTaskDueDate;
-    const taskInstance = Task(inboxTasks[i]);
+    if (inboxTasks[i].dueDate !== null) {
+        parsedTaskDueDate = new Date(`${inboxTasks[i].dueDate}`);
+        inboxTasks[i].dueDate = parsedTaskDueDate;
 
-    displayTask(
-        inboxTasks[i], !inboxTasks[i].notes,
-        taskInstance.getTaskDueDate(differenceInCalendarDays(
-            parsedTaskDueDate, new Date()
-        )),
-    );
+        displayTask(
+            inboxTasks[i], !inboxTasks[i].notes,
+            taskInstance.getTaskDueDate(differenceInCalendarDays(
+                parsedTaskDueDate, new Date()
+            )),
+        );
+    } else {
+        displayTask(inboxTasks[i], !inboxTasks[i].notes,)
+    }
 
     const taskListElem = document.querySelector('#task-list');
     const taskItemElem = taskListElem.lastElementChild;
