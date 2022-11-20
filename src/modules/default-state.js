@@ -15,8 +15,7 @@ mainContentHeadingElem.textContent = 'Inbox';
 const storedTasks = accessLocalStorage('getItem', 'tasks');
 const userTasks = storedTasks ?? defaultTasks;
 
-window.localStorage.setItem('tasks', JSON.stringify(userTasks));
-
+accessLocalStorage('setItem', userTasks);
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
 for (let i = 0; i < inboxTasks.length; i++) {

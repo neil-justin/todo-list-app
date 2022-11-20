@@ -155,6 +155,7 @@ taskModalConfirmButtonElem.addEventListener('click', (e) => {
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');
 projectInboxListElem.addEventListener('click', (e) => {
+    debugger;
     const filteredTasks = filterByTaskProperty(tasks, 'project', e);
 
     if (filteredTasks.length === 0) return;

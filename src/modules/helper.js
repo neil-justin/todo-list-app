@@ -11,11 +11,12 @@ function isValueEmpty(data) {
     return data.trim().length === 0;
 }
 
-function filterByTaskProperty(array, property, event) {
+function filterByTaskProperty(array, property, event = null) {
     switch (property) {
         case 'project':
             const INBOX_PROJECT = ['Inbox', 'Today', 'Upcoming'];
-            const chosenProject = 'Inbox' || event.target.textContent;
+            const chosenProject = event === null ?
+                'Inbox' : event.target.textContent;
 
             if (INBOX_PROJECT.includes(chosenProject)) {
                 return array.filter(elem => elem['project'] === 'Inbox');
