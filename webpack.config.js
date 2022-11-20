@@ -10,6 +10,7 @@ module.exports = {
         project: './src/modules/project.js',
         projectListeners: './src/modules/project-listeners.js',
         defaultState: './src/modules/default-state.js',
+        localStorage: './src/modules/local-storage.js',
     },
     devtool: 'inline-source-map',
     plugins: [

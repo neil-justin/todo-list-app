@@ -22,6 +22,7 @@ import {
     getTaskIndex
 } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
+import { accessLocalStorage } from './local-storage';
 
 const taskNameTextareaElem = document.querySelector('#task-name');
 const taskModalElem = document.querySelector('#task-modal');
@@ -53,35 +54,31 @@ let taskInfoElem;
 
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
-    let taskIndex;
+    if (e.target === taskListElem) return;
 
-    while (typeof taskIndex === 'undefined') {
-        taskItemElem = defineTaskItemElem(e);
-        taskInfoElem = taskItemElem.querySelector('.task-info-container');
-        taskIndex = getTaskIndex(e);
+    const taskIndex = getTaskIndex(e);
+    const storedTasks = accessLocalStorage('getItem', 'tasks');
+    taskInstance = Task(storedTasks[taskIndex]);
 
-        const taskCheckboxElem = taskInfoElem.previousElementSibling;
-        const deleteTaskElem = taskInfoElem.nextElementSibling;
+    for (let i = 0; i < storedTasks.length; i++) {
+        taskInstance.updateTasks(storedTasks[i], 'add');
+    }
 
-        if (e.target === taskListElem) break;
+    taskItemElem = defineTaskItemElem(e);
+    taskInfoElem = taskItemElem.querySelector('.task-info-container');
+    const taskCheckboxElem = taskInfoElem.previousElementSibling;
+    const deleteTaskElem = taskInfoElem.nextElementSibling;
 
-        if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
-            if (e.target === deleteTaskElem && !shouldDeleteTask()) break;
+    if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
+        if (e.target === deleteTaskElem && !shouldDeleteTask()) return;
 
-            tasks.splice(taskIndex, 1);
-            taskItemElem.remove();
-        } else {
-            const storedTasks = JSON.parse(window.localStorage.getItem('tasks'));
-            taskInstance = Task(storedTasks[taskIndex]);
-
-            for (let i = 0; i < storedTasks.length; i++) {
-                taskInstance.updateTasks(storedTasks[i], 'add');
-            }
-
-            taskModalElem.showModal();
-            taskItemElem.setAttribute('data-editing-task', '');
-            populateFormControl(taskFormControl, tasks[taskIndex], taskInstance);
-        }
+        tasks.splice(taskIndex, 1);
+        taskItemElem.remove();
+        accessLocalStorage('setItem', tasks);
+    } else {
+        taskModalElem.showModal();
+        taskItemElem.setAttribute('data-editing-task', '');
+        populateFormControl(taskFormControl, tasks[taskIndex], taskInstance);
     }
 });
 
@@ -92,7 +89,7 @@ taskModalCloseButtonElem.addEventListener('click', () => {
     // this allows the task modal from closing
     taskNameTextareaElem.removeAttribute('required');
 
-    editedTaskElem = document.querySelector('[data-editing-task');
+    editedTaskElem = document.querySelector('[data-editing-task]');
 
     if (editedTaskElem) {
         editedTaskElem.removeAttribute('data-editing-task');
@@ -153,7 +150,7 @@ taskModalConfirmButtonElem.addEventListener('click', (e) => {
         taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
     }
 
-    window.localStorage.setItem('tasks', JSON.stringify(tasks));
+    accessLocalStorage('setItem', tasks);
 });
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');

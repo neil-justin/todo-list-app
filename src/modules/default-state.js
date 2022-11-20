@@ -6,14 +6,13 @@ import {
 } from './dom-controller';
 import { filterByTaskProperty } from './helper';
 import { differenceInCalendarDays } from 'date-fns';
+import { accessLocalStorage } from './local-storage';
 
 const inboxTabElem = document.querySelector('#inbox-nav-link');
 inboxTabElem.setAttribute('current-tab', '');
-
 const mainContentHeadingElem = document.querySelector('#main-content-heading');
 mainContentHeadingElem.textContent = 'Inbox';
-
-const storedTasks = JSON.parse(window.localStorage.getItem('tasks'));
+const storedTasks = accessLocalStorage('getItem', 'tasks');
 const userTasks = storedTasks ?? defaultTasks;
 
 window.localStorage.setItem('tasks', JSON.stringify(userTasks));
