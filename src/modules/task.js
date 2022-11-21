@@ -28,6 +28,9 @@ const defaultTasks = [
 const tasks = [];
 
 function Task(taskDetails) {
+    if (taskDetails.dueDate !== null) {
+        taskDetails.dueDate = new Date(`${taskDetails.dueDate}`);
+    }
 
     function updateTasks(task, update, index = null) {
         if (update === 'add') {
@@ -44,7 +47,7 @@ function Task(taskDetails) {
             const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday'];
 
-            return week[taskDetails.dueDate.getDay()];
+            return week[new Date(`${taskDetails.dueDate}`).getDay()];
         },
 
         getLongDate: function (diffInYears) {

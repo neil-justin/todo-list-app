@@ -12,16 +12,30 @@ function isValueEmpty(data) {
 }
 
 function filterByTaskProperty(array, property, event = null) {
+    const chosenProject = event === null ? 'Inbox' : event.target.textContent;
+
     switch (property) {
         case 'project':
             const INBOX_PROJECT = ['Inbox', 'Today', 'Upcoming'];
-            const chosenProject = event === null ?
-                'Inbox' : event.target.textContent;
 
             if (INBOX_PROJECT.includes(chosenProject)) {
                 return array.filter(elem => elem['project'] === 'Inbox');
             } else {
                 return array.filter(elem => elem['project'] === chosenProject);
+            }
+        case 'dueDate':
+            const today = new Date();
+
+            if (chosenProject === 'Today') {
+                return array.filter(item => {
+                    return new Date(`${item.dueDate}`).toDateString()
+                        === today.toDateString();
+                });
+            } else if (chosenProject === 'Upcoming') {
+                return array.filter(item => {
+                    return new Date(`${item.dueDate}`).toDateString()
+                        !== today.toDateString();
+                });
             }
     }
 }

@@ -9,16 +9,16 @@ export {
     listProjectName,
     displayProjectName,
     populateFormControl,
-    updateTaskDisplay
+    updateTaskDisplay,
+    highlightChosenTab,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
+const taskListElem = document.querySelector('#task-list');
 
 function displayTask(task, isNotesEmpty, taskDueDate = null) {
-    const taskListElem = document.querySelector('#task-list');
-
     const taskItemElem = document.createElement('li');
     taskItemElem.classList.add('task', 'pointer-cursor');
     taskListElem.appendChild(taskItemElem);
@@ -82,8 +82,6 @@ function createDeleteTaskElem(taskItemElem) {
 }
 
 function defineTaskItemElem(event, index = null) {
-    const taskListElem = document.querySelector('#task-list');
-
     if (event.currentTarget === taskListElem) {
         return event.target.classList.contains('task') ?
             event.target :
@@ -170,4 +168,12 @@ function updateTaskDisplay(taskDetails, taskItemElem, isNotesEmpty, taskDueDate 
 
     const taskPriorityText = document.createTextNode(taskDetails.priority);
     taskAdditionalInfoElem.appendChild(taskPriorityText);
+}
+
+function highlightChosenTab(event) {
+    const previousItemElem = document.querySelector('[current-tab]');
+    previousItemElem.removeAttribute('current-tab');
+
+    const chosenItemElem = event.target;
+    chosenItemElem.setAttribute('current-tab', '');
 }

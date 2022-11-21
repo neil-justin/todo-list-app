@@ -12,7 +12,8 @@ import {
     createDeleteTaskElem,
     defineTaskItemElem,
     populateFormControl,
-    updateTaskDisplay
+    updateTaskDisplay,
+    highlightChosenTab,
 } from './dom-controller';
 import {
     isValueEmpty,
@@ -51,13 +52,14 @@ addTaskElems.forEach(addTaskElem => {
 let taskInstance;
 let taskItemElem;
 let taskInfoElem;
+let storedTasks;
 
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
     if (e.target === taskListElem) return;
 
     const taskIndex = getTaskIndex(e);
-    const storedTasks = accessLocalStorage('getItem', 'tasks');
+    storedTasks = accessLocalStorage('getItem', 'tasks');
     taskInstance = Task(storedTasks[taskIndex]);
 
     for (let i = 0; i < storedTasks.length; i++) {
@@ -155,22 +157,37 @@ taskModalConfirmButtonElem.addEventListener('click', (e) => {
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');
 projectInboxListElem.addEventListener('click', (e) => {
-    debugger;
-    const filteredTasks = filterByTaskProperty(tasks, 'project', e);
+    if (e.target.hasAttribute('current-tab')) return;
+
+    highlightChosenTab(e);
+    taskListElem.replaceChildren();
+    storedTasks = accessLocalStorage('getItem', 'tasks');
+
+    if (storedTasks.length === 0) return;
+
+    let filteredTasks = filterByTaskProperty(storedTasks, 'project', e);
+
+    if (e.target.textContent !== 'Inbox') {
+        filteredTasks = filterByTaskProperty(filteredTasks, 'dueDate', e);
+    }
 
     if (filteredTasks.length === 0) return;
 
     for (let i = 0; i < filteredTasks.length; i++) {
+        taskInstance = Task(filteredTasks[i]);
+
         displayTask(
-            filteredTasks[i], isValueEmpty(filteredTasks[i].notes),
-            filteredTasks[i].dueDate
+            filteredTasks[i], !filteredTasks[i].notes,
+            taskInstance.getTaskDueDate(differenceInCalendarDays(
+                new Date(`${filteredTasks[i].dueDate} `), new Date()
+            ))
         );
+
+        taskItemElem = taskListElem.lastElementChild;
+        taskInfoElem = taskItemElem.querySelector('.task-info-container');
+
+        createTaskCheckbox(taskItemElem, taskInfoElem);
+        createDeleteTaskElem(taskItemElem);
+        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1} `);
     }
-
-    taskItemElem = taskListElem.lastElementChild;
-    taskInfoElem = taskItemElem.querySelector('.task-info-container');
-
-    createTaskCheckbox(taskItemElem, taskInfoElem);
-    createDeleteTaskElem(taskItemElem);
-    taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
 });

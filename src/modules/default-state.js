@@ -5,7 +5,7 @@ import {
     createDeleteTaskElem
 } from './dom-controller';
 import { filterByTaskProperty } from './helper';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, parse } from 'date-fns';
 import { accessLocalStorage } from './local-storage';
 
 const inboxTabElem = document.querySelector('#inbox-nav-link');
