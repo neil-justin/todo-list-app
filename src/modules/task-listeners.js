@@ -100,6 +100,7 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', (e) => {
+    console.log(accessLocalStorage('getItem', 'tasks'));
     const taskDetails = getTaskDetails(taskFormControl);
 
     if (isValueEmpty(taskDetails.name)) return;
@@ -153,10 +154,12 @@ taskModalConfirmButtonElem.addEventListener('click', (e) => {
     }
 
     accessLocalStorage('setItem', tasks);
+    console.log(accessLocalStorage('getItem', 'tasks'));
 });
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');
 projectInboxListElem.addEventListener('click', (e) => {
+    console.log(accessLocalStorage('getItem', 'tasks'));
     if (e.target.hasAttribute('current-tab')) return;
 
     highlightChosenTab(e);

@@ -1,11 +1,11 @@
-import { defaultTasks, Task } from './task';
+import { defaultTasks, Task, tasks } from './task';
 import {
     displayTask,
     createTaskCheckbox,
     createDeleteTaskElem
 } from './dom-controller';
 import { filterByTaskProperty } from './helper';
-import { differenceInCalendarDays, parse } from 'date-fns';
+import { add, differenceInCalendarDays, parse } from 'date-fns';
 import { accessLocalStorage } from './local-storage';
 
 const inboxTabElem = document.querySelector('#inbox-nav-link');
@@ -14,6 +14,11 @@ const mainContentHeadingElem = document.querySelector('#main-content-heading');
 mainContentHeadingElem.textContent = 'Inbox';
 const storedTasks = accessLocalStorage('getItem', 'tasks');
 const userTasks = storedTasks ?? defaultTasks;
+
+for (let i = 0; i < userTasks.length; i++) {
+    const taskInstance = Task(userTasks[i]);
+    taskInstance.updateTasks(taskInstance[i], 'add');
+}
 
 accessLocalStorage('setItem', userTasks);
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
