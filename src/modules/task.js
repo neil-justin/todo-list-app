@@ -29,15 +29,14 @@ const tasks = [];
 
 function Task(taskDetails) {
     if (taskDetails.dueDate !== null) {
+        // parsing the due date to an appropriate date format
         taskDetails.dueDate = new Date(`${taskDetails.dueDate}`);
     }
 
     function updateTasks(task, update, index = null) {
         if (update === 'add') {
             return tasks.push(task);
-        }
-
-        if (update === 'edit') {
+        } else if (update === 'edit') {
             return tasks[index] = task;
         }
     }

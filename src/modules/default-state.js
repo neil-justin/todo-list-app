@@ -1,44 +1,45 @@
-import { defaultTasks, Task, tasks } from './task';
+import '../stylesheets/index.css';
+import '../stylesheets/main-content.css';
+import '../stylesheets/sidebar.css';
+import '../stylesheets/modal.css';
+import '../stylesheets/task-modal.css';
+import '../stylesheets/project-modal.css';
+
+import { defaultTasks, Task } from './task';
 import {
     displayTask,
     createTaskCheckbox,
-    createDeleteTaskElem
+    createDeleteTaskElem,
+    highlightChosenTab,
+    updateMainContentHeading
 } from './dom-controller';
 import { filterByTaskProperty } from './helper';
-import { add, differenceInCalendarDays, parse } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 import { accessLocalStorage } from './local-storage';
 
-const inboxTabElem = document.querySelector('#inbox-nav-link');
-inboxTabElem.setAttribute('current-tab', '');
-const mainContentHeadingElem = document.querySelector('#main-content-heading');
-mainContentHeadingElem.textContent = 'Inbox';
+highlightChosenTab();
+updateMainContentHeading();
+
 const storedTasks = accessLocalStorage('getItem', 'tasks');
 const userTasks = storedTasks ?? defaultTasks;
 
 for (let i = 0; i < userTasks.length; i++) {
     const taskInstance = Task(userTasks[i]);
-    taskInstance.updateTasks(taskInstance[i], 'add');
+    taskInstance.updateTasks(userTasks[i], 'add');
 }
 
 accessLocalStorage('setItem', userTasks);
 const inboxTasks = filterByTaskProperty(userTasks, 'project');
 
 for (let i = 0; i < inboxTasks.length; i++) {
-    let parsedTaskDueDate = inboxTasks[i].dueDate;
     const taskInstance = Task(inboxTasks[i]);
 
-    /* Parsing the task's due date before passing the task object as the
-    parameter of the 'Task' object in order to avoid receiving date error in
-    the console */
     if (inboxTasks[i].dueDate !== null) {
-        parsedTaskDueDate = new Date(`${inboxTasks[i].dueDate}`);
-        inboxTasks[i].dueDate = parsedTaskDueDate;
-
         displayTask(
             inboxTasks[i], !inboxTasks[i].notes,
-            taskInstance.getTaskDueDate(differenceInCalendarDays(
-                parsedTaskDueDate, new Date()
-            )),
+            taskInstance.getTaskDueDate(
+                differenceInCalendarDays(inboxTasks[i].dueDate, new Date())
+            ),
         );
     } else {
         displayTask(inboxTasks[i], !inboxTasks[i].notes,)

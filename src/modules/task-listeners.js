@@ -1,9 +1,3 @@
-import '../stylesheets/index.css';
-import '../stylesheets/main-content.css';
-import '../stylesheets/sidebar.css';
-import '../stylesheets/modal.css';
-import '../stylesheets/task-modal.css';
-import '../stylesheets/project-modal.css';
 import { Task, tasks, } from './task';
 import {
     displayTask,

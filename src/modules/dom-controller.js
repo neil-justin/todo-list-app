@@ -11,6 +11,7 @@ export {
     populateFormControl,
     updateTaskDisplay,
     highlightChosenTab,
+    updateMainContentHeading,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -170,10 +171,20 @@ function updateTaskDisplay(taskDetails, taskItemElem, isNotesEmpty, taskDueDate 
     taskAdditionalInfoElem.appendChild(taskPriorityText);
 }
 
-function highlightChosenTab(event) {
-    const previousItemElem = document.querySelector('[current-tab]');
-    previousItemElem.removeAttribute('current-tab');
+function highlightChosenTab(event = null) {
+    if (event !== null) {
+        const currentTabElem = document.querySelector('[current-tab]');
+        currentTabElem.removeAttribute('current-tab');
+    }
 
-    const chosenItemElem = event.target;
-    chosenItemElem.setAttribute('current-tab', '');
+    const inboxTabElem = document.querySelector('#inbox-tab');
+    const chosenTabElem = event === null ? inboxTabElem : event.target;
+    chosenTabElem.setAttribute('current-tab', '');
+}
+
+function updateMainContentHeading(event = null) {
+    const mainContentHeading = event === null ? 'Inbox'
+        : event.target.textContent;
+    const mainContentHeadingElem = document.querySelector('#main-content-heading');
+    mainContentHeadingElem.textContent = mainContentHeading;
 }
