@@ -39,7 +39,7 @@ function Task(taskDetails) {
                 return tasks.push(task);
             case 'edit':
                 return tasks[index] = task;
-            case 'delete':
+            case 'remove':
                 return tasks.splice(index, 1);
         }
     }

@@ -52,7 +52,6 @@ taskListElem.addEventListener('click', (e) => {
 
     const taskIndex = getTaskIndex(e);
     storedTasks = accessLocalStorage('getItem', 'tasks');
-    taskInstance = Task(storedTasks[taskIndex]);
 
     for (let i = 0; i < storedTasks.length; i++) {
         taskInstance = Task(storedTasks[i]);
@@ -66,6 +65,7 @@ taskListElem.addEventListener('click', (e) => {
 
     if (e.target === taskCheckboxElem ||
         e.target === deleteTaskElem && shouldDeleteTask()) {
+        taskInstance = Task(storedTasks[taskIndex]);
         taskInstance.updateTasks(tasks[taskIndex], 'remove', taskIndex);
         taskItemElem.remove();
         accessLocalStorage('setItem', tasks);
