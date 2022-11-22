@@ -34,10 +34,13 @@ function Task(taskDetails) {
     }
 
     function updateTasks(task, update, index = null) {
-        if (update === 'add') {
-            return tasks.push(task);
-        } else if (update === 'edit') {
-            return tasks[index] = task;
+        switch (update) {
+            case 'add':
+                return tasks.push(task);
+            case 'edit':
+                return tasks[index] = task;
+            case 'delete':
+                return tasks.splice(index, 1);
         }
     }
 

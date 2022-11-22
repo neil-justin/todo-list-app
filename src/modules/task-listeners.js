@@ -55,6 +55,7 @@ taskListElem.addEventListener('click', (e) => {
     taskInstance = Task(storedTasks[taskIndex]);
 
     for (let i = 0; i < storedTasks.length; i++) {
+        taskInstance = Task(storedTasks[i]);
         taskInstance.updateTasks(storedTasks[i], 'add');
     }
 
@@ -63,16 +64,15 @@ taskListElem.addEventListener('click', (e) => {
     const taskCheckboxElem = taskInfoElem.previousElementSibling;
     const deleteTaskElem = taskInfoElem.nextElementSibling;
 
-    if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
-        if (e.target === deleteTaskElem && !shouldDeleteTask()) return;
-
-        tasks.splice(taskIndex, 1);
+    if (e.target === taskCheckboxElem ||
+        e.target === deleteTaskElem && shouldDeleteTask()) {
+        taskInstance.updateTasks(tasks[taskIndex], 'remove', taskIndex);
         taskItemElem.remove();
         accessLocalStorage('setItem', tasks);
     } else {
         taskModalElem.showModal();
         taskItemElem.setAttribute('data-editing-task', '');
-        populateFormControl(taskFormControl, tasks[taskIndex], taskInstance);
+        populateFormControl(taskFormControl, tasks[taskIndex]);
     }
 });
 

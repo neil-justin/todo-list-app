@@ -68,5 +68,5 @@ function getTaskIndex(event) {
             getAttribute('data-task-index');
     }
 
-    return taskIndex;
+    return parseInt(taskIndex);
 }

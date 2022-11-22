@@ -1,4 +1,4 @@
-import { add } from 'date-fns';
+import { add, differenceInCalendarDays } from 'date-fns';
 
 export {
     displayTask,
@@ -111,26 +111,13 @@ function displayProjectName(projectNameInputElem) {
     projectListElem.appendChild(projectItemElem);
 }
 
-function populateFormControl(formControl, data, taskInstance) {
+function populateFormControl(formControl, data) {
     for (const property in data) {
         if (!data[property]) continue;
 
         if (property === 'dueDate') {
-            switch (data.dueDate) {
-                case 'Today':
-                    formControl.dueDate.valueAsDate = new Date;
-                    break;
-                case 'Tomorrow':
-                    formControl.dueDate.valueAsDate =
-                        add(new Date(), { days: 1 });
-                    break;
-                case 'Yesterday':
-                    formControl.dueDate.valueAsDate =
-                        taskInstance.dateFormatter.getYesterdayDate();
-                    break;
-                default:
-                    formControl.dueDate.valueAsDate = data.dueDate.valueAsDate;
-            }
+            const dateString = data.dueDate.toISOString().slice(0, 10);
+            formControl[property].value = dateString;
         } else {
             formControl[property].value = data[property];
         }
