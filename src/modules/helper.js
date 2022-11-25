@@ -1,11 +1,11 @@
 export {
     isValueEmpty,
     filterByTaskProperty,
-    getTaskDetails,
+    getTaskInfo,
     shouldDeleteTask,
     getTaskIndex,
+    checkTaskDuplicate,
 };
-
 
 function isValueEmpty(data) {
     return data.trim().length === 0;
@@ -40,33 +40,40 @@ function filterByTaskProperty(array, property, event = null) {
     }
 }
 
-function getTaskDetails(taskForm) {
-    const taskDetails = Object.assign({}, taskForm);
+function getTaskInfo(taskForm) {
+    const taskInfo = Object.assign({}, taskForm);
 
-    for (const property in taskDetails) {
+    for (const property in taskInfo) {
         if (property === 'dueDate') {
-            taskDetails.dueDate = taskDetails.dueDate.valueAsDate;
+            taskInfo.dueDate = taskInfo.dueDate.valueAsDate;
+        } else if (property === 'project') {
+            taskInfo.project = taskInfo.project.value.toLowerCase();
         } else {
-            taskDetails[property] = taskDetails[property].value;
+            taskInfo[property] = taskInfo[property].value;
         }
     }
 
-    return taskDetails;
+    return taskInfo;
 }
 
 function shouldDeleteTask() {
     return window.confirm('Are you sure you want to delete this item?')
 }
 
-function getTaskIndex(event) {
-    let taskIndex;
+let project;
 
-    if (event.target.hasAttribute('data-task-index')) {
-        taskIndex = event.target.getAttribute('data-task-index');
-    } else {
-        taskIndex = event.target.closest('.task').
-            getAttribute('data-task-index');
-    }
+function getTaskIndex(storedProjects, task) {
+    project = storedProjects[task.project];
 
-    return parseInt(taskIndex);
+    return project.findIndex(storedTask => {
+        return storedTask.name === task.name;
+    });
+}
+
+function checkTaskDuplicate(storedProjects, newTask) {
+    project = storedProjects[newTask.project];
+
+    return project.some(storedTask => {
+        return storedTask.name === newTask.name;
+    });
 }

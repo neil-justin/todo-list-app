@@ -1,55 +1,76 @@
 import { differenceInCalendarYears } from "date-fns";
-export { defaultTasks, tasks, Task, };
+export {
+    defaultProjects,
+    tasks,
+    Task,
+};
 
-const defaultTasks = [
-    {
-        name: 'Go to the wet market',
-        notes: null,
-        project: 'Inbox',
-        priority: 'Priority 4',
-        dueDate: new Date(2022, 10, 18)
-    },
-    {
-        name: 'Export bitwarden passwords',
-        notes: null,
-        project: 'Inbox',
-        priority: 'Priority 1',
-        dueDate: new Date(2022, 10, 25)
-    },
-    {
-        name: 'Wash laptop\'s cleaning cloth',
-        notes: 'Do not forget that you have three of these!',
-        project: 'Inbox',
-        priority: 'Priority 2',
-        dueDate: new Date(2022, 11, 13)
-    }
-]
+const defaultProjects = {
+    'inbox': [
+        {
+            name: 'Go to the wet market',
+            notes: null,
+            project: 'Inbox',
+            priority: 'Priority 4',
+            dueDate: new Date(2022, 10, 18)
+        },
+        {
+            name: 'Export bitwarden passwords',
+            notes: null,
+            project: 'Inbox',
+            priority: 'Priority 1',
+            dueDate: new Date(2022, 10, 25)
+        },
+        {
+            name: 'Wash laptop\'s cleaning cloth',
+            notes: 'Do not forget that you have three of these!',
+            project: 'Inbox',
+            priority: 'Priority 2',
+            dueDate: new Date(2022, 11, 13)
+        }
+    ]
+}
 
 const tasks = [];
 
-function Task(taskDetails) {
-    if (taskDetails.dueDate !== null) {
+function Task(taskInfo) {
+    if (taskInfo.dueDate !== null) {
         // parsing the due date to an appropriate date format
-        taskDetails.dueDate = new Date(`${taskDetails.dueDate}`);
+        taskInfo.dueDate = new Date(`${taskInfo.dueDate}`);
     }
 
-    function updateTasks(task, update, index = null) {
+    function updateProjects(projects, update, task, taskIndex = null) {
+        const chosenProject = projects[task.project];
+
         switch (update) {
             case 'add':
-                return tasks.push(task);
+                chosenProject.push(task);
+                break;
             case 'edit':
-                return tasks[index] = task;
+                chosenProject[taskIndex] = task;
+                break;
             case 'remove':
-                return tasks.splice(index, 1);
+                chosenProject.splice(taskIndex, 1);
         }
+
+        projects[task.project] = chosenProject;
+
+        return projects;
     }
 
-    const dateFormatter = {
+    const _dateFormatter = {
         getDayOfTheWeek: function () {
-            const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-                'Thursday', 'Friday', 'Saturday'];
+            const week = [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday'
+            ];
 
-            return week[new Date(`${taskDetails.dueDate}`).getDay()];
+            return week[taskInfo.dueDate.getDay()];
         },
 
         getLongDate: function (diffInYears) {
@@ -63,11 +84,11 @@ function Task(taskDetails) {
                 options.year = 'numeric';
             }
 
-            if (taskDetails.dueDate !== null) {
-                return taskDetails.dueDate.toLocaleDateString('en-US', options);
+            if (taskInfo.dueDate !== null) {
+                return taskInfo.dueDate.toLocaleDateString('en-US', options);
             }
 
-            return taskDetails.dueDate;
+            return taskInfo.dueDate;
         },
 
         getYesterdayDate: function () {
@@ -78,7 +99,7 @@ function Task(taskDetails) {
         }
     };
 
-    function getTaskDueDate(differenceInDays) {
+    function getTaskDueDateString(differenceInDays) {
         let taskDueDate;
 
         if (differenceInDays >= 0) {
@@ -90,13 +111,11 @@ function Task(taskDetails) {
                     taskDueDate = 'Tomorrow';
                     break;
                 case differenceInDays <= 7:
-                    taskDueDate = dateFormatter.getDayOfTheWeek();
+                    taskDueDate = _dateFormatter.getDayOfTheWeek();
                     break;
                 default:
-                    taskDueDate = dateFormatter.getLongDate(
-                        differenceInCalendarYears(
-                            taskDetails.dueDate, new Date()
-                        )
+                    taskDueDate = _dateFormatter.getLongDate(
+                        differenceInCalendarYears(taskInfo.dueDate, new Date())
                     );
             }
 
@@ -105,10 +124,8 @@ function Task(taskDetails) {
             if (differenceInDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
-                taskDueDate = dateFormatter.getLongDate(
-                    differenceInCalendarYears(
-                        taskDetails.dueDate, new Date()
-                    )
+                taskDueDate = _dateFormatter.getLongDate(
+                    differenceInCalendarYears(taskInfo.dueDate, new Date())
                 );
             }
 
@@ -117,8 +134,7 @@ function Task(taskDetails) {
     }
 
     return {
-        updateTasks,
-        dateFormatter,
-        getTaskDueDate,
+        updateProjects,
+        getTaskDueDateString,
     }
 }

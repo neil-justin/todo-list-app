@@ -1,7 +1,5 @@
-import { add, differenceInCalendarDays } from 'date-fns';
-
 export {
-    displayTask,
+    createTaskComponents,
     resetTaskModal,
     createTaskCheckbox,
     createDeleteTaskElem,
@@ -9,9 +7,9 @@ export {
     listProjectName,
     displayProjectName,
     populateFormControl,
-    updateTaskDisplay,
     highlightChosenTab,
     updateMainContentHeading,
+    appendTaskItemElem,
 };
 
 /* I can't find in their documentation how to use the "import" keyword.
@@ -19,10 +17,9 @@ to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
 const taskListElem = document.querySelector('#task-list');
 
-function displayTask(task, isNotesEmpty, taskDueDate = null) {
+function createTaskComponents(task, isNotesEmpty, taskDueDate = null) {
     const taskItemElem = document.createElement('li');
     taskItemElem.classList.add('task', 'pointer-cursor');
-    taskListElem.appendChild(taskItemElem);
 
     const taskInfoContainerElem = document.createElement('section');
     taskInfoContainerElem.classList.add('task-info-container');
@@ -55,6 +52,8 @@ function displayTask(task, isNotesEmpty, taskDueDate = null) {
 
     const taskPriorityText = document.createTextNode(task.priority);
     taskAdditionalInfoElem.appendChild(taskPriorityText);
+
+    return taskItemElem;
 }
 
 function resetTaskModal(taskFormControl) {
@@ -124,39 +123,6 @@ function populateFormControl(formControl, data) {
     }
 }
 
-function updateTaskDisplay(taskDetails, taskItemElem, isNotesEmpty, taskDueDate = null) {
-    const taskInfoElem = taskItemElem.querySelector('.task-info-container');
-
-    const taskNameElem = taskInfoElem.querySelector('.task-name');
-    taskNameElem.textContent = `${taskDetails.name}`;
-
-    const taskNotesElem = taskInfoElem.querySelector('task-notes');
-
-    if (!isNotesEmpty) {
-        taskNotesElem.textContent = `${taskDetails.notes}`;
-    }
-
-    if (taskNotesElem) {
-        taskNotesElem.remove();
-    }
-
-    const taskAdditionalInfoElem = taskInfoElem.
-        querySelector('.task-additional-info');
-    taskAdditionalInfoElem.textContent = '';
-
-
-    if (taskDueDate !== null) {
-        const taskDueDateText = document.createTextNode(taskDueDate);
-        taskAdditionalInfoElem.appendChild(taskDueDateText);
-
-        const bulletPointText = document.
-            createTextNode(` ${he.decode('&bull;')} `);
-        taskAdditionalInfoElem.appendChild(bulletPointText);
-    }
-
-    const taskPriorityText = document.createTextNode(taskDetails.priority);
-    taskAdditionalInfoElem.appendChild(taskPriorityText);
-}
 
 function highlightChosenTab(event = null) {
     if (event !== null) {
@@ -174,4 +140,12 @@ function updateMainContentHeading(event = null) {
         : event.target.textContent;
     const mainContentHeadingElem = document.querySelector('#main-content-heading');
     mainContentHeadingElem.textContent = mainContentHeading;
+}
+
+function appendTaskItemElem(newTaskElem, editedTaskElem = null) {
+    if (editedTaskElem) {
+        return editedTaskElem.replaceWith(newTaskElem);
+    }
+
+    taskListElem.appendChild(newTaskElem);
 }

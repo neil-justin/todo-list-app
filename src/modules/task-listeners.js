@@ -1,23 +1,27 @@
-import { Task, tasks, } from './task';
 import {
-    displayTask,
+    Task,
+    tasks,
+} from './task';
+import {
+    createTaskComponents,
     resetTaskModal,
     createTaskCheckbox,
     createDeleteTaskElem,
     defineTaskItemElem,
     populateFormControl,
-    updateTaskDisplay,
     highlightChosenTab,
+    appendTaskItemElem,
 } from './dom-controller';
 import {
     isValueEmpty,
     filterByTaskProperty,
-    getTaskDetails,
+    getTaskInfo,
     shouldDeleteTask,
-    getTaskIndex
+    getTaskIndex,
+    checkTaskDuplicate,
 } from './helper';
-import { differenceInCalendarDays } from 'date-fns';
 import { accessLocalStorage } from './local-storage';
+import { differenceInCalendarDays } from 'date-fns';
 
 const taskModalElem = document.querySelector('#task-modal');
 const taskFormControl = {
@@ -51,7 +55,7 @@ taskListElem.addEventListener('click', (e) => {
     if (e.target === taskListElem) return;
 
     const taskIndex = getTaskIndex(e);
-    storedTasks = accessLocalStorage('getItem', 'tasks');
+    storedTasks = accessLocalStorage('getItem', 'projects');
 
     for (let i = 0; i < storedTasks.length; i++) {
         taskInstance = Task(storedTasks[i]);
@@ -68,7 +72,7 @@ taskListElem.addEventListener('click', (e) => {
         taskInstance = Task(storedTasks[taskIndex]);
         taskInstance.updateTasks(tasks[taskIndex], 'remove', taskIndex);
         taskItemElem.remove();
-        accessLocalStorage('setItem', tasks);
+        accessLocalStorage('setItem', 'projects');
     } else {
         taskModalElem.showModal();
         taskItemElem.setAttribute('data-editing-task', '');
@@ -91,72 +95,60 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 });
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
-taskModalConfirmButtonElem.addEventListener('click', (e) => {
-    console.log(accessLocalStorage('getItem', 'tasks'));
-    const taskDetails = getTaskDetails(taskFormControl);
+taskModalConfirmButtonElem.addEventListener('click', () => {
+    const taskInfo = getTaskInfo(taskFormControl);
+    const isTaskNameEmpty = isValueEmpty(taskInfo.name);
 
-    if (isValueEmpty(taskDetails.name)) return;
+    if (isTaskNameEmpty) return;
 
-    taskInstance = Task(taskDetails);
-    editedTaskElem = document.querySelector('[data-editing-task')
+    const storedProjects = accessLocalStorage('getItem', 'projects');
+    const isTaskDuplicate = checkTaskDuplicate(storedProjects, taskInfo);
 
-    if (editedTaskElem) {
-        const editedTaskIndex = parseInt(editedTaskElem.getAttribute('data-task-index'));
-
-        taskInstance.updateTasks(taskDetails, 'edit', editedTaskIndex);
-
-        if (taskDetails.dueDate !== null) {
-            updateTaskDisplay(
-                taskDetails, defineTaskItemElem(e, editedTaskIndex),
-                isValueEmpty(taskDetails.notes),
-                taskInstance.getTaskDueDate(
-                    differenceInCalendarDays(
-                        taskDetails.dueDate, new Date()
-                    )
-                ),
-            );
-        } else {
-            updateTaskDisplay(
-                taskDetails, defineTaskItemElem(e, editedTaskIndex),
-                isValueEmpty(taskDetails.notes),
-            );
-        }
-    } else {
-        taskInstance.updateTasks(taskDetails, 'add');
-
-        if (taskDetails.dueDate !== null) {
-            displayTask(
-                taskDetails, isValueEmpty(taskDetails.notes),
-                taskInstance.getTaskDueDate(differenceInCalendarDays(
-                    taskDetails.dueDate, new Date()
-                )),
-            );
-        } else {
-            displayTask(
-                taskDetails, isValueEmpty(taskDetails.notes),
-            );
-        }
-
-        taskItemElem = taskListElem.lastElementChild;
-        taskInfoElem = taskItemElem.querySelector('.task-info-container');
-
-        createTaskCheckbox(taskItemElem, taskInfoElem);
-        createDeleteTaskElem(taskItemElem);
-        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1}`);
+    if (isTaskDuplicate) {
+        window.alert('This task already exists in this project');
+        return;
     }
 
-    accessLocalStorage('setItem', tasks);
-    console.log(accessLocalStorage('getItem', 'tasks'));
+    taskInstance = Task(taskInfo);
+    const isTaskNotesEmpty = isValueEmpty(taskInfo.notes);
+    const taskDueDateString = taskInstance.getTaskDueDateString(
+        differenceInCalendarDays(taskInfo.dueDate, new Date())
+    );
+
+    if (taskInfo.dueDate === null) {
+        taskItemElem = createTaskComponents(taskInfo, isTaskNotesEmpty);
+    } else {
+        taskItemElem = createTaskComponents(taskInfo, isTaskNotesEmpty, taskDueDateString);
+    }
+
+    taskInfoElem = taskItemElem.querySelector('.task-info-container');
+    editedTaskElem = document.querySelector('[data-editing-task]')
+
+    appendTaskItemElem(taskItemElem, editedTaskElem);
+    createTaskCheckbox(taskItemElem, taskInfoElem);
+    createDeleteTaskElem(taskItemElem);
+
+    let updatedProjects;
+
+    if (editedTaskElem) {
+        const editedTaskIndex = getTaskIndex(storedProjects, taskInfo);
+        updatedProjects = taskInstance.
+            updateProjects(storedProjects, 'edit', taskInfo, editedTaskIndex);
+    } else {
+        updatedProjects = taskInstance.
+            updateProjects(storedProjects, 'add', taskInfo);
+    }
+
+    accessLocalStorage('setItem', updatedProjects);
 });
 
 const projectInboxListElem = document.querySelector('#project-inbox-container');
 projectInboxListElem.addEventListener('click', (e) => {
-    console.log(accessLocalStorage('getItem', 'tasks'));
     if (e.target.hasAttribute('current-tab')) return;
 
     highlightChosenTab(e);
     taskListElem.replaceChildren();
-    storedTasks = accessLocalStorage('getItem', 'tasks');
+    storedTasks = accessLocalStorage('getItem', 'projects');
 
     if (storedTasks.length === 0) return;
 
@@ -171,9 +163,9 @@ projectInboxListElem.addEventListener('click', (e) => {
     for (let i = 0; i < filteredTasks.length; i++) {
         taskInstance = Task(filteredTasks[i]);
 
-        displayTask(
+        createTaskComponents(
             filteredTasks[i], !filteredTasks[i].notes,
-            taskInstance.getTaskDueDate(differenceInCalendarDays(
+            taskInstance.getTaskDueDateString(differenceInCalendarDays(
                 new Date(`${filteredTasks[i].dueDate} `), new Date()
             ))
         );
