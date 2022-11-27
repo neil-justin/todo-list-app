@@ -37,7 +37,7 @@
     background-color: var(--lightgray-color);
 }
 
-.sidebar-nav-link-container {
+.project-navbar {
     display: grid;
     row-gap: 8px;
 }

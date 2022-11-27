@@ -19,6 +19,7 @@ import {
     shouldDeleteTask,
     getTaskIndex,
     checkTaskDuplicate,
+    getProjectName,
 } from './helper';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
@@ -48,35 +49,38 @@ addTaskElems.forEach(addTaskElem => {
 let taskInstance;
 let taskItemElem;
 let taskInfoElem;
+let storedProjects;
+let taskInfo;
+let taskIndex;
+let updatedProjects;
+
 let storedTasks;
 
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
     if (e.target === taskListElem) return;
 
-    const taskIndex = getTaskIndex(e);
-    storedTasks = accessLocalStorage('getItem', 'projects');
-
-    for (let i = 0; i < storedTasks.length; i++) {
-        taskInstance = Task(storedTasks[i]);
-        taskInstance.updateTasks(storedTasks[i], 'add');
-    }
-
+    storedProjects = accessLocalStorage('getItem', 'projects');
     taskItemElem = defineTaskItemElem(e);
     taskInfoElem = taskItemElem.querySelector('.task-info-container');
     const taskCheckboxElem = taskInfoElem.previousElementSibling;
     const deleteTaskElem = taskInfoElem.nextElementSibling;
+    const chosenProject = getProjectName();
+    taskIndex = getTaskIndex(storedProjects, taskItemElem, chosenProject);
+    taskInfo = storedProjects[chosenProject][taskIndex];
+    taskInstance = Task(taskInfo);
 
-    if (e.target === taskCheckboxElem ||
-        e.target === deleteTaskElem && shouldDeleteTask()) {
-        taskInstance = Task(storedTasks[taskIndex]);
-        taskInstance.updateTasks(tasks[taskIndex], 'remove', taskIndex);
+    if (e.target === deleteTaskElem && !shouldDeleteTask()) return;
+
+    if (e.target === taskCheckboxElem || e.target === deleteTaskElem) {
+        updatedProjects = taskInstance.
+            updateTasks(storedProjects, 'remove', taskIndex);
+        accessLocalStorage('setItem', updatedProjects);
         taskItemElem.remove();
-        accessLocalStorage('setItem', 'projects');
     } else {
         taskModalElem.showModal();
         taskItemElem.setAttribute('data-editing-task', '');
-        populateFormControl(taskFormControl, tasks[taskIndex]);
+        populateFormControl(taskFormControl, taskInfo);
     }
 });
 
@@ -96,15 +100,16 @@ taskModalCloseButtonElem.addEventListener('click', () => {
 
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
-    const taskInfo = getTaskInfo(taskFormControl);
+    taskInfo = getTaskInfo(taskFormControl);
     const isTaskNameEmpty = isValueEmpty(taskInfo.name);
 
     if (isTaskNameEmpty) return;
 
-    const storedProjects = accessLocalStorage('getItem', 'projects');
+    storedProjects = accessLocalStorage('getItem', 'projects');
     const isTaskDuplicate = checkTaskDuplicate(storedProjects, taskInfo);
+    editedTaskElem = document.querySelector('[data-editing-task]')
 
-    if (isTaskDuplicate) {
+    if (!editedTaskElem && isTaskDuplicate) {
         window.alert('This task already exists in this project');
         return;
     }
@@ -122,59 +127,57 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     }
 
     taskInfoElem = taskItemElem.querySelector('.task-info-container');
-    editedTaskElem = document.querySelector('[data-editing-task]')
 
     appendTaskItemElem(taskItemElem, editedTaskElem);
     createTaskCheckbox(taskItemElem, taskInfoElem);
     createDeleteTaskElem(taskItemElem);
 
-    let updatedProjects;
-
     if (editedTaskElem) {
-        const editedTaskIndex = getTaskIndex(storedProjects, taskInfo);
         updatedProjects = taskInstance.
-            updateProjects(storedProjects, 'edit', taskInfo, editedTaskIndex);
+            updateTasks(storedProjects, 'edit', taskIndex);
     } else {
         updatedProjects = taskInstance.
-            updateProjects(storedProjects, 'add', taskInfo);
+            updateTasks(storedProjects, 'add');
     }
 
     accessLocalStorage('setItem', updatedProjects);
 });
 
-const projectInboxListElem = document.querySelector('#project-inbox-container');
-projectInboxListElem.addEventListener('click', (e) => {
-    if (e.target.hasAttribute('current-tab')) return;
+const projectNavBars = document.querySelectorAll('.project-navbar');
+projectNavBars.forEach(projectNavBar => {
+    projectNavBar.addEventListener('click', (e) => {
+        if (e.target.hasAttribute('data-current-tab')) return;
 
-    highlightChosenTab(e);
-    taskListElem.replaceChildren();
-    storedTasks = accessLocalStorage('getItem', 'projects');
+        highlightChosenTab(e);
+        taskListElem.replaceChildren();
 
-    if (storedTasks.length === 0) return;
+        storedProjects = accessLocalStorage('getItem', 'projects');
+        if (storedProjects.length === 0) return;
 
-    let filteredTasks = filterByTaskProperty(storedTasks, 'project', e);
+        let filteredTasks = filterByTaskProperty(storedTasks, 'project', e);
 
-    if (e.target.textContent !== 'Inbox') {
-        filteredTasks = filterByTaskProperty(filteredTasks, 'dueDate', e);
-    }
+        if (e.target.textContent !== 'Inbox') {
+            filteredTasks = filterByTaskProperty(filteredTasks, 'dueDate', e);
+        }
 
-    if (filteredTasks.length === 0) return;
+        if (filteredTasks.length === 0) return;
 
-    for (let i = 0; i < filteredTasks.length; i++) {
-        taskInstance = Task(filteredTasks[i]);
+        for (let i = 0; i < filteredTasks.length; i++) {
+            taskInstance = Task(filteredTasks[i]);
 
-        createTaskComponents(
-            filteredTasks[i], !filteredTasks[i].notes,
-            taskInstance.getTaskDueDateString(differenceInCalendarDays(
-                new Date(`${filteredTasks[i].dueDate} `), new Date()
-            ))
-        );
+            createTaskComponents(
+                filteredTasks[i], !filteredTasks[i].notes,
+                taskInstance.getTaskDueDateString(differenceInCalendarDays(
+                    new Date(`${filteredTasks[i].dueDate} `), new Date()
+                ))
+            );
 
-        taskItemElem = taskListElem.lastElementChild;
-        taskInfoElem = taskItemElem.querySelector('.task-info-container');
+            taskItemElem = taskListElem.lastElementChild;
+            taskInfoElem = taskItemElem.querySelector('.task-info-container');
 
-        createTaskCheckbox(taskItemElem, taskInfoElem);
-        createDeleteTaskElem(taskItemElem);
-        taskItemElem.setAttribute('data-task-index', `${tasks.length - 1} `);
-    }
+            createTaskCheckbox(taskItemElem, taskInfoElem);
+            createDeleteTaskElem(taskItemElem);
+            taskItemElem.setAttribute('data-task-index', `${tasks.length - 1} `);
+        }
+    });
 });

@@ -5,6 +5,8 @@ export {
     shouldDeleteTask,
     getTaskIndex,
     checkTaskDuplicate,
+    getProjectName,
+    capitalizeString,
 };
 
 function isValueEmpty(data) {
@@ -16,9 +18,9 @@ function filterByTaskProperty(array, property, event = null) {
 
     switch (property) {
         case 'project':
-            const INBOX_PROJECT = ['Inbox', 'Today', 'Upcoming'];
+            const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
 
-            if (INBOX_PROJECT.includes(chosenProject)) {
+            if (PROJECT_INBOX.includes(chosenProject)) {
                 return array.filter(elem => elem['project'] === 'Inbox');
             } else {
                 return array.filter(elem => elem['project'] === chosenProject);
@@ -60,20 +62,36 @@ function shouldDeleteTask() {
     return window.confirm('Are you sure you want to delete this item?')
 }
 
-let project;
 
-function getTaskIndex(storedProjects, task) {
-    project = storedProjects[task.project];
+function getTaskIndex(projects, taskElem, chosenProject) {
+    const chosenTask = taskElem.querySelector('.task-name');
+    const project = projects[chosenProject];
 
     return project.findIndex(storedTask => {
-        return storedTask.name === task.name;
+        return storedTask.name === chosenTask.textContent;
     });
 }
 
 function checkTaskDuplicate(storedProjects, newTask) {
-    project = storedProjects[newTask.project];
+    const project = storedProjects[newTask.project];
 
     return project.some(storedTask => {
         return storedTask.name === newTask.name;
     });
+}
+
+function getProjectName() {
+    const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
+    const chosenProjectName = document.querySelector('[data-opened-tab]')
+        .textContent.toLowerCase();
+
+    if (PROJECT_INBOX.includes(chosenProjectName)) {
+        return 'inbox';
+    }
+
+    return chosenProjectName;
+}
+
+function capitalizeString(string) {
+    return string[0].toUpperCase() + string.slice(1);
 }

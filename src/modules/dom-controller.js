@@ -12,9 +12,12 @@ export {
     appendTaskItemElem,
 };
 
+import { capitalizeString } from './helper';
+
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
+
 const taskListElem = document.querySelector('#task-list');
 
 function createTaskComponents(task, isNotesEmpty, taskDueDate = null) {
@@ -83,9 +86,7 @@ function createDeleteTaskElem(taskItemElem) {
 
 function defineTaskItemElem(event, index = null) {
     if (event.currentTarget === taskListElem) {
-        return event.target.classList.contains('task') ?
-            event.target :
-            event.target.closest('.task');
+        return event.target.closest('.task');
     }
 
     return document.querySelector(`[data-task-index='${index}']`);
@@ -116,7 +117,14 @@ function populateFormControl(formControl, data) {
 
         if (property === 'dueDate') {
             const dateString = data.dueDate.toISOString().slice(0, 10);
-            formControl[property].value = dateString;
+            formControl.dueDate.value = dateString;
+        } else if (property === 'project') {
+            const taskProject = capitalizeString(data.project);
+            const projectSelectElem = formControl.project;
+            const projectOptionValues = [...projectSelectElem.options]
+                .map(option => option.value);
+            const projectIndex = projectOptionValues.indexOf(taskProject);
+            formControl.dueDate.selectedIndex = projectIndex;
         } else {
             formControl[property].value = data[property];
         }
@@ -126,13 +134,13 @@ function populateFormControl(formControl, data) {
 
 function highlightChosenTab(event = null) {
     if (event !== null) {
-        const currentTabElem = document.querySelector('[current-tab]');
-        currentTabElem.removeAttribute('current-tab');
+        const openedTabElem = document.querySelector('[data-opened-tab]');
+        openedTabElem.removeAttribute('data-opened-tab');
     }
 
     const inboxTabElem = document.querySelector('#inbox-tab');
     const chosenTabElem = event === null ? inboxTabElem : event.target;
-    chosenTabElem.setAttribute('current-tab', '');
+    chosenTabElem.setAttribute('data-opened-tab', '');
 }
 
 function updateMainContentHeading(event = null) {

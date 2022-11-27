@@ -10,21 +10,21 @@ const defaultProjects = {
         {
             name: 'Go to the wet market',
             notes: null,
-            project: 'Inbox',
+            project: 'inbox',
             priority: 'Priority 4',
             dueDate: new Date(2022, 10, 18)
         },
         {
             name: 'Export bitwarden passwords',
             notes: null,
-            project: 'Inbox',
+            project: 'inbox',
             priority: 'Priority 1',
             dueDate: new Date(2022, 10, 25)
         },
         {
-            name: 'Wash laptop\'s cleaning cloth',
+            name: 'Wash laptop\'s cleaning clothes',
             notes: 'Do not forget that you have three of these!',
-            project: 'Inbox',
+            project: 'inbox',
             priority: 'Priority 2',
             dueDate: new Date(2022, 11, 13)
         }
@@ -39,21 +39,19 @@ function Task(taskInfo) {
         taskInfo.dueDate = new Date(`${taskInfo.dueDate}`);
     }
 
-    function updateProjects(projects, update, task, taskIndex = null) {
-        const chosenProject = projects[task.project];
-
+    function updateTasks(projects, update, taskIndex = null) {
+        const chosenProject = projects[taskInfo.project];
+        debugger;
         switch (update) {
             case 'add':
-                chosenProject.push(task);
+                chosenProject.push(taskInfo);
                 break;
             case 'edit':
-                chosenProject[taskIndex] = task;
+                chosenProject[taskIndex] = taskInfo;
                 break;
             case 'remove':
                 chosenProject.splice(taskIndex, 1);
         }
-
-        projects[task.project] = chosenProject;
 
         return projects;
     }
@@ -134,7 +132,7 @@ function Task(taskInfo) {
     }
 
     return {
-        updateProjects,
+        updateTasks,
         getTaskDueDateString,
     }
 }
