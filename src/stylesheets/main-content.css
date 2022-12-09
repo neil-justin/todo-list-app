@@ -12,21 +12,6 @@
     font-size: 25px;
 }
 
-#sort-by-and-order-by-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-self: end;
-    justify-content: end;
-}
-
-#sort-by-and-order-by-container select {
-    border: 2px solid var(--accent-color);
-    background-color: var(--white-color);
-    padding: 2px;
-    margin-left: 4px;
-}
-
 #main-content-add-task-elem {
     background-color: var(--white-color);
     padding: 18px;
