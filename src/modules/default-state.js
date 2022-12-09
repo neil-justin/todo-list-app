@@ -15,7 +15,8 @@ import {
     createDeleteTaskElem,
     highlightChosenTab,
     updateMainContentHeading,
-    appendTaskItemElem
+    appendTaskItemElem,
+    displayProjectName
 } from './dom-controller';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
@@ -27,6 +28,14 @@ const storedProjects = accessLocalStorage('getItem', 'projects');
 const userProjects = storedProjects ?? defaultProjects;
 
 accessLocalStorage('setItem', userProjects);
+
+const projectNames = Object.keys(userProjects);
+
+for (let i = 0; i < projectNames.length; i++) {
+    if (projectNames[i] === 'inbox') continue;
+
+    displayProjectName(projectNames[i]);
+}
 
 const inbox = userProjects.inbox;
 

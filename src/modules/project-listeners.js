@@ -1,17 +1,17 @@
-import { Project, projectNameInputElem } from "./project";
+import { displayProjectName } from "./dom-controller";
 import { isValueEmpty } from "./helper";
-import {
-    listProjectName,
-    displayProjectName
-} from "./dom-controller";
+import { accessLocalStorage } from "./local-storage";
+import { Project } from "./project";
+
+const projectNameInput = document.querySelector('#project-name');
 
 const addProjectButtonElem = document.querySelector('#add-project-button');
 addProjectButtonElem.addEventListener('click', () => {
     const projectModalElem = document.querySelector('#project-modal');
     projectModalElem.showModal();
 
-    if (!projectNameInputElem.hasAttribute('required')) {
-        projectNameInputElem.setAttribute('required', '');
+    if (!projectNameInput.hasAttribute('required')) {
+        projectNameInput.setAttribute('required', '');
     }
 });
 
@@ -19,12 +19,17 @@ const projectModalConfirmButtonElem = document.
     querySelector('#project-modal-confirm-button');
 
 projectModalConfirmButtonElem.addEventListener('click', () => {
-    if (!isValueEmpty(projectNameInputElem)) {
-        const project = Project();
+    const isProjectNameInputEmpty = isValueEmpty(projectNameInput.value)
 
-        project.addProject();
-        listProjectName(projectNameInputElem);
-        displayProjectName(projectNameInputElem);
+    if (!isProjectNameInputEmpty) {
+        displayProjectName(projectNameInput.value);
+
+        const projectInstance = Project();
+        const storedProjects = accessLocalStorage('getItem', 'projects');
+        const updatedProjects =
+            projectInstance.updateProjects(storedProjects, projectNameInput);
+
+        accessLocalStorage('setItem', updatedProjects);
     }
 });
 
@@ -32,5 +37,5 @@ const projectModalCancelButtonElem = document
     .querySelector('#project-modal-cancel-button');
 
 projectModalCancelButtonElem.addEventListener('click', () => {
-    projectNameInputElem.removeAttribute('required');
+    projectNameInput.removeAttribute('required');
 })

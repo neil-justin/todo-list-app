@@ -41,7 +41,7 @@ function Task(taskInfo) {
 
     function updateTasks(projects, update, taskIndex = null) {
         const chosenProject = projects[taskInfo.project];
-        debugger;
+        
         switch (update) {
             case 'add':
                 chosenProject.push(taskInfo);

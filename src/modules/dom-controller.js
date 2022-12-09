@@ -4,7 +4,6 @@ export {
     createTaskCheckbox,
     createDeleteTaskElem,
     defineTaskItemElem,
-    listProjectName,
     displayProjectName,
     populateFormControl,
     highlightChosenTab,
@@ -92,23 +91,19 @@ function defineTaskItemElem(event, index = null) {
     return document.querySelector(`[data-task-index='${index}']`);
 }
 
-function listProjectName(projectNameInputElem) {
-    const taskModalProjectSelectElem = document.querySelector('#task-project');
-    const taskModalProjectOptionElem = document.createElement('option');
-    taskModalProjectOptionElem.value = `${projectNameInputElem.value}`;
-    taskModalProjectOptionElem.textContent = `${projectNameInputElem.value}`;
-
-    taskModalProjectSelectElem.appendChild(taskModalProjectOptionElem);
-}
-
-function displayProjectName(projectNameInputElem) {
+function displayProjectName(projectName) {
     const projectListElem = document.querySelector('#project-list');
     const projectItemElem = document.createElement('li');
-    projectItemElem.textContent = `${projectNameInputElem.value}`;
+    projectItemElem.textContent = `${projectName}`;
     projectItemElem.classList
         .add('sidebar-text', 'medium-text', 'pointer-cursor');
-
     projectListElem.appendChild(projectItemElem);
+
+    const projectSelectElem = document.querySelector('#task-project');
+    const projectOptionElem = document.createElement('option');
+    projectOptionElem.value = `${projectName}`;
+    projectOptionElem.textContent = `${projectName}`;
+    projectSelectElem.appendChild(projectOptionElem);
 }
 
 function populateFormControl(formControl, data) {
