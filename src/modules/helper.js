@@ -10,6 +10,7 @@ export {
     getProjectName,
     capitalizeString,
     shouldDisplayTask,
+    PROJECT_INBOX,
 };
 
 function isValueEmpty(data) {

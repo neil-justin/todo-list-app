@@ -11,6 +11,7 @@ import {
     populateFormControl,
     highlightChosenTab,
     appendTaskItemElem,
+    updateMainContentHeading,
 } from './dom-controller';
 import {
     isValueEmpty,
@@ -162,6 +163,9 @@ projectNavBars.forEach(projectNavBar => {
 
         highlightChosenTab(e);
         taskListElem.replaceChildren();
+        updateMainContentHeading(e);
+
+        console.log(e.currentTarget);
 
         storedProjects = accessLocalStorage('getItem', 'projects');
         let chosenProject = filterByTaskProperty(storedProjects, 'project', e);

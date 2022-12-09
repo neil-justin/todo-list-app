@@ -11,7 +11,7 @@ export {
     appendTaskItemElem,
 };
 
-import { capitalizeString } from './helper';
+import { capitalizeString, PROJECT_INBOX } from './helper';
 
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
@@ -139,8 +139,14 @@ function highlightChosenTab(event = null) {
 }
 
 function updateMainContentHeading(event = null) {
-    const mainContentHeading = event === null ? 'Inbox'
-        : event.target.textContent;
+    let mainContentHeading;
+
+    if (event === null || PROJECT_INBOX.includes(event.target.textContent)) {
+        mainContentHeading = 'Inbox';
+    } else {
+        mainContentHeading = event.target.textContent;
+    }
+
     const mainContentHeadingElem = document.querySelector('#main-content-heading');
     mainContentHeadingElem.textContent = mainContentHeading;
 }
