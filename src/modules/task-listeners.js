@@ -155,7 +155,10 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 const projectNavBars = document.querySelectorAll('.project-navbar');
 projectNavBars.forEach(projectNavBar => {
     projectNavBar.addEventListener('click', (e) => {
-        if (e.target.hasAttribute('data-opened-tab')) return;
+        if (
+            e.target.classList.contains('project-navbar') ||
+            e.target.hasAttribute('data-opened-tab')
+        ) return;
 
         highlightChosenTab(e);
         taskListElem.replaceChildren();
