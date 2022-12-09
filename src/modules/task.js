@@ -40,11 +40,13 @@ function Task(taskInfo) {
     }
 
     function updateTasks(projects, update, taskIndex = null) {
-        const chosenProject = projects[taskInfo.project];
-        
+        let chosenProject = projects[taskInfo.project];
+
         switch (update) {
             case 'add':
-                chosenProject.push(taskInfo);
+                chosenProject === null ?
+                    chosenProject = [taskInfo] :
+                    chosenProject.push(taskInfo);
                 break;
             case 'edit':
                 chosenProject[taskIndex] = taskInfo;
@@ -52,6 +54,8 @@ function Task(taskInfo) {
             case 'remove':
                 chosenProject.splice(taskIndex, 1);
         }
+
+        projects[taskInfo.project] = chosenProject;
 
         return projects;
     }

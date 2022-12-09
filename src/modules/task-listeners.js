@@ -20,6 +20,7 @@ import {
     getTaskIndex,
     checkTaskDuplicate,
     getProjectName,
+    shouldDisplayTask,
 } from './helper';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
@@ -53,6 +54,7 @@ let storedProjects;
 let taskInfo;
 let taskIndex;
 let updatedProjects;
+let openedTabElem;
 
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
@@ -63,7 +65,8 @@ taskListElem.addEventListener('click', (e) => {
     taskInfoElem = taskItemElem.querySelector('.task-info-container');
     const taskCheckboxElem = taskInfoElem.previousElementSibling;
     const deleteTaskElem = taskInfoElem.nextElementSibling;
-    const chosenProjectName = getProjectName();
+    openedTabElem = document.querySelector('[data-opened-tab]');
+    const chosenProjectName = getProjectName(openedTabElem);
     taskIndex = getTaskIndex(storedProjects, taskItemElem, chosenProjectName);
     taskInfo = storedProjects[chosenProjectName][taskIndex];
     taskInstance = Task(taskInfo);
@@ -115,6 +118,22 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     }
 
     taskInstance = Task(taskInfo);
+
+    if (editedTaskElem) {
+        updatedProjects = taskInstance.
+            updateTasks(storedProjects, 'edit', taskIndex);
+    } else {
+        updatedProjects = taskInstance.updateTasks(storedProjects, 'add');
+    }
+
+    accessLocalStorage('setItem', updatedProjects);
+
+    openedTabElem = document.querySelector('[data-opened-tab]');
+    const shouldDisplayNewTask =
+        shouldDisplayTask(taskInfo, openedTabElem);
+
+    if (!shouldDisplayNewTask) return;
+
     const isTaskNotesEmpty = isValueEmpty(taskInfo.notes);
     displayedTaskDueDate = taskInstance.getTaskDueDateString(
         differenceInCalendarDays(taskInfo.dueDate, new Date())
@@ -131,16 +150,6 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
     appendTaskItemElem(taskItemElem, editedTaskElem);
     createTaskCheckbox(taskItemElem, taskInfoElem);
     createDeleteTaskElem(taskItemElem);
-
-    if (editedTaskElem) {
-        updatedProjects = taskInstance.
-            updateTasks(storedProjects, 'edit', taskIndex);
-    } else {
-        updatedProjects = taskInstance.
-            updateTasks(storedProjects, 'add');
-    }
-
-    accessLocalStorage('setItem', updatedProjects);
 });
 
 const projectNavBars = document.querySelectorAll('.project-navbar');
@@ -154,7 +163,7 @@ projectNavBars.forEach(projectNavBar => {
         storedProjects = accessLocalStorage('getItem', 'projects');
         let chosenProject = filterByTaskProperty(storedProjects, 'project', e);
 
-        if (chosenProject.length === 0) return;
+        if (chosenProject === null || chosenProject.length === 0) return;
 
         const isProjectInbox = chosenProject[0].project === 'inbox';
         const inboxTabElem = document.querySelector('#inbox-tab');

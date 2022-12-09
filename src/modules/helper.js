@@ -9,6 +9,7 @@ export {
     checkTaskDuplicate,
     getProjectName,
     capitalizeString,
+    shouldDisplayTask,
 };
 
 function isValueEmpty(data) {
@@ -64,33 +65,43 @@ function shouldDeleteTask() {
 
 
 function getTaskIndex(projects, taskElem, chosenProjectName) {
-    const chosenTask = taskElem.querySelector('.task-name');
+    const chosenTaskName = taskElem.querySelector('.task-name').textContent;
     const project = projects[chosenProjectName];
 
     return project.findIndex(storedTask => {
-        return storedTask.name === chosenTask.textContent;
+        return storedTask.name === chosenTaskName;
     });
 }
 
 function checkTaskDuplicate(storedProjects, newTask) {
     const project = storedProjects[newTask.project];
 
+    if (project === null) return;
+
     return project.some(storedTask => {
         return storedTask.name === newTask.name;
     });
 }
 
-function getProjectName() {
-    const chosenProjectName = document.querySelector('[data-opened-tab]')
-        .textContent.toLowerCase();
+function getProjectName(openedTab) {
+    if (PROJECT_INBOX.includes(openedTab.textContent)) return 'inbox';
 
-    if (PROJECT_INBOX.includes(chosenProjectName)) {
-        return 'inbox';
-    }
-
-    return chosenProjectName;
+    return openedTab.textContent;
 }
 
 function capitalizeString(string) {
     return string[0].toUpperCase() + string.slice(1);
+}
+
+function shouldDisplayTask(task, openedTab) {
+    const diffInCalendarDays =
+        differenceInCalendarDays(task.dueDate, new Date());
+
+    if (openedTab.textContent === 'Today') {
+        return diffInCalendarDays === 0;
+    } else if (openedTab.textContent === 'Upcoming') {
+        return diffInCalendarDays > 0;
+    } else {
+        return task.project === openedTab.textContent;
+    }
 }
