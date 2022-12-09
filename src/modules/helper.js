@@ -1,3 +1,5 @@
+import { differenceInCalendarDays } from "date-fns";
+
 export {
     isValueEmpty,
     filterByTaskProperty,
@@ -13,30 +15,28 @@ function isValueEmpty(data) {
     return data.trim().length === 0;
 }
 
-function filterByTaskProperty(array, property, event = null) {
-    const chosenProject = event === null ? 'Inbox' : event.target.textContent;
+const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
+
+function filterByTaskProperty(project, property, event) {
+    const chosenProjectName = event.target.textContent;
 
     switch (property) {
         case 'project':
-            const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
-
-            if (PROJECT_INBOX.includes(chosenProject)) {
-                return array.filter(elem => elem['project'] === 'Inbox');
-            } else {
-                return array.filter(elem => elem['project'] === chosenProject);
-            }
+            return PROJECT_INBOX.includes(chosenProjectName) ?
+                project.inbox : project[chosenProjectName.toLowerCase()]
         case 'dueDate':
             const today = new Date();
 
-            if (chosenProject === 'Today') {
-                return array.filter(item => {
-                    return new Date(`${item.dueDate}`).toDateString()
-                        === today.toDateString();
+            if (chosenProjectName === 'Today') {
+                return project.filter(task => {
+                    return task.dueDate.toDateString() === today.toDateString();
                 });
-            } else if (chosenProject === 'Upcoming') {
-                return array.filter(item => {
-                    return new Date(`${item.dueDate}`).toDateString()
-                        !== today.toDateString();
+            } else if (chosenProjectName === 'Upcoming') {
+                return project.filter(task => {
+                    const diffInCalendarDays =
+                        differenceInCalendarDays(task.dueDate, new Date());
+
+                    return diffInCalendarDays > 0;
                 });
             }
     }
@@ -63,9 +63,9 @@ function shouldDeleteTask() {
 }
 
 
-function getTaskIndex(projects, taskElem, chosenProject) {
+function getTaskIndex(projects, taskElem, chosenProjectName) {
     const chosenTask = taskElem.querySelector('.task-name');
-    const project = projects[chosenProject];
+    const project = projects[chosenProjectName];
 
     return project.findIndex(storedTask => {
         return storedTask.name === chosenTask.textContent;
@@ -81,7 +81,6 @@ function checkTaskDuplicate(storedProjects, newTask) {
 }
 
 function getProjectName() {
-    const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
     const chosenProjectName = document.querySelector('[data-opened-tab]')
         .textContent.toLowerCase();
 

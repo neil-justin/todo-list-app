@@ -62,11 +62,11 @@
     background-color: var(--lightgray-color);
 }
 
-[current-tab] {
+[data-opened-tab] {
     border-left: 2px solid var(--accent-color);
     background-color: var(--light-accent-color);
 }
 
-[current-tab]:hover {
+[data-opened-tab]:hover {
     background-color: var(--light-accent-color) !important;
 }

@@ -28,21 +28,21 @@ const userProjects = storedProjects ?? defaultProjects;
 
 accessLocalStorage('setItem', userProjects);
 
-const inboxTasks = userProjects['inbox'];
+const inbox = userProjects.inbox;
 
-for (let i = 0; i < inboxTasks.length; i++) {
-    const taskInstance = Task(inboxTasks[i]);
+for (let i = 0; i < inbox.length; i++) {
+    const taskInstance = Task(inbox[i]);
     let taskItemElem;
 
-    if (inboxTasks[i].dueDate === null) {
-        taskItemElem = createTaskComponents(inboxTasks[i], !inboxTasks[i].notes,)
+    if (inbox[i].dueDate === null) {
+        taskItemElem = createTaskComponents(inbox[i], !inbox[i].notes,)
     } else {
-        const taskDueDateString = taskInstance.getTaskDueDateString(
-            differenceInCalendarDays(inboxTasks[i].dueDate, new Date())
+        const displayedTaskDueDate = taskInstance.getTaskDueDateString(
+            differenceInCalendarDays(inbox[i].dueDate, new Date())
         );
 
         taskItemElem = createTaskComponents(
-            inboxTasks[i], !inboxTasks[i].notes, taskDueDateString
+            inbox[i], !inbox[i].notes, displayedTaskDueDate
         );
     }
 

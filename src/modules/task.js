@@ -35,7 +35,7 @@ const tasks = [];
 
 function Task(taskInfo) {
     if (taskInfo.dueDate !== null) {
-        // parsing the due date to an appropriate date format
+        // parsing the dates into an appropriate and meaningful format
         taskInfo.dueDate = new Date(`${taskInfo.dueDate}`);
     }
 

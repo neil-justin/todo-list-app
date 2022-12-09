@@ -54,8 +54,6 @@ let taskInfo;
 let taskIndex;
 let updatedProjects;
 
-let storedTasks;
-
 const taskListElem = document.querySelector('#task-list');
 taskListElem.addEventListener('click', (e) => {
     if (e.target === taskListElem) return;
@@ -65,9 +63,9 @@ taskListElem.addEventListener('click', (e) => {
     taskInfoElem = taskItemElem.querySelector('.task-info-container');
     const taskCheckboxElem = taskInfoElem.previousElementSibling;
     const deleteTaskElem = taskInfoElem.nextElementSibling;
-    const chosenProject = getProjectName();
-    taskIndex = getTaskIndex(storedProjects, taskItemElem, chosenProject);
-    taskInfo = storedProjects[chosenProject][taskIndex];
+    const chosenProjectName = getProjectName();
+    taskIndex = getTaskIndex(storedProjects, taskItemElem, chosenProjectName);
+    taskInfo = storedProjects[chosenProjectName][taskIndex];
     taskInstance = Task(taskInfo);
 
     if (e.target === deleteTaskElem && !shouldDeleteTask()) return;
@@ -98,6 +96,8 @@ taskModalCloseButtonElem.addEventListener('click', () => {
     }
 });
 
+let displayedTaskDueDate;
+
 const taskModalConfirmButtonElem = document.querySelector('#task-modal-confirm-button');
 taskModalConfirmButtonElem.addEventListener('click', () => {
     taskInfo = getTaskInfo(taskFormControl);
@@ -116,14 +116,14 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 
     taskInstance = Task(taskInfo);
     const isTaskNotesEmpty = isValueEmpty(taskInfo.notes);
-    const taskDueDateString = taskInstance.getTaskDueDateString(
+    displayedTaskDueDate = taskInstance.getTaskDueDateString(
         differenceInCalendarDays(taskInfo.dueDate, new Date())
     );
 
     if (taskInfo.dueDate === null) {
         taskItemElem = createTaskComponents(taskInfo, isTaskNotesEmpty);
     } else {
-        taskItemElem = createTaskComponents(taskInfo, isTaskNotesEmpty, taskDueDateString);
+        taskItemElem = createTaskComponents(taskInfo, isTaskNotesEmpty, displayedTaskDueDate);
     }
 
     taskInfoElem = taskItemElem.querySelector('.task-info-container');
@@ -146,38 +146,53 @@ taskModalConfirmButtonElem.addEventListener('click', () => {
 const projectNavBars = document.querySelectorAll('.project-navbar');
 projectNavBars.forEach(projectNavBar => {
     projectNavBar.addEventListener('click', (e) => {
-        if (e.target.hasAttribute('data-current-tab')) return;
+        if (e.target.hasAttribute('data-opened-tab')) return;
 
         highlightChosenTab(e);
         taskListElem.replaceChildren();
 
         storedProjects = accessLocalStorage('getItem', 'projects');
-        if (storedProjects.length === 0) return;
+        let chosenProject = filterByTaskProperty(storedProjects, 'project', e);
 
-        let filteredTasks = filterByTaskProperty(storedTasks, 'project', e);
+        if (chosenProject.length === 0) return;
 
-        if (e.target.textContent !== 'Inbox') {
-            filteredTasks = filterByTaskProperty(filteredTasks, 'dueDate', e);
+        const isProjectInbox = chosenProject[0].project === 'inbox';
+        const inboxTabElem = document.querySelector('#inbox-tab');
+
+        if (isProjectInbox && e.target !== inboxTabElem) {
+            for (let i = 0; i < chosenProject.length; i++) {
+                /* parsing the date(s) into an appropriate and meaningful format,
+                to be used in the filterByTaskProperty function */
+                chosenProject[i].dueDate = new Date(`${chosenProject[i].dueDate}`);
+            }
+
+            chosenProject = filterByTaskProperty(chosenProject, 'dueDate', e)
         }
 
-        if (filteredTasks.length === 0) return;
+        if (chosenProject.length === 0) return;
 
-        for (let i = 0; i < filteredTasks.length; i++) {
-            taskInstance = Task(filteredTasks[i]);
+        for (let i = 0; i < chosenProject.length; i++) {
+            taskInstance = Task(chosenProject[i]);
 
-            createTaskComponents(
-                filteredTasks[i], !filteredTasks[i].notes,
-                taskInstance.getTaskDueDateString(differenceInCalendarDays(
-                    new Date(`${filteredTasks[i].dueDate} `), new Date()
-                ))
-            );
+            if (chosenProject[i].dueDate === null) {
+                taskItemElem = createTaskComponents(
+                    chosenProject[i], !chosenProject[i].notes
+                );
+            } else {
+                displayedTaskDueDate = taskInstance.getTaskDueDateString(
+                    differenceInCalendarDays(chosenProject[i].dueDate, new Date())
+                );
 
-            taskItemElem = taskListElem.lastElementChild;
+                taskItemElem = createTaskComponents(
+                    chosenProject[i], !chosenProject[i].notes, displayedTaskDueDate
+                );
+            }
+
             taskInfoElem = taskItemElem.querySelector('.task-info-container');
 
+            appendTaskItemElem(taskItemElem);
             createTaskCheckbox(taskItemElem, taskInfoElem);
             createDeleteTaskElem(taskItemElem);
-            taskItemElem.setAttribute('data-task-index', `${tasks.length - 1} `);
         }
     });
 });
