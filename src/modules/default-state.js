@@ -43,15 +43,13 @@ for (let i = 0; i < inbox.length; i++) {
     let taskItemElement;
 
     if (inbox[i].dueDate === null) {
-        taskItemElement = createTaskComponents(inbox[i], !inbox[i].notes,)
+        taskItemElement = createTaskComponents(inbox[i])
     } else {
         const displayedTaskDueDate = taskInstance.getDisplayedTaskDueDate(
             differenceInCalendarDays(inbox[i].dueDate, new Date())
         );
 
-        taskItemElement = createTaskComponents(
-            inbox[i], !inbox[i].notes, displayedTaskDueDate
-        );
+        taskItemElement = createTaskComponents(inbox[i], displayedTaskDueDate);
     }
 
     const taskInfoElement = taskItemElement.querySelector('.task-info-container');

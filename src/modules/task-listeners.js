@@ -37,6 +37,7 @@ const taskFormControl = {
 const addTaskElements = document.querySelectorAll('.add-task-elem');
 addTaskElements.forEach(addTaskElement => {
     addTaskElement.addEventListener('click', () => {
+        debugger;
         taskModalElement.removeAttribute('open');
         taskModalElement.showModal();
         resetTaskModal(taskFormControl);
@@ -134,15 +135,14 @@ taskModalConfirmButton.addEventListener('click', () => {
 
     if (!shouldDisplayNewTask) return;
 
-    const isTaskNotesEmpty = isValueEmpty(taskInfo.notes);
     displayedTaskDueDate = taskInstance.getDisplayedTaskDueDate(
         differenceInCalendarDays(taskInfo.dueDate, new Date())
     );
 
     if (taskInfo.dueDate === null) {
-        taskItemElement = createTaskComponents(taskInfo, isTaskNotesEmpty);
+        taskItemElement = createTaskComponents(taskInfo);
     } else {
-        taskItemElement = createTaskComponents(taskInfo, isTaskNotesEmpty, displayedTaskDueDate);
+        taskItemElement = createTaskComponents(taskInfo, displayedTaskDueDate);
     }
 
     taskInfoElement = taskItemElement.querySelector('.task-info-container');
@@ -186,16 +186,14 @@ projectNavBars.forEach(projectNavBar => {
             taskInstance = Task(chosenProject[i]);
 
             if (chosenProject[i].dueDate === null) {
-                taskItemElement = createTaskComponents(
-                    chosenProject[i], !chosenProject[i].notes
-                );
+                taskItemElement = createTaskComponents(chosenProject[i]);
             } else {
                 displayedTaskDueDate = taskInstance.getDisplayedTaskDueDate(
                     differenceInCalendarDays(chosenProject[i].dueDate, new Date())
                 );
 
                 taskItemElement = createTaskComponents(
-                    chosenProject[i], !chosenProject[i].notes, displayedTaskDueDate
+                    chosenProject[i], displayedTaskDueDate
                 );
             }
 

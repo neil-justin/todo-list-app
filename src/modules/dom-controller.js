@@ -18,7 +18,7 @@ const he = require('he');
 
 const taskListElement = document.querySelector('#task-list');
 
-function createTaskComponents(task, isNotesEmpty, taskDueDate = null) {
+function createTaskComponents(task, taskDueDate = null) {
     const taskItemElement = document.createElement('li');
     taskItemElement.classList.add('task', 'pointer-cursor');
 
@@ -30,13 +30,6 @@ function createTaskComponents(task, isNotesEmpty, taskDueDate = null) {
     taskNameElement.textContent = `${task.name}`;
     taskNameElement.classList.add('task-name', 'medium-text', 'text-ellipsis');
     taskInfoContainer.appendChild(taskNameElement);
-
-    if (!isNotesEmpty) {
-        const taskNotesElement = document.createElement('p');
-        taskNotesElement.textContent = `${task.notes}`;
-        taskNotesElement.classList.add('task-notes', 'small-text', 'text-ellipsis');
-        taskInfoContainer.appendChild(taskNotesElement);
-    }
 
     const taskAdditionalInfoElement = document.createElement('p');
     taskAdditionalInfoElement.classList.add('task-additional-info', 'text-ellipsis', 'small-text');
