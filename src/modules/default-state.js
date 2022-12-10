@@ -4,22 +4,21 @@ import '../stylesheets/sidebar.css';
 import '../stylesheets/modal.css';
 import '../stylesheets/task-modal.css';
 import '../stylesheets/project-modal.css';
-
 import {
-    defaultProjects,
     Task,
 } from './task';
 import {
     createTaskComponents,
     createTaskCheckbox,
-    createDeleteTaskElem,
     highlightChosenTab,
     updateMainContentHeading,
-    appendTaskItemElem,
-    displayProjectName
+    appendTaskItemElement,
+    displayProjectName,
+    createDeleteTaskElement,
 } from './dom-controller';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
+import { defaultProjects } from './project';
 
 highlightChosenTab();
 updateMainContentHeading();
@@ -41,23 +40,23 @@ const inbox = userProjects.inbox;
 
 for (let i = 0; i < inbox.length; i++) {
     const taskInstance = Task(inbox[i]);
-    let taskItemElem;
+    let taskItemElement;
 
     if (inbox[i].dueDate === null) {
-        taskItemElem = createTaskComponents(inbox[i], !inbox[i].notes,)
+        taskItemElement = createTaskComponents(inbox[i], !inbox[i].notes,)
     } else {
-        const displayedTaskDueDate = taskInstance.getTaskDueDateString(
+        const displayedTaskDueDate = taskInstance.getDisplayedTaskDueDate(
             differenceInCalendarDays(inbox[i].dueDate, new Date())
         );
 
-        taskItemElem = createTaskComponents(
+        taskItemElement = createTaskComponents(
             inbox[i], !inbox[i].notes, displayedTaskDueDate
         );
     }
 
-    const taskInfoElem = taskItemElem.querySelector('.task-info-container');
+    const taskInfoElement = taskItemElement.querySelector('.task-info-container');
 
-    appendTaskItemElem(taskItemElem);
-    createTaskCheckbox(taskItemElem, taskInfoElem);
-    createDeleteTaskElem(taskItemElem);
+    appendTaskItemElement(taskItemElement);
+    createTaskCheckbox(taskItemElement, taskInfoElement);
+    createDeleteTaskElement(taskItemElement);
 }

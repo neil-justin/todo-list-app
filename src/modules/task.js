@@ -1,37 +1,7 @@
 import { differenceInCalendarYears } from "date-fns";
 export {
-    defaultProjects,
-    tasks,
     Task,
 };
-
-const defaultProjects = {
-    'inbox': [
-        {
-            name: 'Go to the wet market',
-            notes: null,
-            project: 'inbox',
-            priority: 'Priority 4',
-            dueDate: new Date(2022, 10, 18)
-        },
-        {
-            name: 'Export bitwarden passwords',
-            notes: null,
-            project: 'inbox',
-            priority: 'Priority 1',
-            dueDate: new Date(2022, 10, 25)
-        },
-        {
-            name: 'Wash laptop\'s cleaning clothes',
-            notes: 'Do not forget that you have three of these!',
-            project: 'inbox',
-            priority: 'Priority 2',
-            dueDate: new Date(2022, 11, 13)
-        }
-    ]
-}
-
-const tasks = [];
 
 function Task(taskInfo) {
     if (taskInfo.dueDate !== null) {
@@ -94,25 +64,25 @@ function Task(taskInfo) {
         },
 
         getYesterdayDate: function () {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayDate = new Date();
+            yesterdayDate.setDate(yesterdayDate.getDate() - 1);
 
-            return yesterday;
+            return yesterdayDate;
         }
     };
 
-    function getTaskDueDateString(differenceInDays) {
+    function getDisplayedTaskDueDate(diffInCalendarDays) {
         let taskDueDate;
 
-        if (differenceInDays >= 0) {
+        if (diffInCalendarDays >= 0) {
             switch (true) {
-                case differenceInDays === 0:
+                case diffInCalendarDays === 0:
                     taskDueDate = 'Today';
                     break;
-                case differenceInDays === 1:
+                case diffInCalendarDays === 1:
                     taskDueDate = 'Tomorrow';
                     break;
-                case differenceInDays <= 7:
+                case diffInCalendarDays <= 7:
                     taskDueDate = _dateFormatter.getDayOfTheWeek();
                     break;
                 default:
@@ -123,7 +93,7 @@ function Task(taskInfo) {
 
             return `Due ${taskDueDate}`;
         } else {
-            if (differenceInDays === -1) {
+            if (diffInCalendarDays === -1) {
                 taskDueDate = 'Yesterday';
             } else {
                 taskDueDate = _dateFormatter.getLongDate(
@@ -137,6 +107,6 @@ function Task(taskInfo) {
 
     return {
         updateTasks,
-        getTaskDueDateString,
+        getDisplayedTaskDueDate,
     }
 }

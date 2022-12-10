@@ -5,8 +5,8 @@ import { Project } from "./project";
 
 const projectNameInput = document.querySelector('#project-name');
 
-const addProjectButtonElem = document.querySelector('#add-project-button');
-addProjectButtonElem.addEventListener('click', () => {
+const addProjectButton = document.querySelector('#add-project-button');
+addProjectButton.addEventListener('click', () => {
     const projectModalElem = document.querySelector('#project-modal');
     projectModalElem.showModal();
 
@@ -15,10 +15,8 @@ addProjectButtonElem.addEventListener('click', () => {
     }
 });
 
-const projectModalConfirmButtonElem = document.
-    querySelector('#project-modal-confirm-button');
-
-projectModalConfirmButtonElem.addEventListener('click', () => {
+const confirmProjectButton = document.querySelector('#confirm-project-button');
+confirmProjectButton.addEventListener('click', () => {
     const isProjectNameInputEmpty = isValueEmpty(projectNameInput.value)
 
     if (!isProjectNameInputEmpty) {
@@ -33,9 +31,8 @@ projectModalConfirmButtonElem.addEventListener('click', () => {
     }
 });
 
-const projectModalCancelButtonElem = document
-    .querySelector('#project-modal-cancel-button');
-
-projectModalCancelButtonElem.addEventListener('click', () => {
+const cancelProjectButton =
+    document.querySelector('#cancel-project-button');
+cancelProjectButton.addEventListener('click', () => {
     projectNameInput.removeAttribute('required');
 })

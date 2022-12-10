@@ -22,25 +22,24 @@ const PROJECT_INBOX = ['Inbox', 'Today', 'Upcoming'];
 function filterByTaskProperty(project, property, event) {
     const chosenProjectName = event.target.textContent;
 
-    switch (property) {
-        case 'project':
-            return PROJECT_INBOX.includes(chosenProjectName) ?
-                project.inbox : project[chosenProjectName.toLowerCase()]
-        case 'dueDate':
-            const today = new Date();
+    if (property === 'project') {
+        return PROJECT_INBOX.includes(chosenProjectName) ?
+            project.inbox : project[chosenProjectName.toLowerCase()]
+    } else if (property === 'dueDate') {
+        const today = new Date();
 
-            if (chosenProjectName === 'Today') {
-                return project.filter(task => {
-                    return task.dueDate.toDateString() === today.toDateString();
-                });
-            } else if (chosenProjectName === 'Upcoming') {
-                return project.filter(task => {
-                    const diffInCalendarDays =
-                        differenceInCalendarDays(task.dueDate, new Date());
+        if (chosenProjectName === 'Today') {
+            return project.filter(task => {
+                return task.dueDate.toDateString() === today.toDateString();
+            });
+        } else if (chosenProjectName === 'Upcoming') {
+            return project.filter(task => {
+                const diffInCalendarDays =
+                    differenceInCalendarDays(task.dueDate, new Date());
 
-                    return diffInCalendarDays > 0;
-                });
-            }
+                return diffInCalendarDays > 0;
+            });
+        }
     }
 }
 

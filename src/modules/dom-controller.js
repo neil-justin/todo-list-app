@@ -2,60 +2,59 @@ export {
     createTaskComponents,
     resetTaskModal,
     createTaskCheckbox,
-    createDeleteTaskElem,
-    defineTaskItemElem,
+    createDeleteTaskElement,
+    defineTaskItemElement,
     displayProjectName,
     populateFormControl,
     highlightChosenTab,
     updateMainContentHeading,
-    appendTaskItemElem,
+    appendTaskItemElement,
 };
 
 import { capitalizeString, PROJECT_INBOX } from './helper';
-
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
 
-const taskListElem = document.querySelector('#task-list');
+const taskListElement = document.querySelector('#task-list');
 
 function createTaskComponents(task, isNotesEmpty, taskDueDate = null) {
-    const taskItemElem = document.createElement('li');
-    taskItemElem.classList.add('task', 'pointer-cursor');
+    const taskItemElement = document.createElement('li');
+    taskItemElement.classList.add('task', 'pointer-cursor');
 
-    const taskInfoContainerElem = document.createElement('section');
-    taskInfoContainerElem.classList.add('task-info-container');
-    taskItemElem.appendChild(taskInfoContainerElem);
+    const taskInfoContainer = document.createElement('section');
+    taskInfoContainer.classList.add('task-info-container');
+    taskItemElement.appendChild(taskInfoContainer);
 
-    const taskNameElem = document.createElement('h3');
-    taskNameElem.textContent = `${task.name}`;
-    taskNameElem.classList.add('task-name', 'medium-text', 'text-ellipsis');
-    taskInfoContainerElem.appendChild(taskNameElem);
+    const taskNameElement = document.createElement('h3');
+    taskNameElement.textContent = `${task.name}`;
+    taskNameElement.classList.add('task-name', 'medium-text', 'text-ellipsis');
+    taskInfoContainer.appendChild(taskNameElement);
 
     if (!isNotesEmpty) {
-        const taskNotesElem = document.createElement('p');
-        taskNotesElem.textContent = `${task.notes}`;
-        taskNotesElem.classList.add('task-notes', 'small-text', 'text-ellipsis');
-        taskInfoContainerElem.appendChild(taskNotesElem);
+        const taskNotesElement = document.createElement('p');
+        taskNotesElement.textContent = `${task.notes}`;
+        taskNotesElement.classList.add('task-notes', 'small-text', 'text-ellipsis');
+        taskInfoContainer.appendChild(taskNotesElement);
     }
 
-    const taskAdditionalInfoElem = document.createElement('p');
-    taskAdditionalInfoElem.classList.add('task-additional-info', 'text-ellipsis', 'small-text');
-    taskInfoContainerElem.appendChild(taskAdditionalInfoElem);
+    const taskAdditionalInfoElement = document.createElement('p');
+    taskAdditionalInfoElement.classList.add('task-additional-info', 'text-ellipsis', 'small-text');
+    taskInfoContainer.appendChild(taskAdditionalInfoElement);
 
     if (taskDueDate !== null) {
         const taskDueDateText = document.createTextNode(taskDueDate);
-        taskAdditionalInfoElem.appendChild(taskDueDateText);
+        taskAdditionalInfoElement.appendChild(taskDueDateText);
 
-        const bulletPointText = document.
+        const bulletPointSymbol = document.
             createTextNode(` ${he.decode('&bull;')} `);
-        taskAdditionalInfoElem.appendChild(bulletPointText);
+        taskAdditionalInfoElement.appendChild(bulletPointSymbol);
     }
 
     const taskPriorityText = document.createTextNode(task.priority);
-    taskAdditionalInfoElem.appendChild(taskPriorityText);
+    taskAdditionalInfoElement.appendChild(taskPriorityText);
 
-    return taskItemElem;
+    return taskItemElement;
 }
 
 function resetTaskModal(taskFormControl) {
@@ -70,21 +69,21 @@ function resetTaskModal(taskFormControl) {
     }
 }
 
-function createTaskCheckbox(taskItemElem, taskInfoElem) {
-    const taskCheckboxElem = document.createElement('button');
-    taskCheckboxElem.classList.add('task-checkbox');
-    taskItemElem.insertBefore(taskCheckboxElem, taskInfoElem);
+function createTaskCheckbox(taskItemElement, taskInfoElement) {
+    const taskCheckboxElement = document.createElement('button');
+    taskCheckboxElement.classList.add('task-checkbox');
+    taskItemElement.insertBefore(taskCheckboxElement, taskInfoElement);
 }
 
-function createDeleteTaskElem(taskItemElem) {
-    const deleteTaskElem = document.createElement('span');
-    deleteTaskElem.textContent = 'Delete';
-    deleteTaskElem.classList.add('delete-task-elem', 'small-text');
-    taskItemElem.appendChild(deleteTaskElem);
+function createDeleteTaskElement(taskItemElement) {
+    const deleteTaskElement = document.createElement('span');
+    deleteTaskElement.textContent = 'Delete';
+    deleteTaskElement.classList.add('delete-task-elem', 'small-text');
+    taskItemElement.appendChild(deleteTaskElement);
 }
 
-function defineTaskItemElem(event, index = null) {
-    if (event.currentTarget === taskListElem) {
+function defineTaskItemElement(event, index = null) {
+    if (event.currentTarget === taskListElement) {
         return event.target.closest('.task');
     }
 
@@ -92,18 +91,18 @@ function defineTaskItemElem(event, index = null) {
 }
 
 function displayProjectName(projectName) {
-    const projectListElem = document.querySelector('#project-list');
-    const projectItemElem = document.createElement('li');
-    projectItemElem.textContent = `${projectName}`;
-    projectItemElem.classList
+    const projectListElement = document.querySelector('#project-list');
+    const projectItemElement = document.createElement('li');
+    projectItemElement.textContent = `${projectName}`;
+    projectItemElement.classList
         .add('sidebar-text', 'medium-text', 'pointer-cursor');
-    projectListElem.appendChild(projectItemElem);
+    projectListElement.appendChild(projectItemElement);
 
-    const projectSelectElem = document.querySelector('#task-project');
-    const projectOptionElem = document.createElement('option');
-    projectOptionElem.value = `${projectName}`;
-    projectOptionElem.textContent = `${projectName}`;
-    projectSelectElem.appendChild(projectOptionElem);
+    const projectSelectElement = document.querySelector('#task-project');
+    const projectOptionElement = document.createElement('option');
+    projectOptionElement.value = `${projectName}`;
+    projectOptionElement.textContent = `${projectName}`;
+    projectSelectElement.appendChild(projectOptionElement);
 }
 
 function populateFormControl(formControl, data) {
@@ -115,8 +114,8 @@ function populateFormControl(formControl, data) {
             formControl.dueDate.value = dateString;
         } else if (property === 'project') {
             const taskProject = capitalizeString(data.project);
-            const projectSelectElem = formControl.project;
-            const projectOptionValues = [...projectSelectElem.options]
+            const projectSelectElement = formControl.project;
+            const projectOptionValues = [...projectSelectElement.options]
                 .map(option => option.value);
             const projectIndex = projectOptionValues.indexOf(taskProject);
             formControl.dueDate.selectedIndex = projectIndex;
@@ -129,13 +128,13 @@ function populateFormControl(formControl, data) {
 
 function highlightChosenTab(event = null) {
     if (event !== null) {
-        const openedTabElem = document.querySelector('[data-opened-tab]');
-        openedTabElem.removeAttribute('data-opened-tab');
+        const openedTabElement = document.querySelector('[data-opened-tab]');
+        openedTabElement.removeAttribute('data-opened-tab');
     }
 
-    const inboxTabElem = document.querySelector('#inbox-tab');
-    const chosenTabElem = event === null ? inboxTabElem : event.target;
-    chosenTabElem.setAttribute('data-opened-tab', '');
+    const inboxTabElement = document.querySelector('#inbox-tab');
+    const chosenTabElement = event === null ? inboxTabElement : event.target;
+    chosenTabElement.setAttribute('data-opened-tab', '');
 }
 
 function updateMainContentHeading(event = null) {
@@ -147,14 +146,15 @@ function updateMainContentHeading(event = null) {
         mainContentHeading = event.target.textContent;
     }
 
-    const mainContentHeadingElem = document.querySelector('#main-content-heading');
-    mainContentHeadingElem.textContent = mainContentHeading;
+    const mainContentHeadingElement = document.querySelector('#main-content-heading');
+    mainContentHeadingElement.textContent = mainContentHeading;
 }
 
-function appendTaskItemElem(newTaskElem, editedTaskElem = null) {
-    if (editedTaskElem) {
-        return editedTaskElem.replaceWith(newTaskElem);
+function appendTaskItemElement(newTaskElement, editedTaskElement = null) {
+    if (editedTaskElement) {
+        editedTaskElement.replaceWith(newTaskElement);
+        return;
     }
 
-    taskListElem.appendChild(newTaskElem);
+    taskListElement.appendChild(newTaskElement);
 }
