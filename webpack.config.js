@@ -8,9 +8,10 @@ module.exports = {
         task: './src/modules/task.js',
         domController: './src/modules/dom-controller.js',
         project: './src/modules/project.js',
-        projectListeners: './src/modules/project-listeners.js',
+        projectModalListeners: './src/modules/project-modal-listeners.js',
         defaultState: './src/modules/default-state.js',
         localStorage: './src/modules/local-storage.js',
+        mainContentProjectListeners: './src/modules/main-content-project-listeners.js',
     },
     devtool: 'inline-source-map',
     plugins: [

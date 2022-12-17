@@ -11,6 +11,7 @@ export {
     capitalizeString,
     shouldDisplayTask,
     PROJECT_INBOX,
+    setAttributes,
 };
 
 function isValueEmpty(data) {
@@ -103,5 +104,11 @@ function shouldDisplayTask(task, openedTab) {
         return diffInCalendarDays > 0;
     } else {
         return task.project === openedTab.textContent;
+    }
+}
+
+function setAttributes(element, attributes) {
+    for (let key in attributes) {
+        element.setAttribute(key, attributes[key]);
     }
 }

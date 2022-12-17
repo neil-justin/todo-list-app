@@ -10,9 +10,10 @@
     <script src="../dist/taskListeners.bundle.js" defer></script>
     <script src="../dist/domController.bundle.js" defer></script>
     <script src="../dist/project.bundle.js" defer></script>
-    <script src="../dist/projectListeners.bundle.js" defer></script>
+    <script src="../dist/projectModalListeners.bundle.js" defer></script>
     <script src="../dist/defaultState.bundle.js" defer></script>
     <script src="../dist/localStorage.bundle.js" defer></script>
+    <script src="../dist/mainContentProjectListeners.bundle.js" defer></script>
 </head>
 
 <body>
@@ -32,12 +33,12 @@
                 </nav>
             </div>
             <div>
-                <div id="project-list-heading-and-button-container">
-                    <h2 id="project-list-heading" class="sidebar-text medium-text">Projects</h2>
+                <div>
+                    <h2 id="sidebar-project-list-heading" class="sidebar-text medium-text">Projects</h2>
                     <button id="add-project-button">&#43;</button>
                 </div>
                 <nav>
-                    <ul class="project-navbar" id="project-list"></ul>
+                    <ul class="project-navbar" id="sidebar-project-list"></ul>
                 </nav>
             </div>
         </div>
@@ -84,7 +85,7 @@
                     <input type="date" id="task-due-date" class="picked-form-control form-control">
                 </div>
                 <button type="submit" id="task-modal-confirm-button"
-                    class="confirm-button modal-button">Confirm</button>
+                    class="modal-confirm-button modal-button">Confirm</button>
             </form>
         </dialog>
         <dialog id="project-modal">
@@ -94,9 +95,9 @@
                     <input type="text" id="project-name" class="form-control typed-form-control"
                         placeholder="Insert your project name here" maxlength="60" required>
                 </div>
-                <div id="project-modal-buttons-container">
-                    <button id="cancel-project-button" class="modal-button">Cancel</button>
-                    <button id="confirm-project-button" class="confirm-button modal-button">Confirm</button>
+                <div class="project-modal-buttons-container">
+                    <button id="cancel-project-button" class="modal-button modal-cancel-button">Cancel</button>
+                    <button id="confirm-project-button" class="modal-confirm-button modal-button">Confirm</button>
                 </div>
             </form>
         </dialog>

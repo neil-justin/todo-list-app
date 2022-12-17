@@ -3,14 +3,3 @@
     flex-direction: column;
     gap: 20px;
 }
-
-#cancel-project-button {
-    background-color: hsl(0deg 0% 45%);
-    color: var(--white-color);
-}
-
-#project-modal-buttons-container {
-    display: flex;
-    justify-content: end;
-    column-gap: 10px;
-}

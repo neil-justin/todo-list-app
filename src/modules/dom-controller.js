@@ -4,14 +4,15 @@ export {
     createTaskCheckbox,
     createDeleteTaskElement,
     defineTaskItemElement,
-    displayProjectName,
+    updateProjectNameDisplay,
     populateFormControl,
     highlightChosenTab,
     updateMainContentHeading,
     appendTaskItemElement,
+    createProjectNameForm,
 };
 
-import { capitalizeString, PROJECT_INBOX } from './helper';
+import { capitalizeString, setAttributes } from './helper';
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
@@ -83,19 +84,31 @@ function defineTaskItemElement(event, index = null) {
     return document.querySelector(`[data-task-index='${index}']`);
 }
 
-function displayProjectName(projectName) {
-    const projectListElement = document.querySelector('#project-list');
-    const projectItemElement = document.createElement('li');
-    projectItemElement.textContent = `${projectName}`;
-    projectItemElement.classList
-        .add('sidebar-text', 'medium-text', 'pointer-cursor');
-    projectListElement.appendChild(projectItemElement);
+function updateProjectNameDisplay(projectName, todo, openedTabElement = null) {
+    const taskModalProjectSelect = document
+        .querySelector('#task-project');
+    let taskModalProjectOption;
 
-    const projectSelectElement = document.querySelector('#task-project');
-    const projectOptionElement = document.createElement('option');
-    projectOptionElement.value = `${projectName}`;
-    projectOptionElement.textContent = `${projectName}`;
-    projectSelectElement.appendChild(projectOptionElement);
+    if (todo === 'add') {
+        const sidebarProjectList = document
+            .querySelector('#sidebar-project-list');
+        const sidebarProjectItem = document.createElement('li');
+        sidebarProjectItem.textContent = `${projectName}`;
+        sidebarProjectItem.classList
+            .add('sidebar-text', 'medium-text', 'pointer-cursor');
+        sidebarProjectList.appendChild(sidebarProjectItem);
+
+        taskModalProjectOption = document.createElement('option');
+        taskModalProjectOption.value = `${projectName}`;
+        taskModalProjectOption.textContent = `${projectName}`;
+        taskModalProjectSelect.appendChild(taskModalProjectOption);
+    } else if (todo === 'edit') {
+        taskModalProjectOption = taskModalProjectSelect
+            .querySelector(`[value="${openedTabElement.textContent}"]`);
+        taskModalProjectOption.value = `${projectName}`;
+        taskModalProjectOption.textContent = `${projectName}`;
+        openedTabElement.textContent = `${projectName}`;
+    }
 }
 
 function populateFormControl(formControl, data) {
@@ -130,17 +143,21 @@ function highlightChosenTab(event = null) {
     chosenTabElement.setAttribute('data-opened-tab', '');
 }
 
-function updateMainContentHeading(event = null) {
-    let mainContentHeading;
+function updateMainContentHeading(event = null, projectNameInputValue = null) {
+    let mainContentHeadingText;
+    const projectInboxList = document.querySelector('#project-inbox');
+    const projectList = document.querySelector('#sidebar-project-list');
 
-    if (event === null || PROJECT_INBOX.includes(event.target.textContent)) {
-        mainContentHeading = 'Inbox';
+    if (event === null || event.currentTarget === projectInboxList) {
+        mainContentHeadingText = 'Inbox';
+    } else if (event.currentTarget === projectList) {
+        mainContentHeadingText = event.target.textContent;
     } else {
-        mainContentHeading = event.target.textContent;
+        mainContentHeadingText = projectNameInputValue;
     }
 
     const mainContentHeadingElement = document.querySelector('#main-content-heading');
-    mainContentHeadingElement.textContent = mainContentHeading;
+    mainContentHeadingElement.textContent = mainContentHeadingText;
 }
 
 function appendTaskItemElement(newTaskElement, editedTaskElement = null) {
@@ -150,4 +167,39 @@ function appendTaskItemElement(newTaskElement, editedTaskElement = null) {
     }
 
     taskListElement.appendChild(newTaskElement);
+}
+
+function createProjectNameForm() {
+    const projectNameForm = document.createElement('div');
+    projectNameForm.setAttribute('id', 'main-content-project-name-form');
+    const mainContentElement = document.querySelector('#main-content');
+    const taskListElement = document.querySelector('#task-list');
+    mainContentElement.insertBefore(projectNameForm, taskListElement);
+    projectNameForm.classList.add('hidden');
+
+    const projectNameInput = document.createElement('input');
+    projectNameForm.appendChild(projectNameInput);
+
+    setAttributes(projectNameInput, {
+        'type': 'text',
+        'id': 'main-content-project-name-input',
+        'minlength': '1',
+        'maxlength': '60'
+    });
+
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.setAttribute('id', 'project-name-buttons-container');
+    projectNameForm.appendChild(buttonsContainer);
+
+    const saveProjectButton = document.createElement('button');
+    saveProjectButton.textContent = 'Save';
+    saveProjectButton.setAttribute('id', 'main-content-save-project-button');
+    saveProjectButton.classList.add('modal-button', 'modal-confirm-button');
+    buttonsContainer.appendChild(saveProjectButton);
+
+    const cancelProjectButton = document.createElement('button');
+    cancelProjectButton.textContent = 'Cancel';
+    cancelProjectButton.setAttribute('id', 'main-content-cancel-project-button');
+    cancelProjectButton.classList.add('modal-button', 'modal-cancel-button');
+    buttonsContainer.appendChild(cancelProjectButton);
 }

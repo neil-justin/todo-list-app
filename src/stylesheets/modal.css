@@ -48,11 +48,22 @@ label {
     border-radius: 5px;
 }
 
-.confirm-button {
+.modal-cancel-button {
+    background-color: hsl(0deg 0% 45%);
+    color: var(--white-color);
+}
+
+.modal-confirm-button {
     background-color: var(--accent-color);
     color: var(--white-color);
 }
 
 .confirm-button:hover {
     opacity: 0.8;
+}
+
+.project-modal-buttons-container {
+    display: flex;
+    justify-content: end;
+    column-gap: 10px;
 }

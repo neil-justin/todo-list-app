@@ -37,7 +37,6 @@ const taskFormControl = {
 const addTaskElements = document.querySelectorAll('.add-task-elem');
 addTaskElements.forEach(addTaskElement => {
     addTaskElement.addEventListener('click', () => {
-        debugger;
         taskModalElement.removeAttribute('open');
         taskModalElement.showModal();
         resetTaskModal(taskFormControl);
@@ -157,6 +156,17 @@ projectNavBars.forEach(projectNavBar => {
     projectNavBar.addEventListener('click', (e) => {
         if (e.target.classList.contains('project-navbar') ||
             e.target.hasAttribute('data-opened-tab')) return;
+
+        const projectNameForm = document
+            .querySelector('#main-content-project-name-form');
+
+        if (!projectNameForm.classList.contains('hidden')) {
+            const mainContentHeadingElement = document
+                .querySelector('#main-content-heading');
+            mainContentHeadingElement.classList.remove('hidden');
+            updateMainContentHeading(e);
+            projectNameForm.classList.add('hidden');
+        }
 
         highlightChosenTab(e);
         updateMainContentHeading(e);

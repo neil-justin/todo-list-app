@@ -26,9 +26,19 @@ const defaultProjects = {
     ]
 }
 
-function Project() {
-    function updateProjects(projects, project) {
-        projects[project.value] = null;
+function Project(projects, project) {
+    function updateProjects(todo) {
+        switch (todo) {
+            case 'add':
+                projects[project.value] = null;
+                break;
+            case 'edit':
+                const editedProjectKey = document.querySelector('[data-opened-tab]')
+                    .textContent;
+                projects[project.value] = projects[editedProjectKey];
+                delete projects[editedProjectKey];
+                break;
+        }
 
         return projects;
     }

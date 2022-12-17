@@ -29,11 +29,11 @@
     color: var(--black-color);
 }
 
-.sidebar-text:not(#project-list-heading) {
+.sidebar-text:not(#sidebar-project-list-heading) {
     list-style-type: none;
 }
 
-.sidebar-text:not(#project-list-heading):hover {
+.sidebar-text:not(#sidebar-project-list-heading):hover {
     background-color: var(--lightgray-color);
 }
 
@@ -42,11 +42,27 @@
     row-gap: 8px;
 }
 
-#project-list-heading-and-button-container {
+div:has(> #sidebar-project-list-heading) {
     display: flex;
     width: 100%;
-    justify-content: space-between;
     align-items: center;
+    justify-content: end;
+}
+
+#sidebar-project-list-heading {
+    margin-right: auto;
+}
+
+#edit-project-icon {
+    background-color: transparent;
+    border: 0px;
+    padding: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+#edit-project-icon:hover {
+    background-color: var(--lightgray-color);
 }
 
 #add-project-button {
@@ -55,7 +71,7 @@
     font-size: 2rem;
     height: max-content;
     padding: 5px;
-    color: var(--black-color);
+    color: black;
 }
 
 #add-project-button:hover {

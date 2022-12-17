@@ -13,7 +13,7 @@ import {
     highlightChosenTab,
     updateMainContentHeading,
     appendTaskItemElement,
-    displayProjectName,
+    updateProjectNameDisplay,
     createDeleteTaskElement,
 } from './dom-controller';
 import { accessLocalStorage } from './local-storage';
@@ -33,7 +33,7 @@ const projectNames = Object.keys(userProjects);
 for (let i = 0; i < projectNames.length; i++) {
     if (projectNames[i] === 'inbox') continue;
 
-    displayProjectName(projectNames[i]);
+    updateProjectNameDisplay(projectNames[i], 'add');
 }
 
 const inbox = userProjects.inbox;
