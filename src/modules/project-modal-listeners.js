@@ -4,10 +4,10 @@ import { accessLocalStorage } from "./local-storage";
 import { Project } from "./project";
 
 const projectNameInput = document.querySelector('#project-name');
+const projectModalElement = document.querySelector('#project-modal');
 
 const addProjectIcon = document.querySelector('#add-project-button');
 addProjectIcon.addEventListener('click', () => {
-    const projectModalElement = document.querySelector('#project-modal');
     projectModalElement.showModal();
 
     if (!projectNameInput.hasAttribute('required')) {
@@ -19,15 +19,18 @@ const confirmProjectButton = document.querySelector('#confirm-project-button');
 confirmProjectButton.addEventListener('click', () => {
     const isProjectNameInputEmpty = isValueEmpty(projectNameInput.value)
 
-    if (!isProjectNameInputEmpty) {
-        updateProjectNameDisplay(projectNameInput.value, 'add');
-
-        const storedProjects = accessLocalStorage('getItem', 'projects');
-        const projectInstance = Project(storedProjects, projectNameInput);
-        const updatedProjects = projectInstance.updateProjects('add');
-
-        accessLocalStorage('setItem', updatedProjects);
+    if (isProjectNameInputEmpty) {
+        window.alert('Please enter a valid name');
+        return;
     }
+
+    updateProjectNameDisplay(projectNameInput.value, 'add');
+
+    const storedProjects = accessLocalStorage('getItem', 'projects');
+    const projectInstance = Project(storedProjects, projectNameInput);
+    const updatedProjects = projectInstance.updateProjects('add');
+
+    accessLocalStorage('setItem', updatedProjects);
 });
 
 const cancelProjectButton = document.querySelector('#cancel-project-button');
