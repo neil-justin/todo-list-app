@@ -1,5 +1,9 @@
 export { defaultProjects, Project };
 
+const todayDate = new Date();
+const tomorrowDate = new Date();
+tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+
 const defaultProjects = {
     'inbox': [
         {
@@ -7,21 +11,21 @@ const defaultProjects = {
             notes: null,
             project: 'inbox',
             priority: 'Priority 4',
-            dueDate: new Date(2022, 10, 18)
+            dueDate: todayDate,
         },
         {
             name: 'Export bitwarden passwords',
             notes: null,
             project: 'inbox',
             priority: 'Priority 1',
-            dueDate: new Date(2022, 10, 25)
+            dueDate: tomorrowDate,
         },
         {
             name: 'Wash laptop\'s cleaning clothes',
             notes: 'Do not forget that you have three of these!',
             project: 'inbox',
             priority: 'Priority 2',
-            dueDate: new Date(2022, 11, 13)
+            dueDate: tomorrowDate,
         }
     ]
 }

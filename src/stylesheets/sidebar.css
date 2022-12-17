@@ -25,7 +25,8 @@
 
 .sidebar-text {
     line-height: 3.8rem;
-    padding-left: 10px;
+    padding-left: 8px;
+    border-left: 2px solid transparent;
     color: var(--black-color);
 }
 
@@ -53,18 +54,6 @@ div:has(> #sidebar-project-list-heading) {
     margin-right: auto;
 }
 
-#edit-project-icon {
-    background-color: transparent;
-    border: 0px;
-    padding: 5px;
-    width: 2.5rem;
-    height: 2.5rem;
-}
-
-#edit-project-icon:hover {
-    background-color: var(--lightgray-color);
-}
-
 #add-project-button {
     background-color: transparent;
     border: 0px;
@@ -79,7 +68,7 @@ div:has(> #sidebar-project-list-heading) {
 }
 
 [data-opened-tab] {
-    border-left: 2px solid var(--accent-color);
+    border-left-color: var(--accent-color);
     background-color: var(--light-accent-color);
 }
 
