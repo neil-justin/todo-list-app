@@ -1,107 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List App</title>
-    <script src="../dist/task.bundle.js" defer></script>
-    <script src="../dist/taskListeners.bundle.js" defer></script>
-    <script src="../dist/domController.bundle.js" defer></script>
-    <script src="../dist/project.bundle.js" defer></script>
-    <script src="../dist/projectModalListeners.bundle.js" defer></script>
-    <script src="../dist/defaultState.bundle.js" defer></script>
-    <script src="../dist/localStorage.bundle.js" defer></script>
-    <script src="../dist/mainContentProjectListeners.bundle.js" defer></script>
-<script defer src="taskListeners.bundle.js"></script><script defer src="task.bundle.js"></script><script defer src="domController.bundle.js"></script><script defer src="project.bundle.js"></script><script defer src="projectModalListeners.bundle.js"></script><script defer src="defaultState.bundle.js"></script><script defer src="localStorage.bundle.js"></script><script defer src="mainContentProjectListeners.bundle.js"></script></head>
-
-<body>
-    <header>
-        <span id="logo">To Do List</span>
-    </header>
-    <main>
-        <div id="sidebar">
-            <div>
-                <button class="add-task-elem medium-text" id="sidebar-add-task-button">Add task</button>
-                <nav>
-                    <ul id="project-inbox" class="project-navbar">
-                        <li id="inbox-tab" class="sidebar-text medium-text pointer-cursor">Inbox</li>
-                        <li class="sidebar-text medium-text pointer-cursor">Today</li>
-                        <li class="sidebar-text medium-text pointer-cursor">Upcoming</li>
-                    </ul>
-                </nav>
-            </div>
-            <div>
-                <div>
-                    <h2 id="sidebar-project-list-heading" class="sidebar-text medium-text">Projects</h2>
-                    <button id="add-project-button">&#43;</button>
-                </div>
-                <nav>
-                    <ul class="project-navbar" id="sidebar-project-list"></ul>
-                </nav>
-            </div>
-        </div>
-        <div id="main-content">
-            <h1 id="main-content-heading" class="text-ellipsis"></h1>
-            <ul id="task-list"> </ul>
-            <div class="add-task-elem medium-text pointer-cursor" id="main-content-add-task-elem">Add task</div>
-        </div>
-        <!-- Add task buttons dialog box -->
-        <dialog id="task-modal">
-            <form method="dialog" id="task-form">
-                <button id="task-modal-close-button">&#x00d7;</button>
-                <div>
-                    <label for="task-name" class="large-text">Task</label>
-                    <textarea placeholder="Insert your task name here" id="task-name" cols="50" rows="1" maxlength="60"
-                        class="form-control task-typed-form-control typed-form-control" required autofocus
-                        data-enable-grammarly="false" data-gramm="false" data-gramm_editor="false"
-                        spellcheck="false"></textarea>
-                </div>
-                <div>
-                    <label for="task-notes" class="large-text">Notes</label>
-                    <textarea placeholder="Insert your notes here" id="task-notes"
-                        class="form-control task-typed-form-control typed-form-control" cols="50" rows="5"
-                        spellcheck="false" data-enable-grammarly="false" data-gramm="false"
-                        data-gramm_editor="false"></textarea>
-                </div>
-                <div>
-                    <label for="task-project" class="large-text">Project</label>
-                    <select id="task-project" class="picked-form-control form-control">
-                        <option value="Inbox">Inbox</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="task-priority" class="large-text">Priority</label>
-                    <select id="task-priority" class="picked-form-control form-control">
-                        <option value="Priority 4">Priority 4</option>
-                        <option value="Priority 3">Priority 3</option>
-                        <option value="Priority 2">Priority 2</option>
-                        <option value="Priority 1">Priority 1</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="task-due-date" class="large-text">Due Date</label>
-                    <input type="date" id="task-due-date" class="picked-form-control form-control">
-                </div>
-                <button type="submit" id="task-modal-confirm-button"
-                    class="modal-confirm-button modal-button">Confirm</button>
-            </form>
-        </dialog>
-        <dialog id="project-modal">
-            <form method="dialog" id="project-form">
-                <div>
-                    <label for="project-name" class="large-text">Project</label>
-                    <input type="text" id="project-name" class="form-control typed-form-control"
-                        placeholder="Insert your project name here" maxlength="60" required>
-                </div>
-                <div class="project-modal-buttons-container">
-                    <button id="cancel-project-button" class="modal-button modal-cancel-button">Cancel</button>
-                    <button id="confirm-project-button" class="modal-confirm-button modal-button">Confirm</button>
-                </div>
-            </form>
-        </dialog>
-    </main>
-</body>
-
-</html>
+<head><script defer src="taskListeners.bundle.js"></script><script defer src="task.bundle.js"></script><script defer src="domController.bundle.js"></script><script defer src="project.bundle.js"></script><script defer src="projectModalListeners.bundle.js"></script><script defer src="defaultState.bundle.js"></script><script defer src="localStorage.bundle.js"></script><script defer src="mainContentProjectListeners.bundle.js"></script><script defer src="helper.bundle.js"></script><script defer src="taskListeners.bundle.js"></script><script defer src="task.bundle.js"></script><script defer src="domController.bundle.js"></script><script defer src="project.bundle.js"></script><script defer src="projectModalListeners.bundle.js"></script><script defer src="defaultState.bundle.js"></script><script defer src="localStorage.bundle.js"></script><script defer src="mainContentProjectListeners.bundle.js"></script><script defer src="helper.bundle.js"></script></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module not found: Error: Can't resolve '/home/neil/repos/dist/index.html' in '/home/neil/rep  os/todo-list-app'
+  ModuleNotFoundError: Module not found: Error: Can't resolve '/home/neil/repos/dist/index.htm  l' in '/home/neil/repos/todo-list-app'
+      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/Compilation.js:2016:28
+      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:798:13      at eval (eval at create (/home/neil/repos/todo-list-app/node_modules/tapable/lib/HookCod  eFactory.js:33:10), <anonymous>:10:1)
+      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:270:22      at eval (eval at create (/home/neil/repos/todo-list-app/node_modules/tapable/lib/HookCod  eFactory.js:33:10), <anonymous>:9:1)
+      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:434:22      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:116:11      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:670:25      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:855:8
+      at /home/neil/repos/todo-list-app/node_modules/webpack/lib/NormalModuleFactory.js:975:5
+  
+  - Compilation.js:2016 
+    [todo-list-app]/[webpack]/lib/Compilation.js:2016:28
+  
+  - NormalModuleFactory.js:798 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:798:13
+  
+  
+  - NormalModuleFactory.js:270 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:270:22
+  
+  
+  - NormalModuleFactory.js:434 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:434:22
+  
+  - NormalModuleFactory.js:116 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:116:11
+  
+  - NormalModuleFactory.js:670 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:670:25
+  
+  - NormalModuleFactory.js:855 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:855:8
+  
+  - NormalModuleFactory.js:975 
+    [todo-list-app]/[webpack]/lib/NormalModuleFactory.js:975:5
+  
+  - child-compiler.js:169 
+    [todo-list-app]/[html-webpack-plugin]/lib/child-compiler.js:169:18
+  
+  - Compiler.js:551 finalCallback
+    [todo-list-app]/[webpack]/lib/Compiler.js:551:5
+  
+  - Compiler.js:577 
+    [todo-list-app]/[webpack]/lib/Compiler.js:577:11
+  
+  - Compiler.js:1196 
+    [todo-list-app]/[webpack]/lib/Compiler.js:1196:17
+  
+  
+  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
+    [todo-list-app]/[tapable]/lib/Hook.js:18:14
+  
+  - Compiler.js:1192 
+    [todo-list-app]/[webpack]/lib/Compiler.js:1192:33
+  
+  - Compilation.js:2787 finalCallback
+    [todo-list-app]/[webpack]/lib/Compilation.js:2787:11
+  
+  - Compilation.js:3092 
+    [todo-list-app]/[webpack]/lib/Compilation.js:3092:11
+  
+  
+</pre>

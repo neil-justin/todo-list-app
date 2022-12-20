@@ -12,12 +12,13 @@ module.exports = {
         defaultState: './src/modules/default-state.js',
         localStorage: './src/modules/local-storage.js',
         mainContentProjectListeners: './src/modules/main-content-project-listeners.js',
+        helper: './src/modules/helper.js',
     },
     devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             title: 'To Do List App',
-            template: './src/index.html',
+            template: './dist/index.html',
         }),
     ],
     output: {
