@@ -103,7 +103,7 @@ function shouldDisplayTask(task, openedTab) {
     } else if (openedTab.textContent === 'Upcoming') {
         return diffInCalendarDays > 0;
     } else {
-        return task.project === openedTab.textContent;
+        return task.project === openedTab.textContent.toLowerCase();
     }
 }
 
