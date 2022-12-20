@@ -15,6 +15,8 @@ import {
     appendTaskItemElement,
     updateProjectNameDisplay,
     createDeleteTaskElement,
+    createProjectNameForm,
+    addDeleteProjectIcon,
 } from './dom-controller';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
@@ -22,6 +24,7 @@ import { defaultProjects } from './project';
 
 highlightChosenTab();
 updateMainContentHeading();
+createProjectNameForm();
 
 const storedProjects = accessLocalStorage('getItem', 'projects');
 const userProjects = storedProjects ?? defaultProjects;
@@ -34,6 +37,11 @@ for (let i = 0; i < projectNames.length; i++) {
     if (projectNames[i] === 'inbox') continue;
 
     updateProjectNameDisplay(projectNames[i], 'add');
+}
+
+const sidebarProjectList = document.querySelector('#sidebar-project-list');
+for (const child of sidebarProjectList.children) {
+    addDeleteProjectIcon(child);
 }
 
 const inbox = userProjects.inbox;

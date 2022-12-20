@@ -10,9 +10,11 @@ export {
     updateMainContentHeading,
     appendTaskItemElement,
     createProjectNameForm,
+    addDeleteProjectIcon,
 };
 
 import { capitalizeString, setAttributes } from './helper';
+import DeleteProjectIcon from '../delete-outline.png';
 /* I can't find in their documentation how to use the "import" keyword.
 to import the library, so I just imported it the old-fashioned way. */
 const he = require('he');
@@ -202,4 +204,11 @@ function createProjectNameForm() {
     cancelProjectButton.setAttribute('id', 'main-content-cancel-project-button');
     cancelProjectButton.classList.add('modal-button', 'modal-cancel-button');
     buttonsContainer.appendChild(cancelProjectButton);
+}
+
+function addDeleteProjectIcon(sidebarProjectItem) {
+    const deleteProjectIcon = new Image();
+    deleteProjectIcon.src = DeleteProjectIcon;
+    deleteProjectIcon.classList.add('delete-project-icon');
+    sidebarProjectItem.appendChild(deleteProjectIcon);
 }

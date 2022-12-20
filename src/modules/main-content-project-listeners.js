@@ -1,4 +1,4 @@
-import { createProjectNameForm, updateMainContentHeading, updateProjectNameDisplay } from "./dom-controller";
+import { updateMainContentHeading, updateProjectNameDisplay } from "./dom-controller";
 import { isValueEmpty } from "./helper";
 import { accessLocalStorage } from "./local-storage";
 import { Project } from "./project";
@@ -21,8 +21,6 @@ mainContentHeading.addEventListener('mouseleave', () => {
 
 let projectNameForm;
 let projectNameInput;
-
-createProjectNameForm(mainContentHeading);
 
 const saveProjectButton = document
     .querySelector('#main-content-save-project-button');

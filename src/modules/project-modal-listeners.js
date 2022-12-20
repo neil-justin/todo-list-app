@@ -1,4 +1,4 @@
-import { updateProjectNameDisplay } from "./dom-controller";
+import { addDeleteProjectIcon, updateProjectNameDisplay } from "./dom-controller";
 import { isValueEmpty } from "./helper";
 import { accessLocalStorage } from "./local-storage";
 import { Project } from "./project";
@@ -25,6 +25,7 @@ confirmProjectButton.addEventListener('click', () => {
     }
 
     updateProjectNameDisplay(projectNameInput.value, 'add');
+    addDeleteProjectIcon(document.querySelector('#sidebar-project-list').lastElementChild);
 
     const storedProjects = accessLocalStorage('getItem', 'projects');
     const projectInstance = Project(storedProjects, projectNameInput);

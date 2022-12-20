@@ -32,10 +32,18 @@
 
 .sidebar-text:not(#sidebar-project-list-heading) {
     list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar-text:not(#sidebar-project-list-heading):hover {
     background-color: var(--lightgray-color);
+}
+
+
+.sidebar-text:not(#sidebar-project-list-heading):hover>.delete-project-icon {
+    display: block;
 }
 
 .project-navbar {
@@ -64,7 +72,7 @@ div:has(> #sidebar-project-list-heading) {
 }
 
 #add-project-button:hover {
-    background-color: var(--lightgray-color);
+    background-color: hsl(0, 0%, 90%);
 }
 
 [data-opened-tab] {
@@ -74,4 +82,15 @@ div:has(> #sidebar-project-list-heading) {
 
 [data-opened-tab]:hover {
     background-color: var(--light-accent-color) !important;
+}
+
+.delete-project-icon {
+    height: 2.6rem;
+    width: auto;
+    padding: 0.3125rem;
+    display: none;
+}
+
+.delete-project-icon:hover {
+    background-color: hsl(0, 0%, 90%);
 }

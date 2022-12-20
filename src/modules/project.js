@@ -30,18 +30,23 @@ const defaultProjects = {
     ]
 }
 
-function Project(projects, project) {
-    function updateProjects(todo) {
+function Project(projects, project = null) {
+    function updateProjects(todo, event) {
+        let projectKey;
+
         switch (todo) {
             case 'add':
                 projects[project.value] = null;
                 break;
             case 'edit':
-                const editedProjectKey = document.querySelector('[data-opened-tab]')
+                projectKey = document.querySelector('[data-opened-tab]')
                     .textContent;
-                projects[project.value] = projects[editedProjectKey];
-                delete projects[editedProjectKey];
+                projects[project.value] = projects[projectKey];
+                delete projects[projectKey];
                 break;
+            case 'delete':
+                projectKey = event.target.parentElement.textContent;
+                delete projects[projectKey];
         }
 
         return projects;

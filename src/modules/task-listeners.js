@@ -24,6 +24,7 @@ import {
 } from './helper';
 import { accessLocalStorage } from './local-storage';
 import { differenceInCalendarDays } from 'date-fns';
+import { Project } from './project';
 
 const taskModalElement = document.querySelector('#task-modal');
 const taskFormControl = {
@@ -154,6 +155,18 @@ taskModalConfirmButton.addEventListener('click', () => {
 const projectNavBars = document.querySelectorAll('.project-navbar');
 projectNavBars.forEach(projectNavBar => {
     projectNavBar.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-project-icon')) {
+            if (window.confirm('Are you sure you want to delete this project?')) {
+                const storedProjects = accessLocalStorage('getItem', 'projects');
+                const projectInstance = Project(storedProjects)
+                updatedProjects = projectInstance.updateProjects('delete', e);
+                accessLocalStorage('setItem', updatedProjects);
+                e.target.parentElement.remove();
+            }
+
+            return;
+        }
+
         if (e.target.classList.contains('project-navbar') ||
             e.target.hasAttribute('data-opened-tab')) return;
 
